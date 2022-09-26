@@ -9,3 +9,5 @@ gitconfig:
     value: '!git add . && git commit --amend && git push --force'
   - name: credential.helper
     value: cache --timeout 28800
+  - name: push.autoSetupRemote
+    value: true
