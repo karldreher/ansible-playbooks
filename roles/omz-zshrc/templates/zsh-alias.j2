@@ -1,3 +1,16 @@
+function cleanup-branch(){
+    branch_to_delete=$(git branch --show-current)
+    # default branch not main or master currently unsupported.
+    dest_branch=$(git branch | grep 'main\|master' | sed 's/^[* \t]*//')
+    if [[ $dest_branch = $branch_to_delete ]]; then
+        echo "Cannot cleanup $branch_to_delete branch."
+    else
+        git checkout $dest_branch
+        git branch -d $branch_to_delete
+        git pull
+    fi
+}
+
 function zalias_title(){
     tput setaf 3
     echo $1
@@ -14,6 +27,14 @@ function zalias(){
                 echo $line | sed 's/alias./\t/' | sed 's/=/\t/g'
             done
     fi
+
+    echo ""
+
+    # Edit this manually when new functions/aliases are added here
+    zalias_title "Other Custom Aliases"
+    tput setaf 7
+    echo "cleanup-branch\tCleanup current git branch and return to master/main"
+
     #revert colors
     tput sgr 0
     echo ""
