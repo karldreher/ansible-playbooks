@@ -1,5 +1,13 @@
 ---
 # tasks file for git
+
+- name: 'Check mandatory variables are defined'
+  ansible.builtin.assert:
+    that:
+    - firstname is defined
+    - lastname is defined
+    - email is defined
+
 - name: Install git
   package:
     name: git
@@ -11,7 +19,7 @@
   community.general.git_config:
     name: user.name
     scope: global
-    value: "{{ firstname }} {{ lastname }}"
+    value: "{{ firstname | mandatory }} {{ lastname | mandatory }}"
   tags:
   - prefs
 
@@ -19,7 +27,7 @@
   community.general.git_config:
     name: user.email
     scope: global
-    value: "{{ email }}"
+    value: "{{ email | mandatory }}"
   tags:
   - prefs
 

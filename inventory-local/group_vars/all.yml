@@ -1,5 +1,2 @@
 ---
-firstname: Karl
-lastname: Dreher
-email: karldreher@outlook.com
 ansible_python_interpreter: auto
