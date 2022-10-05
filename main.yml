@@ -1,9 +1,10 @@
 ---
+
 - hosts: all
-  roles: 
+  roles:
+    - role: git
     - role: misc-packages
     - role: jq
-    - role: git
     - role: omz-zshrc
-      tags: 
+      tags:
       - prefs
