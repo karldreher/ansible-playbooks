@@ -2,15 +2,15 @@
 # tasks file for misc-packages
 
 - name: Install misc packages
-  package: 
+  package:
     name: "{{ packages }}"
     state: present
-  vars: 
+  vars:
     packages:
       - diceware
       - nano
       - rsync
       - zip
-  tags: 
+      - pyenv
+  tags:
     - packages
-

@@ -1,7 +1,8 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
+# Set Path
+export PATH="{{ homedir.stdout }}/.local/bin:$PATH"
+
+# Path to oh-my-zsh installation.
 export ZSH="{{ homedir.stdout }}/.oh-my-zsh"
 
 HIST_STAMPS="yyyy-mm-dd"
@@ -17,4 +18,3 @@ if [ $(command -v nano) ]
     then
         export EDITOR=$(which nano)
 fi
-
