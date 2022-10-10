@@ -1,4 +1,6 @@
-alias stash="git stash"
+## When a new alias is added, it should be added to the "omz-zshrc/vars/main.yml" definition.
+## In the case that it is a complex alias, the function can be defined within this .zsh file.
+
 
 function cleanup-branch(){
     branch_to_delete=$(git branch --show-current)
@@ -26,23 +28,31 @@ function zalias(){
 
         git config --list | grep alias | while read line
             do
-                echo $line | sed 's/alias./\t/' | sed 's/=/\t/g'
+                echo $line | sed 's/alias./\t/' | sed 's/=/\t\t/g'
             done
     fi
-
     echo ""
 
-    # Edit this manually when new functions/aliases are added here
-    zalias_title "Other Custom Aliases"
+    zalias_title "Custom Zsh Aliases:"
     tput setaf 7
 
-    echo "cleanup-branch\tCleanup current git branch and return to master/main"
-    echo "stash\t\tgit stash"
+{% for item in aliases %}
+{% if item.alias|length > 6 %}
+    echo -e '\t'{{ item.alias }} '\t'{{ item.description }}
+{% else %}
+    echo -e '\t'{{ item.alias }} '\t\t'{{ item.description }}
+{% endif %}
+{% endfor %}
 
     #revert colors
     tput sgr 0
     echo ""
 }
+
+## Register non-git aliases
+{% for item in aliases %}
+alias {{ item.alias }}="{{ item.command }}"
+{% endfor %}
 
 tput setaf 3
 echo "Alias help: type 'zalias'"

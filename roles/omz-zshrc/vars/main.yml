@@ -1,0 +1,9 @@
+---
+aliases:
+  - alias: stash
+    command: git stash
+    description: git stash
+
+  - alias: cleanup-branch
+    command: cleanup-branch
+    description: Cleanup current git branch and return to master/main
