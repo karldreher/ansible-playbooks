@@ -7,6 +7,8 @@ gitconfig:
     value: '!git add .; git commit'
   - name: alias.gafp
     value: '!git add . && git commit --amend && git push --force'
+  - name: alias.cb
+    value: checkout -b
   - name: credential.helper
     value: cache --timeout 28800
   - name: push.autoSetupRemote
