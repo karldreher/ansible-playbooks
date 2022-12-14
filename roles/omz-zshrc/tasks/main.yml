@@ -6,6 +6,11 @@
     path: "{{ homedir.stdout }}/.oh-my-zsh"
   register: omz_folder
 
+- name: Check that NVM folder exists
+  stat:
+    path: "{{ homedir.stdout }}/.nvm"
+  register: nvm_folder
+
 - name: Install venv plugin
   git:
     repo: https://github.com/glostis/venv-wrapper.git
@@ -28,8 +33,14 @@
     dest: "{{ homedir.stdout }}/.zshrc"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
-- name: Install alias file
+- name: Install zsh alias file
   template:
-    src: zsh-alias.j2
+    src: zsh-custom/zsh-alias.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-aliases.zsh"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
+
+- name: Install nvm helper
+  template:
+    src: zsh-custom/zsh-nvm.j2
+    dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-nvm.zsh"
+  when: "omz_folder.stat.exists and omz_folder.stat.isdir and nvm_folder.stat.exists and nvm_folder.stat.isdir"
