@@ -7,3 +7,7 @@ aliases:
   - alias: cleanup-branch
     command: cleanup-branch
     description: Cleanup current git branch and return to master/main
+
+  - alias: flatten-json
+    command: jq -c
+    description: Flatten JSON document to one line.
