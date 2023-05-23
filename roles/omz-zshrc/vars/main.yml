@@ -4,6 +4,10 @@ aliases:
     command: git stash
     description: git stash
 
+  - alias: clone
+    command: git clone
+    description: git clone
+
   - alias: cleanup-branch
     command: cleanup-branch
     description: Cleanup current git branch and return to master/main
