@@ -12,5 +12,7 @@
       - rsync
       - zip
       - pyenv
+      - yq
+      - tree
   tags:
     - packages
