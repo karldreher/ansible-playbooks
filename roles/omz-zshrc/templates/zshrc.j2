@@ -11,6 +11,9 @@ ZSH_THEME="half-life"
 
 plugins=( {{ omz_plugin_list | join(" ") }} )
 
+# Configuration of plugins
+zstyle ':omz:plugins:nvm' autoload yes
+
 source $ZSH/oh-my-zsh.sh
 
 #set editor for Git and anything else
