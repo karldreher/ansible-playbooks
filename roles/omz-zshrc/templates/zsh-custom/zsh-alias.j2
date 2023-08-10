@@ -4,8 +4,14 @@
 
 function cleanup-branch(){
     branch_to_delete=$(git branch --show-current)
-    # default branch not main or master currently unsupported.
-    dest_branch=$(git branch | grep 'main\|master' | sed 's/^[* \t]*//')
+    # Check if repo origin is github
+    git config --get remote.origin.url | grep -q github
+    if [[ $? != 0 ]]; then
+        dest_branch=$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)
+    else
+        # If not github, default branch not main or master currently unsupported.
+        dest_branch=$(git config --get remote.origin.url | grep -q github)
+    fi
     if [[ $dest_branch = $branch_to_delete ]]; then
         echo "Cannot cleanup $branch_to_delete branch."
     else

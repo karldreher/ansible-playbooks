@@ -15,6 +15,13 @@
   tags:
   - packages
 
+- name: Install gh
+  package:
+    name: gh
+    state: present
+  tags:
+  - packages
+
 - name: Set git user.name
   community.general.git_config:
     name: user.name
