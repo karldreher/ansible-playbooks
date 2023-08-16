@@ -5,19 +5,27 @@
 function cleanup-branch(){
     branch_to_delete=$(git branch --show-current)
     # Check if repo origin is github
-    git config --get remote.origin.url | grep -q github
-    if [[ $? != 0 ]]; then
+    is_github=$(git config --get remote.origin.url | grep github)
+    if [[ ! -z $is_github ]]; then
+        echo " · 😸 Obtaining default branch from Github..."
         dest_branch=$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)
     else
+        echo " · 🤔 Guessing your default branch..."
         # If not github, default branch not main or master currently unsupported.
-        dest_branch=$(git config --get remote.origin.url | grep -q github)
+        dest_branch=$(git branch | grep -e master -e main | grep -v '*' | head -n 1 | sed 's/ //g')
     fi
     if [[ $dest_branch = $branch_to_delete ]]; then
-        echo "Cannot cleanup $branch_to_delete branch."
+        echo " · ❌ Cannot cleanup \"${branch_to_delete}\" branch."
     else
-        git checkout $dest_branch
+        # everything below this line is expected not to fail.
+        set -e
+        git checkout $dest_branch -q
         git branch -d $branch_to_delete -q
-        git pull
+        echo -e " · ❎ Deleted \"${branch_to_delete}\" branch"
+        git pull -q
+        # Shhhh... this already happened.
+        echo -e " · 🌳 Switched to \"${dest_branch}\" branch."
+
     fi
 }
 
