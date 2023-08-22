@@ -21,7 +21,7 @@ function zalias_title(){
     tput sgr 0
 }
 
-function zalias(){
+function zah(){
     zalias_title "Available Git Aliases: (usage: git <alias>)"
     tput setaf 7
     if (git config --list | grep -q alias); then
@@ -55,6 +55,6 @@ alias {{ item.alias }}="{{ item.command }}"
 {% endfor %}
 
 tput setaf 3
-echo "Alias help: type 'zalias'"
+echo "Alias help: type 'zah'"
 echo ""
 tput sgr 0
