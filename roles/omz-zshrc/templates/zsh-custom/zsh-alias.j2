@@ -36,7 +36,7 @@ function zalias(){
     zalias_title "Custom Zsh Aliases:"
     tput setaf 7
 
-{% for item in aliases %}
+{% for item in (aliases | sort(attribute='alias')) %}
 {% if item.alias|length > 6 %}
     echo -e '\t'{{ item.alias }} '\t'{{ item.description }}
 {% else %}
