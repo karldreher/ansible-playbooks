@@ -15,3 +15,7 @@ aliases:
   - alias: flatten-json
     command: jq -c
     description: Flatten JSON document to one line.
+
+  - alias: k
+    command: kubectl
+    description: Alias 'k' to kubectl.
