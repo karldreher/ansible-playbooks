@@ -12,6 +12,10 @@ aliases:
     command: cleanup-branch
     description: Cleanup current git branch and return to master/main
 
+  - alias: download
+    command: curl -OJL 
+    description: Download with Curl, 'curl -OJL <file>'.
+
   - alias: flatten-json
     command: jq -c
     description: Flatten JSON document to one line.
@@ -19,3 +23,7 @@ aliases:
   - alias: k
     command: kubectl
     description: Alias 'k' to kubectl.
+
+  - alias: ve
+    command: ve
+    description: Wrap the venv command and infer current working directory.
