@@ -23,3 +23,7 @@ aliases:
   - alias: k
     command: kubectl
     description: Alias 'k' to kubectl.
+
+  - alias: ve
+    command: ve
+    description: Wrap the venv command and infer current working directory.

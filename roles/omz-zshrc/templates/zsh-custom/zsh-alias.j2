@@ -2,6 +2,12 @@
 ## In the case that it is a complex alias, the function can be defined within this .zsh file.
 
 
+function ve(){
+    # Wrap the venv command and infer current working directory.
+    leaf=$(basename $(pwd))
+    venv $leaf
+}
+
 function cleanup-branch(){
     branch_to_delete=$(git branch --show-current)
     # default branch not main or master currently unsupported.
