@@ -26,4 +26,4 @@ aliases:
 
   - alias: ve
     command: ve
-    description: Wrap the venv command and infer current working directory.
+    description: Wrap the venv command and infer current working directory for venv name.
