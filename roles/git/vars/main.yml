@@ -2,7 +2,7 @@
 # vars file for git
 gitconfig:
   - name: alias.acp
-    value: '!git add .; git commit; git push'
+    value: "{{ '!zsh ~/.oh-my-zsh/custom/scripts/git_acp.zsh' if git_acp_installed else '!git add .; git commit; git push' }}"
   - name: alias.ac
     value: '!git add .; git commit'
   - name: alias.gafp
