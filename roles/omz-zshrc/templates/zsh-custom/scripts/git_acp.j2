@@ -1,0 +1,8 @@
+# Conducts "Git ACP", but only for non-canonically main branches
+current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+if [[ "$current_branch" == "main" || "$current_branch" == "master" ]]; then
+  echo "Branch is 'main' or 'master'. Aborting further commands."
+  exit 1
+fi
+
+git add .; git commit; git push
