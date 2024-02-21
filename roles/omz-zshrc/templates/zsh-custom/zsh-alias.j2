@@ -4,8 +4,16 @@
 
 function ve(){
     # Wrap the venv command and infer current working directory.
-    leaf=$(basename $(pwd))
-    venv $leaf
+    name=$(basename $(pwd))
+    # IF the directory does not have a .git directory, see if the one above does
+    if [[ ! -d .git ]]; then
+        if [[ -d ../.git ]]; then
+            # Use a combination of parent path and leaf
+            parent=$(basename $(dirname $(pwd)))
+            name=$parent--$name
+        fi
+    fi
+    venv $name
 }
 
 function cleanup-branch(){
