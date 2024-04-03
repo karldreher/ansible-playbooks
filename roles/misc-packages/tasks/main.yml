@@ -1,6 +1,6 @@
 ---
 # tasks file for misc-packages
-
+  
 - name: Install misc packages
   package:
     name: "{{ packages }}"
@@ -14,5 +14,6 @@
       - pyenv
       - yq
       - tree
+      - rectangle
   tags:
     - packages
