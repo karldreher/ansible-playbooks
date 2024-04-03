@@ -3,5 +3,7 @@
         "*.yml": "ansible",
         "*.yaml": "ansible",
         "*.zsh.j2": "shellscript"
-    }
+    },  
+    "editor.formatOnSave": true,
+
 }

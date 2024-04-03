@@ -1,7 +1,7 @@
 ---
 # tasks file for git
 
-- name: 'Check mandatory variables are defined'
+- name: "Check mandatory variables are defined"
   ansible.builtin.assert:
     that:
       - firstname is defined

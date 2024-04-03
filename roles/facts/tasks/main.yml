@@ -1,5 +1,4 @@
 ---
-
 - name: Get Home Directory
   ansible.builtin.command: echo ~
   register: homedir
