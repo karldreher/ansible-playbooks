@@ -1,6 +1,6 @@
 ---
 # vars file for git
-gitconfig:
+git_gitconfig:
   - name: alias.acp
     value: "{{ '!zsh ~/.oh-my-zsh/custom/scripts/git_acp.zsh' if git_acp_installed else '!git add .; git commit; git push' }}"
   - name: alias.ac
