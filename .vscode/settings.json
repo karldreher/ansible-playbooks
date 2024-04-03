@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.yml": "ansible",
-        "*.yaml": "ansible"
+        "*.yaml": "ansible",
+        "*.zsh.j2": "shellscript"
     }
 }

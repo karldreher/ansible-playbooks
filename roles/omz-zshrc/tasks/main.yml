@@ -29,13 +29,13 @@
 
 - name: install .zshrc
   template:
-    src: zshrc.j2
+    src: zshrc.zsh.j2
     dest: "{{ homedir.stdout }}/.zshrc"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
 - name: Install zsh alias file
   template:
-    src: zsh-custom/zsh-alias.j2
+    src: zsh-custom/zsh-alias.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-aliases.zsh"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
@@ -48,8 +48,7 @@
 
 - name: Install git_acp.zsh
   template: 
-    src: zsh-custom/scripts/git_acp.j2
+    src: zsh-custom/scripts/git_acp.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/scripts/git_acp.zsh"
   when: "custom_scripts_dir"
   register: git_acp_installed
-  
