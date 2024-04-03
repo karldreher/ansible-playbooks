@@ -2,22 +2,23 @@
 # tasks file for omz-zshrc
 
 - name: Check that OMZ folder exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ homedir.stdout }}/.oh-my-zsh"
   register: omz_folder
 
 - name: Check that NVM folder exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ homedir.stdout }}/.nvm"
   register: nvm_folder
 
 - name: Install venv plugin
-  git:
+  ansible.builtin.git:
     repo: https://github.com/glostis/venv-wrapper.git
-    dest:  "{{ homedir.stdout }}/.oh-my-zsh/plugins/venv-wrapper"
+    dest: "{{ homedir.stdout }}/.oh-my-zsh/plugins/venv-wrapper"
+    version: 81af4239bc5bb99eaa98117b2988a29fdd5b7eb7
 
 - name: Set OMZ plugins to be enabled
-  set_fact:
+  ansible.builtin.set_fact:
     # To enable more omz plugins, add them here.
     omz_plugin_list:
       - git
@@ -27,29 +28,31 @@
       - nvm
       - pyenv
 
-- name: install .zshrc
-  template:
-    src: zshrc.j2
+- name: Install .zshrc
+  ansible.builtin.template:
+    src: zshrc.zsh.j2
     dest: "{{ homedir.stdout }}/.zshrc"
+    mode: "0644"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
 - name: Install zsh alias file
-  template:
-    src: zsh-custom/zsh-alias.j2
+  ansible.builtin.template:
+    src: zsh-custom/zsh-alias.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-aliases.zsh"
+    mode: "0644"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
 - name: Custom scripts directory
-  file:
+  ansible.builtin.file:
     path: "{{ homedir.stdout }}/.oh-my-zsh/custom/scripts"
     state: directory
   register: custom_scripts_dir
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
 - name: Install git_acp.zsh
-  template: 
-    src: zsh-custom/scripts/git_acp.j2
+  ansible.builtin.template:
+    src: zsh-custom/scripts/git_acp.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/scripts/git_acp.zsh"
+    mode: "0644"
   when: "custom_scripts_dir"
   register: git_acp_installed
-  

@@ -1,6 +1,5 @@
 ---
-
 - name: Get Home Directory
-  command: echo ~
+  ansible.builtin.command: echo ~
   register: homedir
   changed_when: false
