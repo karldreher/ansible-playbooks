@@ -9,11 +9,11 @@
     packages:
       - diceware
       - nano
-      - rsync
-      - zip
       - pyenv
-      - yq
-      - tree
       - rectangle
+      - rsync
+      - tree
+      - yq
+      - zip
   tags:
     - packages
