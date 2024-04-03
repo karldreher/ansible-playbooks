@@ -15,6 +15,7 @@
   ansible.builtin.git:
     repo: https://github.com/glostis/venv-wrapper.git
     dest: "{{ homedir.stdout }}/.oh-my-zsh/plugins/venv-wrapper"
+    version: 81af4239bc5bb99eaa98117b2988a29fdd5b7eb7
 
 - name: Set OMZ plugins to be enabled
   ansible.builtin.set_fact:
@@ -27,16 +28,18 @@
       - nvm
       - pyenv
 
-- name: install .zshrc
+- name: Install .zshrc
   ansible.builtin.template:
     src: zshrc.zsh.j2
     dest: "{{ homedir.stdout }}/.zshrc"
+    mode: "0644"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
 - name: Install zsh alias file
   ansible.builtin.template:
     src: zsh-custom/zsh-alias.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-aliases.zsh"
+    mode: "0644"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
 - name: Custom scripts directory
@@ -50,5 +53,6 @@
   ansible.builtin.template:
     src: zsh-custom/scripts/git_acp.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/scripts/git_acp.zsh"
+    mode: 0644
   when: "custom_scripts_dir"
   register: git_acp_installed
