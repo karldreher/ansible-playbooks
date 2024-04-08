@@ -4,11 +4,15 @@ git_gitconfig:
   - name: alias.acp
     value: "{{ '!zsh ~/.oh-my-zsh/custom/scripts/git_acp.zsh' if git_acp_installed else '!git add .; git commit; git push' }}"
   - name: alias.ac
-    value: '!git add .; git commit'
+    value: "!git add .; git commit"
   - name: alias.gafp
-    value: '!git add . && git commit --amend && git push --force'
+    value: "!git add . && git commit --amend && git push --force"
   - name: alias.cb
     value: checkout -b
+  - name: alias.s
+    value: stash
+  - name: alias.sa
+    value: "!git stash apply; git stash drop"
   - name: credential.helper
     value: cache --timeout 28800
   - name: push.autoSetupRemote
