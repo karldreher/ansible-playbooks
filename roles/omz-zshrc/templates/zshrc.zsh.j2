@@ -16,8 +16,4 @@ zstyle ':omz:plugins:nvm' autoload yes
 
 source $ZSH/oh-my-zsh.sh
 
-#set editor for Git and anything else
-if [ $(command -v nano) ]
-    then
-        export EDITOR=$(which nano)
-fi
+export EDITOR=vim
