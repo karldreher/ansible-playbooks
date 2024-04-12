@@ -9,9 +9,7 @@ git_gitconfig:
     value: "!git add . && git commit --amend && git push --force"
   - name: alias.cb
     value: checkout -b
-  - name: alias.s
-    value: stash
-  - name: alias.sa
+  - name: alias.stasha
     value: "!git stash apply; git stash drop"
   - name: credential.helper
     value: cache --timeout 28800
