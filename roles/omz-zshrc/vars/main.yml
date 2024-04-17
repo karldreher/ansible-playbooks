@@ -20,6 +20,14 @@ aliases:
     command: kubectl
     description: Alias 'k' to kubectl.
 
+  - alias: stash
+    command: git stash
+    description: git stash
+
+  - alias: unstash
+    command: git unstash
+    description: git unstash
+
   - alias: ve
     command: ve
     description: Wrap the venv command and infer current working directory for venv name.
