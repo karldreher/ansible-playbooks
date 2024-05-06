@@ -14,5 +14,6 @@
       - tree
       - yq
       - zip
+      - kubectx
   tags:
     - packages

@@ -20,6 +20,10 @@ aliases:
     command: kubectl
     description: Alias 'k' to kubectl.
 
+  - alias: kns
+    command: kubens
+    description: Set kubernetes namespace with 'kubens'.
+
   - alias: stash
     command: git stash
     description: git stash
