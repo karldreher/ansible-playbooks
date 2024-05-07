@@ -28,16 +28,16 @@
       - nvm
       - pyenv
 
-- name: Install .zshrc
+- name: Template .zshrc
   ansible.builtin.template:
     src: zshrc.zsh.j2
     dest: "{{ homedir.stdout }}/.zshrc"
     mode: "0644"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
-- name: Install zsh alias file
+- name: Template zsh alias file
   ansible.builtin.template:
-    src: zsh-custom/zsh-alias.zsh.j2
+    src: zsh-custom/zsh-aliases.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-aliases.zsh"
     mode: "0644"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
@@ -49,7 +49,7 @@
   register: custom_scripts_dir
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
-- name: Install git_acp.zsh
+- name: Template git_acp.zsh
   ansible.builtin.template:
     src: zsh-custom/scripts/git_acp.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/scripts/git_acp.zsh"
