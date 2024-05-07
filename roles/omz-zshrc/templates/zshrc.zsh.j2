@@ -6,13 +6,15 @@ export PATH="{{ homedir.stdout }}/.local/bin:$PATH"
 export ZSH="{{ homedir.stdout }}/.oh-my-zsh"
 
 HIST_STAMPS="yyyy-mm-dd"
-
 ZSH_THEME="half-life"
 
-plugins=( {{ omz_plugin_list | join(" ") }} )
-
 # Configuration of plugins
+plugins=( {{ omz_plugin_list | join(" ") }} )
 zstyle ':omz:plugins:nvm' autoload yes
+
+# Autocompletions - Must precede sourcing omz
+## Homebrew
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
 
