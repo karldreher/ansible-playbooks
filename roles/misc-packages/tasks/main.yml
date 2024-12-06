@@ -8,12 +8,13 @@
   vars:
     packages:
       - diceware
+      - jq
+      - kubectx
       - pyenv
       - rectangle
       - rsync
       - tree
       - yq
       - zip
-      - kubectx
   tags:
     - packages

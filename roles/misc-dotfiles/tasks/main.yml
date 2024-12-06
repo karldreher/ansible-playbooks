@@ -1,0 +1,12 @@
+---
+# tasks file for misc-dotfiles
+- name: Create tfswitch directory
+  ansible.builtin.file:
+    path: "{{ homedir.stdout }}/.tfswitch"
+    state: directory
+
+- name: Template tfswitch.toml
+  ansible.builtin.template:
+    src: templates/tfswitch.toml.j2
+    dest: "{{ homedir.stdout }}/.tfswitch/tfswitch.toml"
+    mode: "0644"
