@@ -15,5 +15,6 @@
       - yq
       - zip
       - kubectx
+      - tfswitch
   tags:
     - packages
