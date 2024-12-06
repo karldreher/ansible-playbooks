@@ -8,13 +8,13 @@
   vars:
     packages:
       - diceware
+      - kubectx
       - pyenv
       - rectangle
       - rsync
+      - tfswitch
       - tree
       - yq
       - zip
-      - kubectx
-      - tfswitch
   tags:
     - packages
