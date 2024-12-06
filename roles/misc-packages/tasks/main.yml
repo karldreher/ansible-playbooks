@@ -12,7 +12,6 @@
       - pyenv
       - rectangle
       - rsync
-      - tfswitch
       - tree
       - yq
       - zip
