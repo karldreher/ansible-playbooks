@@ -1,9 +1,0 @@
----
-# tasks file for jq
-
-- name: Install jq
-  ansible.builtin.package:
-    name: jq
-    state: present
-  tags:
-    - packages
