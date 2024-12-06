@@ -1,10 +1,12 @@
 ---
-
 - hosts: all
   roles:
     - role: git
     - role: misc-packages
     - role: jq
     - role: omz-zshrc
+      tags:
+        - prefs
+    - role: misc-dotfiles
       tags:
         - prefs
