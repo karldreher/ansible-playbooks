@@ -1,7 +1,7 @@
 ---
-
 - hosts: all
   roles:
+    - role: uv-python
     - role: git
     - role: misc-packages
     - role: jq

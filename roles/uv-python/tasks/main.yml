@@ -1,0 +1,9 @@
+# tasks file for omz-zshrc
+
+- name: Install uv
+  ansible.builtin.shell:
+    cmd: "curl -LsSf https://astral.sh/uv/install.sh | sh"
+    creates: $HOME/.local/bin/uv
+  when: ansible_os_family == "Darwin"
+  tags:
+    - packages
