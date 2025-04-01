@@ -11,6 +11,11 @@
     path: "{{ homedir.stdout }}/.nvm"
   register: nvm_folder
 
+- name: Check that goenv folder exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.goenv"
+  register: goenv_folder
+
 - name: Install venv plugin
   ansible.builtin.git:
     repo: https://github.com/glostis/venv-wrapper.git
@@ -48,6 +53,13 @@
     state: directory
   register: custom_scripts_dir
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
+
+- name: Template goenv
+  ansible.builtin.template:
+    src: zsh-custom/zsh-goenv.zsh.j2
+    dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-goenv.zsh"
+    mode: "0644"
+  when: "goenv_folder"
 
 - name: Template git_acp.zsh
   ansible.builtin.template:
