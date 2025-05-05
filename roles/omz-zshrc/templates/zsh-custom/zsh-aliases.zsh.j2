@@ -18,8 +18,8 @@ function ve(){
 
 function cleanup-branch(){
     branch_to_delete=$(git branch --show-current)
-    # default branch not main or master currently unsupported.
-    dest_branch=$(git branch | grep 'main\|master' | sed 's/^[* \t]*//')
+    # When a default branch is set to main, master or dev, do not allow deletion
+    dest_branch=$(git branch | grep 'main\|master\|dev' | sed 's/^[* \t]*//')
     if [[ $dest_branch = $branch_to_delete ]]; then
         echo "Cannot cleanup $branch_to_delete branch."
     else
