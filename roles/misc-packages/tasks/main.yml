@@ -17,6 +17,7 @@
       - yq
       - zip
     macos_productivity:
+      - raycast
       - rectangle
   tags:
     - packages
