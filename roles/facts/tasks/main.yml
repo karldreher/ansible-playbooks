@@ -3,3 +3,10 @@
   ansible.builtin.command: echo ~
   register: homedir
   changed_when: false
+
+- name: "Check mandatory variables are defined"
+  ansible.builtin.assert:
+    that:
+      - firstname is defined
+      - lastname is defined
+      - email is defined

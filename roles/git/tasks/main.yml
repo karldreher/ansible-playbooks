@@ -1,13 +1,6 @@
 ---
 # tasks file for git
 
-- name: "Check mandatory variables are defined"
-  ansible.builtin.assert:
-    that:
-      - firstname is defined
-      - lastname is defined
-      - email is defined
-
 - name: Install git
   ansible.builtin.package:
     name: git

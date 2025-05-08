@@ -59,7 +59,7 @@
     src: zsh-custom/zsh-goenv.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-goenv.zsh"
     mode: "0644"
-  when: "goenv_folder"
+  when: "goenv_folder.stat.exists and goenv_folder.stat.isdir"
 
 - name: Template git_acp.zsh
   ansible.builtin.template:
