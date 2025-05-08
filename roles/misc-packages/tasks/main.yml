@@ -1,20 +1,22 @@
 ---
 # tasks file for misc-packages
 
-- name: Install misc packages
-  package:
-    name: "{{ packages }}"
+- name: Install misc MacOS packages
+  community.general.homebrew:
+    name: "{{ command_line_tools + macos_productivity }}"
     state: present
+  when: ansible_os_family == "Darwin"
   vars:
-    packages:
+    command_line_tools:
       - diceware
       - jq
       - kubectx
       - pyenv
-      - rectangle
       - rsync
       - tree
       - yq
       - zip
+    macos_productivity:
+      - rectangle
   tags:
     - packages
