@@ -8,6 +8,9 @@ export ZSH="{{ homedir.stdout }}/.oh-my-zsh"
 HIST_STAMPS="yyyy-mm-dd"
 ZSH_THEME="half-life"
 
+# Disable auto cd
+unsetopt autocd
+
 # Configuration of plugins
 plugins=( {{ omz_plugin_list | join(" ") }} )
 zstyle ':omz:plugins:nvm' autoload yes
