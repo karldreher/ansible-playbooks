@@ -8,5 +8,5 @@
 - name: Template tfswitch.toml
   ansible.builtin.template:
     src: templates/tfswitch.toml.j2
-    dest: "{{ homedir.stdout }}/.tfswitch/tfswitch.toml"
+    dest: "{{ homedir.stdout }}/.tfswitch.toml"
     mode: "0644"

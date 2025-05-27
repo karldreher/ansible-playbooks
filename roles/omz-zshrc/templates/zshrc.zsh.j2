@@ -1,6 +1,12 @@
 
 # Set Path
+# Base PATH setting
 export PATH="{{ homedir.stdout }}/.local/bin:$PATH"
+
+# Add tfswitch if directory exists
+if [ -d "{{ homedir.stdout }}/.tfswitch" ]; then
+    export PATH="{{ homedir.stdout }}/.tfswitch:$PATH"
+fi
 
 # Path to oh-my-zsh installation.
 export ZSH="{{ homedir.stdout }}/.oh-my-zsh"
