@@ -6,18 +6,9 @@
     name: "{{ command_line_tools }}"
     state: present
   when: ansible_os_family == "Darwin"
-  vars:
-    command_line_tools:
-      - diceware
-      - jq
-      - kubectx
-      - pyenv
-      - rsync
-      - tree
-      - yq
-      - zip
+  register: brew_packages
   tags:
-    - packages
+  - packages
 
 - name: Install misc MacOS casks
   # Certain apps are cask only, which requires the use of the 
@@ -28,7 +19,6 @@
     name: "{{ macos_productivity }}"
     state: present
   when: ansible_os_family == "Darwin"
-  vars:
-    macos_productivity:
-      - raycast
-      - rectangle
+  register: brew_casks
+  tags:
+    - packages

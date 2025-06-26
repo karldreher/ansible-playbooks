@@ -1,0 +1,14 @@
+---
+# Variables for misc-packages role
+command_line_tools:
+  - diceware
+  - jq
+  - kubectx
+  - pyenv
+  - rsync
+  - tree
+  - yq
+  - zip
+macos_productivity:
+  - raycast
+  - rectangle
