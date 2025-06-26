@@ -4,7 +4,9 @@
         "*.yaml": "ansible",
         "*.zsh.j2": "shellscript"
     },
-    "editor.formatOnSave": true,
+    "[ansible]": {
+        "editor.formatOnSave": false
+    },
     "ansible.python.interpreterPath": "",
     "ansible.validation.lint.enabled": false,
 }
