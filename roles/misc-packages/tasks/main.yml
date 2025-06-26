@@ -6,16 +6,6 @@
     name: "{{ command_line_tools }}"
     state: present
   when: ansible_os_family == "Darwin"
-  vars:
-    command_line_tools:
-      - diceware
-      - jq
-      - kubectx
-      - pyenv
-      - rsync
-      - tree
-      - yq
-      - zip
   tags:
     - packages
 
@@ -28,7 +18,3 @@
     name: "{{ macos_productivity }}"
     state: present
   when: ansible_os_family == "Darwin"
-  vars:
-    macos_productivity:
-      - raycast
-      - rectangle
