@@ -12,6 +12,10 @@ aliases:
     command: curl -OJL
     description: Download with Curl, 'curl -OJL <file>'.
 
+  - alias: gtfo
+    command: cleanup-branch
+    description: Cleanup current git branch and return to default branch.
+
   - alias: flatten-json
     command: jq -c
     description: Flatten JSON document to one line.
