@@ -18,16 +18,15 @@ function ve(){
 
 function cleanup-branch(){
     branch_to_delete=$(git branch --show-current)
-    # When a default branch is set to main, master or dev, do not allow deletion
-    dest_branch=$(git branch | grep -w 'main\|master\|dev' | sed 's/^[* \t]*//' || echo "")
+    dest_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@')
     if [[ -z "$dest_branch" ]]; then
-        echo "No default branch (main/master/dev) found."
+        echo "No default branch found."
         return 1
-    elif [[ $dest_branch = $branch_to_delete ]]; then
+    elif [[ "$dest_branch" == "$branch_to_delete" ]]; then
         echo "Cannot cleanup $branch_to_delete branch."
     else
-        git checkout $dest_branch
-        git branch -d $branch_to_delete -q
+        git checkout "$dest_branch"
+        git branch -d "$branch_to_delete" -q
         git pull
     fi
 }
