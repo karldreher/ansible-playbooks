@@ -1,6 +1,26 @@
 ## When a new alias is added, it should be added to the "omz-zshrc/vars/main.yml" definition.
 ## In the case that it is a complex alias, the function can be defined within this .zsh file.
 
+function docker_build_this(){
+    # Build the Dockerfile in the current directory.
+    docker build -t $(basename $(pwd)) .
+}
+
+function docker_run_this(){
+    # Run the Docker container based on the current directory's image.
+    ## Get port from -p option if needed
+    if [[ -n "$1" ]]; then
+        # make sure it starts with -p
+        if [[ "$1" != "-p"* ]]; then
+            echo "Error: Port option must start with -p.  Use docker syntax."
+            return 1
+        fi
+        PORT="$1"
+    else
+        PORT=""
+    fi
+    docker run -it --rm $PORT $(basename $(pwd))
+}
 
 function ve(){
     # Wrap the venv command and infer current working directory.
@@ -18,16 +38,15 @@ function ve(){
 
 function cleanup-branch(){
     branch_to_delete=$(git branch --show-current)
-    # When a default branch is set to main, master or dev, do not allow deletion
-    dest_branch=$(git branch | grep -w 'main\|master\|dev' | sed 's/^[* \t]*//' || echo "")
+    dest_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@')
     if [[ -z "$dest_branch" ]]; then
-        echo "No default branch (main/master/dev) found."
+        echo "No default branch found."
         return 1
-    elif [[ $dest_branch = $branch_to_delete ]]; then
+    elif [[ "$dest_branch" == "$branch_to_delete" ]]; then
         echo "Cannot cleanup $branch_to_delete branch."
     else
-        git checkout $dest_branch
-        git branch -d $branch_to_delete -q
+        git checkout "$dest_branch"
+        git branch -d "$branch_to_delete" -q
         git pull
     fi
 }
@@ -42,10 +61,11 @@ function zah(){
     zalias_title "Available Git Aliases: (usage: git <alias>)"
     tput setaf 7
     if (git config --list | grep -q alias); then
-
         git config --list | grep alias | while read line
             do
-                echo $line | sed 's/alias./\t/' | sed 's/=/\t\t/g'
+                alias_name=$(echo $line | sed 's/^alias\.//' | sed 's/=.*//')
+                alias_cmd=$(echo $line | sed 's/^alias\.[^=]*=//')
+                printf '  %-20s %s\n' "$alias_name" "$alias_cmd"
             done
     fi
     echo ""
@@ -54,11 +74,7 @@ function zah(){
     tput setaf 7
 
 {% for item in (aliases | sort(attribute='alias')) %}
-{% if item.alias|length > 6 %}
-    echo -e '\t'{{ item.alias }} '\t'{{ item.description }}
-{% else %}
-    echo -e '\t'{{ item.alias }} '\t\t'{{ item.description }}
-{% endif %}
+    printf '  %-20s %s\n' '{{ item.alias }}' '{{ item.description | replace("'", "'\\''") }}'
 {% endfor %}
 
     #revert colors
