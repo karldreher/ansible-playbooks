@@ -1,6 +1,26 @@
 ## When a new alias is added, it should be added to the "omz-zshrc/vars/main.yml" definition.
 ## In the case that it is a complex alias, the function can be defined within this .zsh file.
 
+function docker_build_this(){
+    # Build the Dockerfile in the current directory.
+    docker build -t $(basename $(pwd)) .
+}
+
+function docker_run_this(){
+    # Run the Docker container based on the current directory's image.
+    ## Get port from -p option if needed
+    if [[ -n "$1" ]]; then
+        # make sure it starts with -p
+        if [[ "$1" != "-p"* ]]; then
+            echo "Error: Port option must start with -p.  Use docker syntax."
+            return 1
+        fi
+        PORT="$1"
+    else
+        PORT=""
+    fi
+    docker run -it --rm $PORT $(basename $(pwd))
+}
 
 function ve(){
     # Wrap the venv command and infer current working directory.

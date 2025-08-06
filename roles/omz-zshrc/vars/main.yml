@@ -12,6 +12,14 @@ aliases:
     command: curl -OJL
     description: Download with Curl, 'curl -OJL <file>'.
 
+  - alias: docker_build_this
+    command: docker_build_this
+    description: Build a Docker image with CWD as context and tag.
+
+  - alias: docker_run_this
+    command: docker_run_this
+    description: Run a Docker container with CWD as tag.
+
   - alias: gtfo
     command: cleanup-branch
     description: Cleanup current git branch and return to default branch.
