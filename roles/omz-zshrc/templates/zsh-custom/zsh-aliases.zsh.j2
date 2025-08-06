@@ -61,10 +61,11 @@ function zah(){
     zalias_title "Available Git Aliases: (usage: git <alias>)"
     tput setaf 7
     if (git config --list | grep -q alias); then
-
         git config --list | grep alias | while read line
             do
-                echo $line | sed 's/alias./\t/' | sed 's/=/\t\t/g'
+                alias_name=$(echo $line | sed 's/^alias\.//' | sed 's/=.*//')
+                alias_cmd=$(echo $line | sed 's/^alias\.[^=]*=//')
+                printf '  %-20s %s\n' "$alias_name" "$alias_cmd"
             done
     fi
     echo ""
@@ -73,11 +74,7 @@ function zah(){
     tput setaf 7
 
 {% for item in (aliases | sort(attribute='alias')) %}
-{% if item.alias|length > 6 %}
-    echo -e '\t'{{ item.alias }} '\t'{{ item.description }}
-{% else %}
-    echo -e '\t'{{ item.alias }} '\t\t'{{ item.description }}
-{% endif %}
+    printf '  %-20s %s\n' '{{ item.alias }}' '{{ item.description | replace("'", "'\\''") }}'
 {% endfor %}
 
     #revert colors
