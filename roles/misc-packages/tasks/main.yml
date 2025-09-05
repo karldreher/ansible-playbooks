@@ -3,7 +3,7 @@
 
 - name: Install misc MacOS brew packages
   community.general.homebrew:
-    name: "{{ command_line_tools }}"
+    name: "{{ macos_tools }}"
     state: present
   when: ansible_os_family == "Darwin"
   register: brew_packages

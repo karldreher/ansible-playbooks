@@ -1,6 +1,6 @@
 ---
 # Variables for misc-packages role
-command_line_tools:
+macos_tools:
   - diceware
   - jq
   - kubectx
