@@ -1,6 +1,6 @@
 ---
 # Variables for misc-packages role
-macos_tools:
+macos_brew_packages:
   - diceware
   - jq
   - kubectx
@@ -9,6 +9,6 @@ macos_tools:
   - tree
   - yq
   - zip
-macos_productivity:
+macos_brew_casks:
   - raycast
   - rectangle

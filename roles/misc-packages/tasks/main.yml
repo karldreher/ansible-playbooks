@@ -3,7 +3,7 @@
 
 - name: Install misc MacOS brew packages
   community.general.homebrew:
-    name: "{{ macos_tools }}"
+    name: "{{ macos_brew_packages }}"
     state: present
   when: ansible_os_family == "Darwin"
   register: brew_packages
@@ -16,7 +16,7 @@
   # Care should be taken to add casks to this list instead of the 
   # one above, as they are not technically interchangeable.
   community.general.homebrew_cask:
-    name: "{{ macos_productivity }}"
+    name: "{{ macos_brew_casks }}"
     state: present
   when: ansible_os_family == "Darwin"
   register: brew_casks
