@@ -10,5 +10,6 @@ macos_brew_packages:
   - yq
   - zip
 macos_brew_casks:
+  - ghostty
   - raycast
   - rectangle
