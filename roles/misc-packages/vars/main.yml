@@ -2,6 +2,7 @@
 # Variables for misc-packages role
 macos_brew_packages:
   - diceware
+  - httpie
   - jq
   - kubectx
   - pyenv
