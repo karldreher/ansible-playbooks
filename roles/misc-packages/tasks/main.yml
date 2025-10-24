@@ -22,3 +22,8 @@
   register: brew_casks
   tags:
     - packages
+
+- name: Install script-based packages
+  ansible.builtin.include_tasks: script-packages.yml
+  tags:
+    - packages

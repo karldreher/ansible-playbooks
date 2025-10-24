@@ -62,3 +62,13 @@ function color {
 }
 ## Pick and assign the color to the tab on zsh launch
 color
+
+
+{{ if bun_install  }}
+# bun completions
+[ -s "{{ homedir.stdout }}/.bun/_bun" ] && source "{{ homedir.stdout }}/.bun/_bun"
+
+# bun
+export BUN_INSTALL="{{ homedir.stdout }}/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+{{ endif }}

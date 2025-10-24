@@ -1,0 +1,9 @@
+---
+- name: Install bun (JavaScript runtime)
+  ansible.builtin.shell: |
+    curl -fsSL https://bun.sh/install | bash
+  args:
+    creates: "{{ homedir.stdout }}/.bun/bin/bun"
+  register: bun_install
+  tags:
+    - packages
