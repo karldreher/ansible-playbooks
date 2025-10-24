@@ -1,12 +1,18 @@
+{#- Set up PATH using Jinja templating -#}
+{#- Always include .local/bin -#}
+{%- set path_entries = [homedir.stdout ~ '/.local/bin'] -%}
 
-# Set Path
-# Base PATH setting
-export PATH="{{ homedir.stdout }}/.local/bin:$PATH"
-
-# Add tfswitch if directory exists
-if [ -d "{{ homedir.stdout }}/.tfswitch" ]; then
-    export PATH="{{ homedir.stdout }}/.tfswitch:$PATH"
-fi
+{#- Optionally add .tfswitch if enabled -#}
+{%- if bun_install|default(false) -%}
+    {#- Add bun to PATH if installed -#}
+    {%- set _ = path_entries.insert(0, homedir.stdout ~ '/.bun/bin') -%}
+{%- endif -%}
+{%- if tfswitch_enabled|default(false) -%}
+    {%- set _ = path_entries.append(homedir.stdout ~ '/.tfswitch') -%}
+{%- endif -%}
+{#- Export the constructed PATH #}
+# PATH
+export PATH="{{- path_entries | join(':') -}}:$PATH"
 
 # Path to oh-my-zsh installation.
 export ZSH="{{ homedir.stdout }}/.oh-my-zsh"
@@ -62,3 +68,12 @@ function color {
 }
 ## Pick and assign the color to the tab on zsh launch
 color
+
+
+{% if bun_install  %}
+# bun completions
+[ -s "{{ homedir.stdout }}/.bun/_bun" ] && source "{{ homedir.stdout }}/.bun/_bun"
+
+# bun
+export BUN_INSTALL="{{ homedir.stdout }}/.bun"
+{% endif %}
