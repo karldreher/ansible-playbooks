@@ -5,24 +5,18 @@
   ansible.builtin.package:
     name: git
     state: present
-  tags:
-    - packages
 
 - name: Set git user.name
   community.general.git_config:
     name: user.name
     scope: global
     value: "{{ firstname | mandatory }} {{ lastname | mandatory }}"
-  tags:
-    - prefs
 
 - name: Set git user.email
   community.general.git_config:
     name: user.email
     scope: global
     value: "{{ email | mandatory }}"
-  tags:
-    - prefs
 
 - name: Set git config
   community.general.git_config:
@@ -30,5 +24,3 @@
     scope: global
     value: "{{ item.value }}"
   with_items: "{{ git_gitconfig }}"
-  tags:
-    - prefs

@@ -5,5 +5,3 @@
   args:
     creates: "{{ homedir.stdout }}/.bun/bin/bun"
   register: bun_install
-  tags:
-    - packages

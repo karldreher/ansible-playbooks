@@ -4,8 +4,4 @@
     - role: git
     - role: misc-packages
     - role: omz-zshrc
-      tags:
-        - prefs
     - role: misc-dotfiles
-      tags:
-        - prefs
