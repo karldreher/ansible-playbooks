@@ -9,6 +9,8 @@ git_gitconfig:
     value: "!git add . && git commit --amend && git push --force"
   - name: alias.cb
     value: checkout -b
+  - name: alias.cab
+    value: "!git checkout -b $(diceware -n 2 -d '-' --no-caps)"
   - name: alias.unstash
     value: "!git stash apply; git stash drop"
   - name: credential.helper
