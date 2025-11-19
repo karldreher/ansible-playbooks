@@ -7,8 +7,6 @@
     state: present
   when: ansible_os_family == "Darwin"
   register: brew_packages
-  tags:
-  - packages
 
 - name: Install misc MacOS casks
   # Certain apps are cask only, which requires the use of the 
@@ -20,10 +18,6 @@
     state: present
   when: ansible_os_family == "Darwin"
   register: brew_casks
-  tags:
-    - packages
 
 - name: Install script-based packages
   ansible.builtin.include_tasks: script-packages.yml
-  tags:
-    - packages
