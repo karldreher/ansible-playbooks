@@ -1,4 +1,3 @@
 dependencies:
   - role: omz-zshrc
   - role: facts
-  - role: misc-packages
