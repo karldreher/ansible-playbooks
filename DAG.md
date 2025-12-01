@@ -7,6 +7,5 @@ graph TD
     omz-zshrc -->|depends on| misc-packages
     git -->|depends on| omz-zshrc
     git -->|depends on| facts
-    git -->|depends on| misc-packages
 ```
 
