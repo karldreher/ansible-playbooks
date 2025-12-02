@@ -22,17 +22,6 @@
     dest: "{{ homedir.stdout }}/.oh-my-zsh/plugins/venv-wrapper"
     version: 81af4239bc5bb99eaa98117b2988a29fdd5b7eb7
 
-- name: Set OMZ plugins to be enabled
-  ansible.builtin.set_fact:
-    # To enable more omz plugins, add them here.
-    omz_plugin_list:
-      - git
-      - venv-wrapper
-      - dotenv
-      - terraform
-      - nvm
-      - pyenv
-
 - name: Template .zshrc
   ansible.builtin.template:
     src: zshrc.zsh.j2
