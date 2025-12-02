@@ -1,31 +1,10 @@
 ---
 # tasks file for misc-packages
 
-- name: Add misc MacOS brew taps
-  community.general.homebrew_tap:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ macos_brew_taps }}"
+- name: Install macos homebrew packages
+  ansible.builtin.include_tasks: brew_packages.yml
   when: ansible_os_family == "Darwin"
-  register: brew_taps
 
-- name: Install misc MacOS brew packages
-  community.general.homebrew:
-    name: "{{ macos_brew_packages }}"
-    state: present
-  when: ansible_os_family == "Darwin" and brew_taps is not failed
-  register: brew_packages
-
-- name: Install misc MacOS casks
-  # Certain apps are cask only, which requires the use of the 
-  # community.general.homebrew_cask module.
-  # Care should be taken to add casks to this list instead of the 
-  # one above, as they are not technically interchangeable.
-  community.general.homebrew_cask:
-    name: "{{ macos_brew_casks }}"
-    state: present
-  when: ansible_os_family == "Darwin"
-  register: brew_casks
 
 - name: Install script-based packages
   ansible.builtin.include_tasks: script-packages.yml
