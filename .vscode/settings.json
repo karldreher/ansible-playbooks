@@ -9,4 +9,6 @@
     },
     "ansible.python.interpreterPath": "",
     "ansible.validation.lint.enabled": false,
+    "ansible.lightspeed.enabled": false,
+    "ansible.lightspeed.suggestions.enabled": false,
 }

@@ -47,3 +47,13 @@ aliases:
   - alias: ve
     command: ve
     description: Wrap the venv command and infer current working directory for venv name.
+
+
+# To enable more omz plugins, add them here.
+omz_plugin_list:
+  - git
+  - venv-wrapper
+  - dotenv
+  - terraform
+  - nvm
+  - pyenv
