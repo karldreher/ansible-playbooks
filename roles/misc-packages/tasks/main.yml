@@ -1,11 +1,19 @@
 ---
 # tasks file for misc-packages
 
+- name: Add misc MacOS brew taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ macos_brew_taps }}"
+  when: ansible_os_family == "Darwin"
+  register: brew_taps
+
 - name: Install misc MacOS brew packages
   community.general.homebrew:
     name: "{{ macos_brew_packages }}"
     state: present
-  when: ansible_os_family == "Darwin"
+  when: ansible_os_family == "Darwin" and brew_taps is not failed
   register: brew_packages
 
 - name: Install misc MacOS casks

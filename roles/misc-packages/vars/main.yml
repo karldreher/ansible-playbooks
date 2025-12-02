@@ -1,5 +1,9 @@
 ---
 # Variables for misc-packages role
+
+macos_brew_taps:
+  - warrensbox/tap
+
 macos_brew_packages:
   - diceware
   - httpie
@@ -10,6 +14,8 @@ macos_brew_packages:
   - tree
   - yq
   - zip
+  - warrensbox/tap/tfswitch
+
 macos_brew_casks:
   - ghostty
   - raycast
