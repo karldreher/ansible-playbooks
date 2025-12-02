@@ -16,6 +16,13 @@
     path: "{{ homedir.stdout }}/.goenv"
   register: goenv_folder
 
+- name: Tfswitch enabled
+  # TODO: Refactor this more elegantly later, but this is more of a 
+  # matter of placement.  Syntactically it is correct.
+  ansible.builtin.set_fact:
+    tfswitch_enabled: true
+  when: "'warrensbox/tap/tfswitch' in macos_brew_packages and brew_packages is defined and not brew_packages is failed"
+  
 - name: Install venv plugin
   ansible.builtin.git:
     repo: https://github.com/glostis/venv-wrapper.git
