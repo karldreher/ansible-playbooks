@@ -6,11 +6,6 @@
     path: "{{ homedir.stdout }}/.oh-my-zsh"
   register: omz_folder
 
-- name: Check that NVM folder exists
-  ansible.builtin.stat:
-    path: "{{ homedir.stdout }}/.nvm"
-  register: nvm_folder
-
 - name: Check that goenv folder exists
   ansible.builtin.stat:
     path: "{{ homedir.stdout }}/.goenv"
