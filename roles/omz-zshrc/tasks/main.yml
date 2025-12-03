@@ -6,11 +6,6 @@
     path: "{{ homedir.stdout }}/.oh-my-zsh"
   register: omz_folder
 
-- name: Check that NVM folder exists
-  ansible.builtin.stat:
-    path: "{{ homedir.stdout }}/.nvm"
-  register: nvm_folder
-
 - name: Check that goenv folder exists
   ansible.builtin.stat:
     path: "{{ homedir.stdout }}/.goenv"
@@ -29,18 +24,18 @@
     dest: "{{ homedir.stdout }}/.oh-my-zsh/plugins/venv-wrapper"
     version: 81af4239bc5bb99eaa98117b2988a29fdd5b7eb7
 
-- name: Template .zshrc
+- name: Template zsh configuration files
   ansible.builtin.template:
-    src: zshrc.zsh.j2
-    dest: "{{ homedir.stdout }}/.zshrc"
+    src: "{{ item.src }}"
+    dest: "{{ homedir.stdout }}/{{ item.dest }}"
     mode: "0644"
-  when: "omz_folder.stat.exists and omz_folder.stat.isdir"
-
-- name: Template zsh alias file
-  ansible.builtin.template:
-    src: zsh-custom/zsh-aliases.zsh.j2
-    dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-aliases.zsh"
-    mode: "0644"
+  loop:
+    # src is relative to templates/ directory in this role
+    # dest is relative to the user's home directory
+    - src: "zshrc.zsh.j2"
+      dest: ".zshrc"
+    - src: "zsh-custom/zsh-aliases.zsh.j2"
+      dest: ".oh-my-zsh/custom/zsh-aliases.zsh"
   when: "omz_folder.stat.exists and omz_folder.stat.isdir"
 
 - name: Custom scripts directory
