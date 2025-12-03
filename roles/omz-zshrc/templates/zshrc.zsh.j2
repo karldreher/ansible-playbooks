@@ -35,41 +35,6 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR=vim
 
-
-# Color madness for iterm tabs, generate a new color per-tab
-PRELINE="\r\033[A"
-
-function random_color {
-    echo -e "\033]6;1;bg;red;brightness;$((1 + $RANDOM % 255))\a"$PRELINE
-    echo -e "\033]6;1;bg;green;brightness;$((1 + $RANDOM % 255))\a"$PRELINE
-    echo -e "\033]6;1;bg;blue;brightness;$((1 + $RANDOM % 255))\a"$PRELINE
-}
-
-function color {
-    case $1 in
-    green)
-    echo -e "\033]6;1;bg;red;brightness;57\a"$PRELINE
-    echo -e "\033]6;1;bg;green;brightness;197\a"$PRELINE
-    echo -e "\033]6;1;bg;blue;brightness;77\a"$PRELINE
-    ;;
-    red)
-    echo -e "\033]6;1;bg;red;brightness;270\a"$PRELINE
-    echo -e "\033]6;1;bg;green;brightness;60\a"$PRELINE
-    echo -e "\033]6;1;bg;blue;brightness;83\a"$PRELINE
-    ;;
-    orange)
-    echo -e "\033]6;1;bg;red;brightness;227\a"$PRELINE
-    echo -e "\033]6;1;bg;green;brightness;143\a"$PRELINE
-    echo -e "\033]6;1;bg;blue;brightness;10\a"$PRELINE
-    ;;
-    *)
-    random_color
-    esac
-}
-## Pick and assign the color to the tab on zsh launch
-color
-
-
 {% if bun_install  %}
 # bun completions
 [ -s "{{ homedir.stdout }}/.bun/_bun" ] && source "{{ homedir.stdout }}/.bun/_bun"
