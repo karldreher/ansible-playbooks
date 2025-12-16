@@ -5,3 +5,10 @@
   args:
     creates: "{{ homedir.stdout }}/.bun/bin/bun"
   register: bun_install
+
+- name: Install uv
+  ansible.builtin.shell: |
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  args:
+    creates: "{{ homedir.stdout }}/.local/bin/uv"
+  register: uv_install
