@@ -1,0 +1,9 @@
+---
+- name: Install linux apt packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ linux_apt_packages }}"
+  become: yes
+  register: apt_packages
