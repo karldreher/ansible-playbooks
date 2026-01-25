@@ -1,6 +1,12 @@
 ---
 # Variables for misc-packages role
 
+linux_apt_packages:
+  - diceware
+  - tree
+  - yq
+  - zsh
+
 macos_brew_taps:
   - warrensbox/tap
 
