@@ -5,7 +5,7 @@ git_gitconfig:
     value: >-
       {{ '!zsh ~/.oh-my-zsh/custom/scripts/git_acp.zsh'
          if (git_acp_installed is defined
-             and not git_acp_installed.skipped)
+             and not git_acp_installed.skipped | default(false))
          else '!git add .; git commit; git push' }}
   - name: alias.ac
     value: "!git add .; git commit"
