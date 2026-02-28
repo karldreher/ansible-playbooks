@@ -15,6 +15,7 @@ macos_brew_packages:
   - httpie
   - jq
   - kubectx
+  - parallel
   - pyenv
   - rsync
   - tree
