@@ -23,3 +23,5 @@ git_gitconfig:
     value: cache --timeout 28800
   - name: push.autoSetupRemote
     value: true
+  - name: fetch.prune
+    value: true
