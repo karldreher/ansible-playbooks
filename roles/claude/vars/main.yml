@@ -1,0 +1,9 @@
+claude_settings:
+  permissions:
+    allow:
+      - "WebSearch"
+      - "Bash(gh pr list:*)"
+      - "Bash(gh issue view:*)"
+      - "Bash(gh pr view:*)"
+      - "Bash(gh repo view:*)"
+    defaultMode: "plan"
