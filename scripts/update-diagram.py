@@ -13,16 +13,19 @@ import yaml
 ROLES_DIR = Path("roles")
 OUTPUT_FILE = Path("DAG.md")
 
-COLORS = {
-    "facts": ":::facts",
-    "default": "",
-}
-
-STYLE_DEFS = """
+STYLE_DEFS = """\
     classDef facts fill:#4a9eff,stroke:#2b7de9,color:#fff
     classDef role fill:#2d2d2d,stroke:#555,color:#fff
-    classDef default fill:#2d2d2d,stroke:#555,color:#fff
-"""
+    classDef default fill:#2d2d2d,stroke:#555,color:#fff"""
+
+
+def _dep_name(dep: str | dict) -> str | None:
+    """Extract role name from a dependency entry."""
+    if isinstance(dep, dict) and "role" in dep:
+        return dep["role"]
+    if isinstance(dep, str):
+        return dep
+    return None
 
 
 def parse_role_dependencies(roles_dir: Path) -> dict[str, list[str]]:
@@ -30,17 +33,9 @@ def parse_role_dependencies(roles_dir: Path) -> dict[str, list[str]]:
     graph: dict[str, list[str]] = {}
     for meta_file in sorted(roles_dir.glob("*/meta/main.yml")):
         role_name = meta_file.parent.parent.name
-        with open(meta_file) as f:
-            meta = yaml.safe_load(f)
-        deps = []
-        for dep in meta.get("dependencies", []) or []:
-            if isinstance(dep, dict) and "role" in dep:
-                deps.append(dep["role"])
-            elif isinstance(dep, str):
-                deps.append(dep)
-        graph[role_name] = deps
+        meta = yaml.safe_load(meta_file.read_text())
+        graph[role_name] = [name for dep in (meta.get("dependencies") or []) if (name := _dep_name(dep))]
 
-    # Include roles that have no meta file (no dependencies)
     for role_dir in sorted(roles_dir.iterdir()):
         if role_dir.is_dir() and role_dir.name not in graph:
             graph[role_dir.name] = []
@@ -50,40 +45,39 @@ def parse_role_dependencies(roles_dir: Path) -> dict[str, list[str]]:
 
 def generate_mermaid(graph: dict[str, list[str]]) -> str:
     """Generate a Mermaid diagram string from the dependency graph."""
-    lines = ["```mermaid", "graph TD", ""]
-
+    edges = []
     for role, deps in sorted(graph.items()):
         if deps:
-            for dep in sorted(deps):
-                lines.append(f"    {role} -->|depends on| {dep}")
+            edges.extend(f"    {role} -->|depends on| {dep}" for dep in sorted(deps))
         else:
-            lines.append(f"    {role}")
+            edges.append(f"    {role}")
 
-    lines.append(STYLE_DEFS.rstrip())
+    sections = [
+        "```mermaid",
+        "graph TD",
+        "",
+        *edges,
+        "",
+        STYLE_DEFS,
+        "    class facts facts",
+        "```",
+        "",
+    ]
+    return "\n".join(sections)
 
-    # Apply class to facts node
-    lines.append("    class facts facts")
 
-    lines.append("```")
-    lines.append("")
-    return "\n".join(lines)
-
-
-def main() -> int:
+def main() -> None:
     if not ROLES_DIR.is_dir():
-        print(f"Error: {ROLES_DIR} directory not found. Run from the repo root.", file=sys.stderr)
-        return 1
+        sys.exit(f"Error: {ROLES_DIR} directory not found. Run from the repo root.")
 
     graph = parse_role_dependencies(ROLES_DIR)
     mermaid = generate_mermaid(graph)
-
     OUTPUT_FILE.write_text(mermaid)
 
     role_count = len(graph)
     edge_count = sum(len(deps) for deps in graph.values())
     print(f"Generated {OUTPUT_FILE}: {role_count} roles, {edge_count} edges")
-    return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
