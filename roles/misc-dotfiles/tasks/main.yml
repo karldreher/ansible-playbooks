@@ -13,11 +13,11 @@
 
 - name: Create ghostty config directory
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.config/ghostty"
+    path: "{{ homedir.stdout }}/.config/ghostty"
     state: directory
 
 - name: Template ghostty config to $HOME/.config/ghostty/config
   ansible.builtin.template:
     src: templates/ghostty/config.j2
-    dest: "{{ ansible_env.HOME }}/.config/ghostty/config"
+    dest: "{{ homedir.stdout }}/.config/ghostty/config"
     mode: "0644"
