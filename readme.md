@@ -13,4 +13,8 @@ Fill in the `EXAMPLE` values with ones meaningful for you.
 # Dependencies
 [DAG.md](DAG.md) describes the inter-role dependencies that are implied by the `meta/main.yml` in each role.
 
-This is committed to the repo, but maintained by manual execution of `scripts/update-diagram.sh`.  
+This is committed to the repo, but maintained by manual execution of:
+
+```sh
+uv run scripts/update-diagram.py
+```

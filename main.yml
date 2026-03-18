@@ -6,3 +6,4 @@
     - role: omz-zshrc
       when: ansible_facts["os_family"] == "Darwin"
     - role: misc-dotfiles
+    - role: claude
