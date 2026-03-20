@@ -1,0 +1,135 @@
+---
+name: contribution-readiness
+description: Drafts contributor-ready GitHub issues and specifications with User Story, Background, and Acceptance Criteria sections. Use this skill whenever the user wants to write an issue, spec, ticket, or task description for someone else to pick up — even if they don't say "contribution readiness" explicitly. Triggers on phrases like "draft an issue", "write a spec", "create a ticket", "write up this feature", "make this contributable", or any request to prepare work for another developer.
+argument-hint: "[feature or topic]"
+---
+
+## Purpose
+
+Draft a well-structured issue or specification in markdown that gives a contributor everything they need to get started. The output is always presented in the conversation as markdown — this skill never creates files, posts to GitHub, or makes any changes.
+
+A good issue answers three questions before a contributor writes a single line of code: **what** needs to happen, **why** it matters, and **how we'll know it's done**.
+
+## Instructions
+
+### Step 1: Understand the request
+
+Parse the user's argument and any surrounding conversation context. Extract:
+- The feature, bug, or task being described
+- Who benefits (end users, developers, operators, the business)
+- Any constraints, deadlines, or dependencies mentioned
+
+### Step 2: Fill in the gaps
+
+If the user's input clearly answers what, why, and for whom — skip straight to drafting. But if any of these are unclear, use the `AskUserQuestion` tool to ask before writing. This makes the interaction feel like a conversation rather than a wall of text — the user gets a focused prompt they can respond to directly.
+
+Compose a single `AskUserQuestion` call that covers everything you need. Only ask what's genuinely missing; don't interrogate the user when they've already given you enough to work with. Questions to consider:
+
+- **What is the desired outcome?** What should exist or change when this is done?
+- **Why does this matter?** What problem does it solve, or what opportunity does it unlock?
+- **Who is the audience?** End users, internal developers, operators?
+- **Are there constraints?** Specific technologies, backward compatibility, timeline, related issues?
+
+### Step 3: Gather technical context (when in a repo)
+
+If invoked inside a repository and the feature touches existing code, briefly explore the codebase to identify:
+- Relevant files, modules, or APIs the contributor will need to touch
+- Existing patterns or conventions they should follow
+- Related tests or configuration
+
+This context makes the issue actionable rather than abstract. Skip this step if the request is purely conceptual or not tied to a specific codebase.
+
+### Step 4: Draft the issue
+
+Write the issue in markdown with these required sections:
+
+#### User Story
+
+Use the standard format: **"As a [persona], I want [goal] so that [benefit]."**
+
+Pick the right persona — this is the person who feels the problem or benefits from the solution. Be specific: "As a developer using the CLI" is better than "As a user."
+
+#### Background
+
+Explain the current state and why this work matters. Cover:
+- What exists today and what's missing or broken
+- Why now — what prompted this work (incident, user feedback, strategic goal)
+- Any relevant context a contributor needs to understand before diving in
+
+If you gathered codebase context in Step 3, weave in the relevant technical details here — file paths, existing patterns, API surfaces. This helps a contributor orient themselves quickly.
+
+Keep it concise. Two to four paragraphs is usually right. The goal is orientation, not exhaustive documentation.
+
+#### Acceptance Criteria
+
+A checklist of concrete, testable conditions that define "done." Each criterion should be verifiable — a reviewer should be able to look at the PR and confirm yes or no for each item.
+
+Good criteria are specific and observable:
+- "The `/api/users` endpoint returns a 429 status code after 100 requests per minute"
+- "Dark mode colors meet WCAG AA contrast ratios"
+- "Existing tests continue to pass without modification"
+
+Avoid vague criteria like "code is clean" or "performance is acceptable."
+
+#### Optional sections (include when they add value)
+
+- **Technical Notes** — Architecture pointers, relevant files, suggested approach, or API contracts. Include this when the contributor would otherwise need significant exploration to figure out where to start.
+- **Out of Scope** — Explicit boundaries to prevent scope creep. Helpful when the feature is adjacent to other work that might be tempting to bundle in.
+- **Open Questions** — Unresolved decisions that the contributor may need to weigh in on or that need discussion before implementation.
+
+### Step 5: Present the draft
+
+Wrap the entire issue in a single markdown code block (` ```markdown ... ``` `) so the user sees the raw markdown source and can copy-paste it directly into GitHub, Linear, or wherever they file issues. Raw source is more useful than rendered output because the user needs to paste it somewhere — rendered markdown can't be copied cleanly.
+
+Do not create files or post anywhere.
+
+If the user wants to refine the draft, iterate with them — each revision should also be wrapped in a markdown code block.
+
+## Tone and Style
+
+- Write for the contributor, not for a project manager. Be direct and technical where appropriate.
+- Lead with context, not instructions. A contributor who understands the "why" will make better decisions than one following a rigid checklist.
+- Be specific over general. Name the endpoint, the file, the error message. Vague issues produce vague PRs.
+- Keep it scannable. Use headers, short paragraphs, and bullet points. A contributor should be able to skim the issue in 30 seconds and know whether they can pick it up.
+
+## Example
+
+**Input:** `/contribution-readiness "Add rate limiting to the public API"`
+
+**Output:**
+
+````markdown
+## User Story
+
+As an API consumer, I want the public API to enforce rate limits so that a single client cannot degrade performance for everyone else.
+
+## Background
+
+The public API (`/api/v2/*`) currently has no rate limiting. Any authenticated client can make unlimited requests, which has caused two incidents in the past month where a single integration partner's polling loop saturated the API and increased p99 latency for all users.
+
+The API is served by the `api-gateway` service (`src/gateway/`). Authentication is handled via API keys validated in `src/gateway/middleware/auth.ts`. There is no existing rate limiting middleware.
+
+We use Redis for session storage already (`src/lib/redis.ts`), which makes it a natural fit for rate limit counters using a sliding window approach.
+
+## Acceptance Criteria
+
+- [ ] Authenticated API requests are rate-limited to 100 requests per minute per API key
+- [ ] Requests exceeding the limit receive a `429 Too Many Requests` response with a `Retry-After` header
+- [ ] Rate limit headers (`X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`) are included in all API responses
+- [ ] Rate limiting does not apply to internal service-to-service calls
+- [ ] Rate limit counters use a sliding window (not fixed window) to prevent burst behavior at window boundaries
+- [ ] Existing API tests pass without modification
+- [ ] New tests cover: under-limit requests succeed, over-limit requests return 429, counter resets after window expires
+
+## Technical Notes
+
+- Rate limiting middleware should slot into the existing middleware chain in `src/gateway/middleware/` after auth but before routing
+- The Redis client in `src/lib/redis.ts` can be reused — it already supports the `MULTI`/`EXEC` commands needed for atomic counter operations
+- Consider making the limit configurable per API key tier (but the default 100/min is sufficient for this issue)
+
+## Out of Scope
+
+- Per-endpoint rate limits (uniform limit across all endpoints for now)
+- Admin dashboard for viewing rate limit usage
+- IP-based rate limiting for unauthenticated requests (separate issue)
+````
