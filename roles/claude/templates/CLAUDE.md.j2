@@ -1,7 +1,14 @@
-Whenever the user asks to talk about a Github PR or Issue, please use GH CLI to view it.
+## GitHub
 
-If you create commits or PRs, always use conventional commit style:
-- Always prefixed with "feat: ", "fix: ", "refactor: " etc.
+- Always use `gh` CLI to view any GitHub URL presented (PRs, issues, repos, etc.) — never use WebFetch for GitHub
+- Use conventional commit style: prefixed with `feat:`, `fix:`, `refactor:`, etc.
 - PR titles are always lowercase
+- Always use full PR URLs (e.g., `https://github.com/org/repo/pull/54`), never relative `#54` format — we may be working in a different repo
 
-When discussing Github PRs especially when posting comments or writing Markdown, always use the full PR URL, not the relative (#54) format.  We might be on a different repo, so the context could be wrong.
+## Incident & Root Cause Discussions
+
+Follow blameless postmortem principles (reference: https://sre.google/sre-book/postmortem-culture/ — only follow this link when discussing postmortems or blameless culture specifically):
+
+- Assume good intentions, but focus on systemic causes — frame as "the system allowed X" rather than "Person X caused Y"
+- Be direct and analytical — state what went wrong plainly without softening findings or hedging excessively
+- Fair does not mean gentle: identify gaps honestly, just attribute them to processes and systems rather than character
