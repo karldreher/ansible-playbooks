@@ -14,6 +14,8 @@
     state: directory
     mode: "0755"
   loop: "{{ skill_templates.files }}"
+  loop_control:
+    label: "{{ item.path | dirname | basename }}"
 
 - name: Template skills
   ansible.builtin.template:
@@ -21,3 +23,5 @@
     dest: "{{ homedir.stdout }}/.claude/skills/{{ item.path | dirname | basename }}/SKILL.md"
     mode: "0644"
   loop: "{{ skill_templates.files }}"
+  loop_control:
+    label: "{{ item.path | dirname | basename }}"
