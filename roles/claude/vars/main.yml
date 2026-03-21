@@ -24,6 +24,10 @@ claude_settings:
       # Git commands that are safe to allow without confirmation.  
       - "Bash(git add:*)"
       - "Bash(git commit:*)"
+      - "Bash(git diff:*)"
+      - "Bash(git log:*)"
+      - "Bash(git show:*)"
+      - "Bash(git status:*)"
       # Bash-invoked grep.
       - "Bash(grep:*)"
       # Always allow searching
