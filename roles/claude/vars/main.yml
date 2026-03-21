@@ -18,4 +18,7 @@ claude_settings:
       - "Bash(gh run view:*)"
       - "Bash(git add:*)"
       - "Bash(git commit:*)"
+      - "Bash(grep:*)"
+      - "Bash(cat:*)"
+      - "Bash(find:*)"
     defaultMode: "plan"
