@@ -30,6 +30,30 @@ claude_settings:
       - "Bash(git status:*)"
       # Bash-invoked grep.
       - "Bash(grep:*)"
+      - "Bash(ls:*)"
+      # npm read/install commands.
+      - "Bash(npm audit:*)"
+      - "Bash(npm explain:*)"
+      - "Bash(npm i:*)"
+      - "Bash(npm install:*)"
+      - "Bash(npm list:*)"
+      - "Bash(npm outdated:*)"
+      - "Bash(npm view:*)"
+      # Bun read/install commands.
+      - "Bash(bun i:*)"
+      - "Bash(bun install:*)"
+      - "Bash(bun outdated:*)"
+      - "Bash(bun pm:*)"
+      - "Bash(bun view:*)"
+      # UV Python package/project manager.
+      - "Bash(uv lock:*)"
+      - "Bash(uv pip install:*)"
+      - "Bash(uv pip list:*)"
+      - "Bash(uv pip show:*)"
+      - "Bash(uv sync:*)"
+      - "Bash(uv tree:*)"
+      - "Bash(uv version:*)"
+      - "Bash(uvx run ruff:*)"
       # Always allow searching
       - "WebSearch"
     defaultMode: "plan"
