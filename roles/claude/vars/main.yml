@@ -16,4 +16,6 @@ claude_settings:
       - "Bash(gh release view:*)"
       - "Bash(gh run list:*)"
       - "Bash(gh run view:*)"
+      - "Bash(git add:*)"
+      - "Bash(git commit:*)"
     defaultMode: "plan"
