@@ -3,23 +3,29 @@
 # https://code.claude.com/docs/en/permissions.md
 claude_settings:
   permissions:
+    # Always allow these tools, and never ask for permission to use them. 
+    # Add entries in alphabetical order for readability.  Maintain the sections.
     allow:
-      - "WebSearch"
-      - "Bash(gh pr list:*)"
-      - "Bash(gh pr view:*)"
-      - "Bash(gh pr diff:*)"
-      - "Bash(gh pr checks:*)"
-      - "Bash(gh pr create:*)"
-      - "Bash(gh issue list:*)"
-      - "Bash(gh issue view:*)"
-      - "Bash(gh repo view:*)"
-      - "Bash(gh release list:*)"
-      - "Bash(gh release view:*)"
-      - "Bash(gh run list:*)"
-      - "Bash(gh run view:*)"
-      - "Bash(git add:*)"
-      - "Bash(git commit:*)"
-      - "Bash(grep:*)"
       - "Bash(cat:*)"
       - "Bash(find:*)"
+      # GH cli, mostly read oriented.  
+      - "Bash(gh issue list:*)"
+      - "Bash(gh issue view:*)"
+      - "Bash(gh pr checks:*)"
+      - "Bash(gh pr create:*)"
+      - "Bash(gh pr diff:*)"
+      - "Bash(gh pr list:*)"
+      - "Bash(gh pr view:*)"
+      - "Bash(gh release list:*)"
+      - "Bash(gh release view:*)"
+      - "Bash(gh repo view:*)"
+      - "Bash(gh run list:*)"
+      - "Bash(gh run view:*)"
+      # Git commands that are safe to allow without confirmation.  
+      - "Bash(git add:*)"
+      - "Bash(git commit:*)"
+      # Bash-invoked grep.
+      - "Bash(grep:*)"
+      # Always allow searching
+      - "WebSearch"
     defaultMode: "plan"
