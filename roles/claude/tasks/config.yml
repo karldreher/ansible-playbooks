@@ -1,0 +1,51 @@
+---
+# Configure claude settings.json and CLAUDE.md
+
+- name: Check if settings.json exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.claude/settings.json"
+  register: claude_settings_file
+
+- name: Read existing settings.json
+  ansible.builtin.slurp:
+    src: "{{ homedir.stdout }}/.claude/settings.json"
+  register: existing_settings_raw
+  when: claude_settings_file.stat.exists
+
+- name: Parse existing settings
+  ansible.builtin.set_fact:
+    existing_claude_settings: "{{ existing_settings_raw.content | b64decode | from_json }}"
+  when: claude_settings_file.stat.exists
+
+- name: Set empty settings when file does not exist
+  ansible.builtin.set_fact:
+    existing_claude_settings: {}
+  when: not claude_settings_file.stat.exists
+
+- name: Build merged settings
+  ansible.builtin.set_fact:
+    merged_claude_settings: >-
+      {{
+        existing_claude_settings
+        | combine(claude_settings, recursive=true)
+        | combine({
+            'permissions': {
+              'allow': (
+                (existing_claude_settings.permissions.allow | default([]))
+                + claude_settings.permissions.allow
+              ) | unique
+            }
+          }, recursive=true)
+      }}
+
+- name: Write merged settings.json
+  ansible.builtin.copy:
+    content: "{{ merged_claude_settings | to_nice_json }}\n"
+    dest: "{{ homedir.stdout }}/.claude/settings.json"
+    mode: "0644"
+
+- name: Template CLAUDE.md
+  ansible.builtin.template:
+    src: templates/CLAUDE.md.j2
+    dest: "{{ homedir.stdout }}/.claude/CLAUDE.md"
+    mode: "0644"
