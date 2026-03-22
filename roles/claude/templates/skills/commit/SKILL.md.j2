@@ -10,7 +10,7 @@ Commit, push, and ensure a PR exists. If the user provided a description, use it
 
 ## Steps
 
-1. **Review**: run `git status`, `git diff`, `git diff --staged`, `git log --oneline -5` in parallel. Stop if on main/master or nothing to commit.
+1. **Review**: run `git status`, `git diff`, `git diff --staged` in parallel. Stop if on main/master or nothing to commit.
 2. **Stage**: `git add` specific files (skip `.env`, `*.pem`, credentials). Never `git add -A`.
 3. **Commit**: conventional commit — lowercase, imperative, no period, under 72 chars. No body — only the subject line and `Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>` trailer.
 4. **Push**: `git push -u origin HEAD`. Never force push.
