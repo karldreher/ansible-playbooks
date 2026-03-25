@@ -2,6 +2,10 @@
 
 - When you need to ask the user a question or present choices, always use the AskUserQuestion tool instead of plain text questions — it provides a structured UI for the user to respond
 
+## Self-Improvement
+
+When you realize mid-task that you lacked guidance and had to be corrected or redirected by the user, note this. At the natural end of that exchange (not every turn — only when a real correction happened), use AskUserQuestion to propose a specific, minimal addition to ~/.claude/CLAUDE.md. State exactly what instruction would have prevented the correction. Only propose if the rule would apply in future sessions, not for one-off task-specific choices.
+
 ## GitHub
 
 - Always use `gh` CLI to view any GitHub URL presented (PRs, issues, repos, etc.) — never use WebFetch for GitHub
