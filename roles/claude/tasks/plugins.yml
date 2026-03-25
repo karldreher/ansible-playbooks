@@ -1,0 +1,50 @@
+---
+# Manage Claude plugins — install from marketplace and sync enabledPlugins in settings.json
+
+- name: Check if installed_plugins.json exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.claude/plugins/installed_plugins.json"
+  register: _installed_plugins_file
+
+- name: Read installed_plugins.json
+  ansible.builtin.slurp:
+    src: "{{ homedir.stdout }}/.claude/plugins/installed_plugins.json"
+  register: _installed_plugins_raw
+  when: _installed_plugins_file.stat.exists
+
+- name: Parse installed plugin keys
+  ansible.builtin.set_fact:
+    _installed_plugin_keys: "{{ (_installed_plugins_raw.content | b64decode | from_json).keys() | list }}"
+  when: _installed_plugins_file.stat.exists
+
+- name: Set empty installed plugin keys when file does not exist
+  ansible.builtin.set_fact:
+    _installed_plugin_keys: []
+  when: not _installed_plugins_file.stat.exists
+
+- name: Install missing Claude plugins
+  ansible.builtin.command:
+    cmd: "claude plugin install --scope user {{ item.key }}"
+  loop: "{{ claude_plugins }}"
+  when: item.key not in _installed_plugin_keys
+  changed_when: true
+
+- name: Build enabledPlugins map from claude_plugins
+  ansible.builtin.set_fact:
+    _enabled_plugins_map: >-
+      {{
+        _enabled_plugins_map | default({})
+        | combine({item.key: item.enabled})
+      }}
+  loop: "{{ claude_plugins }}"
+
+- name: Read current settings.json
+  ansible.builtin.slurp:
+    src: "{{ homedir.stdout }}/.claude/settings.json"
+  register: _settings_for_plugins
+
+- name: Merge enabledPlugins into settings.json
+  ansible.builtin.copy:
+    content: "{{ (_settings_for_plugins.content | b64decode | from_json) | combine({'enabledPlugins': _enabled_plugins_map}, recursive=true) | to_nice_json }}\n"
+    dest: "{{ homedir.stdout }}/.claude/settings.json"
+    mode: "0644"

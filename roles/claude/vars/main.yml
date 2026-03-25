@@ -61,3 +61,9 @@ claude_settings:
       # Always allow searching
       - "WebSearch"
     defaultMode: "plan"
+
+claude_plugins:
+  - key: claude-md-management@claude-plugins-official
+    enabled: true
+  - key: skill-creator@claude-plugins-official
+    enabled: true

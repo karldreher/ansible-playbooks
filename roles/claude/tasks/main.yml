@@ -12,3 +12,6 @@
 
 - name: Install claude skills
   ansible.builtin.include_tasks: skills.yml
+
+- name: Manage Claude plugins
+  ansible.builtin.include_tasks: plugins.yml
