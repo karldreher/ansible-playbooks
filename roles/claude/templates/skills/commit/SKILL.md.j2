@@ -2,13 +2,15 @@
 name: commit
 description: Commits all changes on the current branch with a conventional commit message, then ensures a GitHub PR exists. Use this skill whenever the user says "commit", "commit and push", "ship it", "send a PR", "create a pull request", or any variation of committing and/or opening a PR for their current work. Also triggers on "/commit".
 argument-hint: "[optional: description of the changes]"
+disable-model-invocation: true
+model: claude-haiku-4-5
 ---
 
 Commit, push, and ensure a PR exists. If the user provided a description, use it to drive the commit message and PR summary — skim the diff only to confirm and pick the right prefix. If no description, read the diff carefully to summarize the change. Either way, keep everything else mechanical.
 
 ## Steps
 
-1. **Review**: run `git status`, `git diff`, `git diff --staged`, `git log --oneline -5` in parallel. Stop if on main/master or nothing to commit.
+1. **Review**: run `git status`, `git diff`, `git diff --staged` in parallel. Stop if on main/master or nothing to commit.
 2. **Stage**: `git add` specific files (skip `.env`, `*.pem`, credentials). Never `git add -A`.
 3. **Commit**: conventional commit — lowercase, imperative, no period, under 72 chars. No body — only the subject line and `Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>` trailer.
 4. **Push**: `git push -u origin HEAD`. Never force push.
