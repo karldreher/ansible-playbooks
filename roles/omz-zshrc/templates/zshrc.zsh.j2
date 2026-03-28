@@ -29,6 +29,7 @@ zstyle ':omz:plugins:nvm' autoload yes
 
 # Autocompletions - Must precede sourcing omz
 ## Homebrew
+export HOMEBREW_NO_AUTO_UPDATE=1
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
