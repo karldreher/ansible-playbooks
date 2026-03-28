@@ -42,7 +42,7 @@ claude_settings:
       - "Bash(npm run lint:*)"
       - "Bash(npm run test:*)"
       - "Bash(npm view:*)"
-      # Bun read/install commands.
+      # Bun/bunx read/install commands.
       - "Bash(bun i:*)"
       - "Bash(bun install:*)"
       - "Bash(bun outdated:*)"
@@ -50,6 +50,7 @@ claude_settings:
       - "Bash(bun run lint:*)"
       - "Bash(bun run test:*)"
       - "Bash(bun view:*)"
+      - "Bash(bunx gitignore:*)"
       # UV Python package/project manager.
       - "Bash(uv lock:*)"
       - "Bash(uv pip install:*)"
