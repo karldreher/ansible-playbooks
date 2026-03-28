@@ -1,0 +1,85 @@
+---
+name: ci-fix
+description: Fixes failing CI checks on the current PR. Only invoke on the explicit slash command "/ci-fix".
+argument-hint: "[optional: hint about what's failing]"
+---
+
+You are fixing failing CI on the current PR. Work in a loop: investigate → fix → push → watch → repeat until all checks are green.
+
+## Step 1: Orient
+
+```bash
+git branch --show-current    # Confirm not on main/master — stop if so
+gh pr checks --json name,state,link,bucket
+```
+
+Parse the failed checks (state == "failure" or bucket == "fail"). Extract run IDs from the `link` field — URLs end with the run ID: `.../actions/runs/<run-id>`.
+
+```bash
+gh pr checks --json name,state,link \
+  --jq '.[] | select(.state=="failure") | {name, runId: (.link | split("/") | last)}'
+```
+
+## Step 2: Read the failures
+
+For each failing run:
+
+```bash
+gh run view <run-id> --log-failed
+```
+
+Also read the CI workflow definition to understand exactly what commands are run, in what environment, and with what flags:
+
+```bash
+ls .github/workflows/
+cat .github/workflows/<relevant-workflow>.yml
+```
+
+This context is essential — the workflow file tells you the exact command CI ran, which is what you need to reproduce locally.
+
+## Step 3: Reproduce locally (when feasible)
+
+Run the same command CI runs. Confirming you can reproduce the failure before touching code prevents wasted fix attempts. For example:
+- Linting: run the linter with the same flags
+- Tests: run the test suite
+- Build: run the build command
+
+If the failure looks flaky or intermittent (random timeout, network error), try `gh run rerun <run-id> --failed` first before making code changes.
+
+## Step 4: Fix
+
+Apply the minimum change that addresses the root cause. CI fix commits should be focused — don't improve or refactor surrounding code.
+
+## Step 5: Commit and push
+
+```bash
+git add <specific files>
+git commit -m "fix: <what was wrong>"
+git push
+```
+
+## Step 6: Watch
+
+Wait for the new run to register, then watch it to completion:
+
+```bash
+sleep 8   # Give GitHub a moment after the push
+
+RUN_ID=$(gh run list --branch "$(git branch --show-current)" \
+  --limit 1 --json databaseId --jq '.[0].databaseId')
+
+gh run watch "$RUN_ID" --exit-status --compact
+```
+
+`--exit-status` exits non-zero on failure, zero on success — use the exit code to branch.
+
+## Step 7: Assess and loop
+
+```bash
+gh run view "$RUN_ID" --json conclusion --jq '.conclusion'
+```
+
+- **"success"** — all checks pass. Report what was fixed and the now-passing run URL. Done.
+- **"failure"** — return to Step 2 with the new run ID. Read the new logs fresh; fixing one issue sometimes reveals a second. Be systematic.
+
+After three failed fix attempts, pause and explain to the user what you're seeing. Some failures require context that isn't visible from logs (missing secrets, environment config, infrastructure issues).
