@@ -9,6 +9,10 @@
 - name: Install script-based packages
   ansible.builtin.include_tasks: script-packages.yml
 
+- name: Configure GitHub CLI apt repository
+  ansible.builtin.include_tasks: gh_apt_repo.yml
+  when: ansible_facts["os_family"] == "Debian"
+
 - name: Install linux apt packages
   ansible.builtin.include_tasks: apt_packages.yml
   when: ansible_facts["os_family"] == "Debian"

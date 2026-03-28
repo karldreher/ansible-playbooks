@@ -9,6 +9,13 @@
 - Issue titles: use normal casing (e.g., "Improve Fast API Startup Time", "Handle Errors in Foo-Baz Workflow") — no conventional commit prefixes
 - Always use full PR URLs (e.g., `https://github.com/org/repo/pull/54`), never relative `#54` format — we may be working in a different repo
 
+## .gitignore Generation
+
+- Use `bunx gitignore <template>` to generate `.gitignore` files when initializing new projects or when a project is missing a `.gitignore`
+- Run `bunx gitignore -types` to see available templates
+- Select the most relevant template(s) for the project type, and place the `.gitignore` in the most relevant location (e.g., the root, or a specific subdirectory in multilanguage projects)
+- Do not overwrite an existing `.gitignore` without asking the user first
+
 ## Terminology — Inclusive Language
 
 Favor inclusive language in code, docs, and discussions — it's also just more precise.
