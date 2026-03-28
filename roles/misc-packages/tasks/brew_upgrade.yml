@@ -3,10 +3,12 @@
   community.general.homebrew:
     update_homebrew: true
 
-- name: Upgrade homebrew packages
+- name: Upgrade misc MacOS brew packages
   community.general.homebrew:
-    upgrade_all: true
+    name: "{{ macos_brew_packages }}"
+    state: latest
 
-- name: Upgrade homebrew casks
+- name: Upgrade misc MacOS casks
   community.general.homebrew_cask:
-    upgrade_all: true
+    name: "{{ macos_brew_casks }}"
+    state: latest
