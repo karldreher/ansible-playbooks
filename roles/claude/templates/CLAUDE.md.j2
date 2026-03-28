@@ -1,3 +1,11 @@
+## System
+
+{% if ansible_facts["os_family"] == "Darwin" %}
+This system is a MacOS device. Use `brew` for package management. Prefer `pbcopy`/`pbpaste` for clipboard. Use `open` to open files/URLs.
+{% elif ansible_facts["os_family"] == "Debian" %}
+This system is a Linux Debian system. Use `apt` for package management. Use `xdg-open` to open files/URLs.
+{% endif %}
+
 ## Interaction
 
 - When you need to ask the user a question or present choices, always use the AskUserQuestion tool instead of plain text questions — it provides a structured UI for the user to respond
