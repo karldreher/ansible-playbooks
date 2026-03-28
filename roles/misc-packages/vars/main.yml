@@ -3,6 +3,7 @@
 
 linux_apt_packages:
   - diceware
+  - gh
   - tree
   - yq
   - zsh
@@ -12,6 +13,7 @@ macos_brew_taps:
 
 macos_brew_packages:
   - diceware
+  - gh
   - httpie
   - jq
   - kubectx
