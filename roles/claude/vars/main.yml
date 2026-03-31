@@ -8,6 +8,9 @@ claude_settings:
     allow:
       - "Bash(cat:*)"
       - "Bash(find:*)"
+      # Gcloud
+      - "Bash(gcloud run services describe:*)
+      - "Bash(gcloud logging read:*)
       # GH cli, mostly read oriented.  
       - "Bash(gh issue list:*)"
       - "Bash(gh issue view:*)"
