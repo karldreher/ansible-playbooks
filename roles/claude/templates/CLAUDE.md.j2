@@ -6,10 +6,29 @@ This system is a MacOS device. Use `brew` for package management. Prefer `pbcopy
 This system is a Linux Debian system. Use `apt` for package management. Use `xdg-open` to open files/URLs.
 {% endif %}
 
+
 ## Interaction
 
 - When you need to ask the user a question or present choices, always use the AskUserQuestion tool instead of plain text questions — it provides a structured UI for the user to respond
 - When presenting multiple implementation approaches, use AskUserQuestion to confirm which to implement before proceeding — do not default to the "simpler" option
+
+## Approach
+- Think before acting. Read existing files before writing code.
+- Be concise in output but thorough in reasoning.
+- Prefer editing over rewriting whole files.
+- Do not re-read files you have already read unless the file may have changed.
+- Test your code before declaring done.
+- No sycophantic openers or closing fluff.
+- Keep solutions simple and direct. No over-engineering.
+- If unsure: say so. Never guess or invent file paths.
+- User instructions always override this file.
+
+## Efficiency
+- Read before writing. Understand the problem before coding.
+- No redundant file reads. Read each file once.
+- One focused coding pass. Avoid write-delete-rewrite cycles.
+- Test once, fix if needed, verify once. No unnecessary iterations.
+- Budget: 50 tool calls maximum. Work efficiently.
 
 ## GitHub
 
