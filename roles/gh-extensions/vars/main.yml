@@ -1,0 +1,5 @@
+---
+# vars file for gh-extensions
+gh_extensions:
+  - karldreher/gh-qpr
+  - karldreher/gh-tag

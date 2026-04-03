@@ -3,6 +3,7 @@ graph TD
 
     claude -->|depends on| facts
     facts
+    gh-extensions -->|depends on| misc-packages
     git -->|depends on| facts
     git -->|depends on| omz-zshrc
     misc-dotfiles -->|depends on| facts

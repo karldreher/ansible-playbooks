@@ -9,8 +9,8 @@ claude_settings:
       - "Bash(cat:*)"
       - "Bash(find:*)"
       # Super cool cheatcodes. 
-      "Bash(* --version)",
-      "Bash(* --help *)"
+      - "Bash(* --version)"
+      - "Bash(* --help *)"
       # Gcloud
       - "Bash(gcloud run services describe:*)"
       - "Bash(gcloud logging read:*)"
