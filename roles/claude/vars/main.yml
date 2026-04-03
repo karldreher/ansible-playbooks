@@ -36,12 +36,18 @@ claude_settings:
       - "Bash(git log*)"
       - "Bash(git show*)"
       - "Bash(git status*)"
+      # Cargo (Rust)
+      - "Bash(cargo build*)"
+      - "Bash(cargo check*)"
+      - "Bash(cargo test*)"
       # Golang
       - "Bash(go build*)"
       - "Bash(go test*)"
       - "Bash(go mod tidy)"
       # Bash-invoked grep.
       - "Bash(grep*)"
+      # jq JSON processor.
+      - "Bash(jq*)"
       - "Bash(ls*)"
       # npm read/install commands.
       - "Bash(npm audit*)"
@@ -71,6 +77,8 @@ claude_settings:
       - "Bash(uv tree*)"
       - "Bash(uv version*)"
       - "Bash(uvx run ruff*)"
+      # yq YAML processor.
+      - "Bash(yq*)"
       # Always allow searching
       - "WebSearch"
     defaultMode: "plan"
