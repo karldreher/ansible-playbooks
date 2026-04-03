@@ -18,11 +18,11 @@
   when: ansible_facts["os_family"] == "Debian"
 
 - name: Upgrade macOS homebrew packages
-  ansible.builtin.include_tasks: brew_upgrade.yml
+  ansible.builtin.import_tasks: brew_upgrade.yml
   when: ansible_facts["os_family"] == "Darwin"
   tags: [upgrade, never]
 
 - name: Upgrade linux apt packages
-  ansible.builtin.include_tasks: apt_upgrade.yml
+  ansible.builtin.import_tasks: apt_upgrade.yml
   when: ansible_facts["os_family"] == "Debian"
   tags: [upgrade, never]
