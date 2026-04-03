@@ -1,0 +1,9 @@
+---
+# tasks file for gh-extensions
+
+- name: Install GitHub CLI extensions
+  ansible.builtin.import_tasks: install.yml
+
+- name: Upgrade GitHub CLI extensions
+  ansible.builtin.import_tasks: upgrade.yml
+  tags: [upgrade, never]

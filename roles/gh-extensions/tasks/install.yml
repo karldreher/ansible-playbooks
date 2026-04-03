@@ -1,0 +1,10 @@
+---
+- name: Get list of installed GitHub CLI extensions
+  ansible.builtin.command: gh extension list
+  register: gh_ext_list_result
+  changed_when: false
+
+- name: Install GitHub CLI extensions
+  ansible.builtin.command: gh extension install {{ item }}
+  loop: "{{ gh_extensions }}"
+  when: item not in gh_ext_list_result.stdout
