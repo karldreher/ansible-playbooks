@@ -21,3 +21,7 @@
     src: templates/ghostty/config.j2
     dest: "{{ homedir.stdout }}/.config/ghostty/config"
     mode: "0644"
+
+- name: Configure alacritty
+  ansible.builtin.include_tasks: alacritty.yml
+  when: ansible_facts["os_family"] == "Debian"
