@@ -12,7 +12,8 @@ claude_settings:
       - "Bash(* --version)"
       - "Bash(* --help *)"
       # Gcloud
-      - "Bash(gcloud run services describe*)"
+      - "Bash(gcloud * describe*)"
+      - "Bash(gcloud * list*)"
       - "Bash(gcloud logging read*)"
       # GH cli, mostly read oriented.  
       - "Bash(gh issue list*)"
