@@ -2,6 +2,9 @@
 # https://code.claude.com/docs/en/settings.md
 # https://code.claude.com/docs/en/permissions.md
 claude_settings:
+  attribution:
+    commit: ""
+    pr: ""
   permissions:
     # Always allow these tools, and never ask for permission to use them. 
     # Add entries in alphabetical order for readability.  Maintain the sections.
