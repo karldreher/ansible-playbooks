@@ -4,6 +4,7 @@
 linux_apt_packages:
   - diceware
   - gh
+  - tmux
   - tree
   - yq
   - zsh
@@ -20,6 +21,7 @@ macos_brew_packages:
   - parallel
   - pyenv
   - rsync
+  - tmux
   - tree
   - yq
   - zip
