@@ -2,7 +2,6 @@
 name: commit
 description: Commits all changes on the current branch with a conventional commit message, then ensures a GitHub PR exists. Use this skill whenever the user says "commit", "commit and push", "ship it", "send a PR", "create a pull request", or any variation of committing and/or opening a PR for their current work. Also triggers on "/commit".
 argument-hint: "[optional: description of the changes]"
-model: claude-haiku-4-5
 ---
 
 Commit, push, and ensure a PR exists. If the user provided a description, use it to drive the commit message and PR summary — skim the diff only to confirm and pick the right prefix. If no description, read the diff carefully to summarize the change. Either way, keep everything else mechanical.
