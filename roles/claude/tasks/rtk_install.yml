@@ -1,0 +1,14 @@
+---
+- name: Install rtk via Homebrew
+  community.general.homebrew:
+    name: rtk
+    state: present
+  when: ansible_facts["os_family"] == "Darwin"
+
+- name: Install rtk via install script
+  ansible.builtin.shell: |
+    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+  args:
+    creates: "{{ homedir.stdout }}/.local/bin/rtk"
+  when: ansible_facts["os_family"] == "Debian"
+  register: rtk_install
