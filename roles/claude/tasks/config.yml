@@ -44,11 +44,6 @@
     dest: "{{ homedir.stdout }}/.claude/settings.json"
     mode: "0644"
 
-- name: Check if rtk hook is installed
-  ansible.builtin.stat:
-    path: "{{ homedir.stdout }}/.claude/hooks/.rtk-hook.sha256"
-  register: rtk_hook
-
 - name: Template CLAUDE.md
   ansible.builtin.template:
     src: templates/CLAUDE.md.j2
