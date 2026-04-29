@@ -22,6 +22,13 @@
     existing_claude_settings: {}
   when: not claude_settings_file.stat.exists
 
+# The rtk hook script must exist on disk before we write it into settings.json.
+# rtk_init.yml may have just created it, or it may have pre-existed from a prior run.
+- name: Check if rtk hook script exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.claude/hooks/rtk-rewrite.sh"
+  register: claude_rtk_rewrite_hook
+
 - name: Build merged settings
   ansible.builtin.set_fact:
     merged_claude_settings: >-
@@ -36,6 +43,24 @@
               ) | unique
             }
           }, recursive=true)
+        | combine(
+            {
+              'hooks': {
+                'PreToolUse': [
+                  {
+                    'matcher': 'Bash',
+                    'hooks': [
+                      {
+                        'type': 'command',
+                        'command': homedir.stdout ~ '/.claude/hooks/rtk-rewrite.sh'
+                      }
+                    ]
+                  }
+                ]
+              }
+            } if claude_rtk_rewrite_hook.stat.exists else {},
+            recursive=true
+          )
       }}
 
 - name: Write merged settings.json
