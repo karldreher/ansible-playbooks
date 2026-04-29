@@ -7,14 +7,14 @@
     state: directory
     mode: "0755"
 
-- name: Configure claude settings and CLAUDE.md
-  ansible.builtin.include_tasks: config.yml
-
-- name: Install claude skills
-  ansible.builtin.include_tasks: skills.yml
-
 - name: Install rtk
   ansible.builtin.include_tasks: rtk_install.yml
 
 - name: Initialize rtk globally
   ansible.builtin.include_tasks: rtk_init.yml
+
+- name: Configure claude settings and CLAUDE.md
+  ansible.builtin.include_tasks: config.yml
+
+- name: Install claude skills
+  ansible.builtin.include_tasks: skills.yml
