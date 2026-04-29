@@ -12,3 +12,9 @@
 
 - name: Install claude skills
   ansible.builtin.include_tasks: skills.yml
+
+- name: Install rtk
+  ansible.builtin.include_tasks: rtk_install.yml
+
+- name: Initialize rtk globally
+  ansible.builtin.include_tasks: rtk_init.yml
