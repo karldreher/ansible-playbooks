@@ -1,0 +1,66 @@
+---
+# tasks file for omz-zshrc
+
+- name: Check that OMZ folder exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.oh-my-zsh"
+  register: omz_zshrc_omz_folder
+
+- name: Check that goenv folder exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.goenv"
+  register: omz_zshrc_goenv_folder
+
+- name: Tfswitch enabled
+  # TODO: Refactor this more elegantly later, but this is more of a
+  # matter of placement.  Syntactically it is correct.
+  ansible.builtin.set_fact:
+    omz_zshrc_tfswitch_enabled: true
+  when:
+    - "'warrensbox/tap/tfswitch' in misc_packages_macos_brew_packages"
+    - "misc_packages_brew_packages is defined"
+    - "not misc_packages_brew_packages is failed"
+
+- name: Install venv plugin
+  ansible.builtin.git:
+    repo: https://github.com/glostis/venv-wrapper.git
+    dest: "{{ homedir.stdout }}/.oh-my-zsh/plugins/venv-wrapper"
+    version: 81af4239bc5bb99eaa98117b2988a29fdd5b7eb7
+  when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
+
+- name: Template zsh configuration files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ homedir.stdout }}/{{ item.dest }}"
+    mode: "0644"
+  loop:
+    # src is relative to templates/ directory in this role
+    # dest is relative to the user's home directory
+    - src: "zshrc.zsh.j2"
+      dest: ".zshrc"
+    - src: "zsh-custom/zsh-aliases.zsh.j2"
+      dest: ".oh-my-zsh/custom/zsh-aliases.zsh"
+  when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
+
+- name: Custom scripts directory
+  ansible.builtin.file:
+    path: "{{ homedir.stdout }}/.oh-my-zsh/custom/scripts"
+    state: directory
+    mode: "0755"
+  register: omz_zshrc_custom_scripts_dir
+  when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
+
+- name: Template goenv
+  ansible.builtin.template:
+    src: zsh-custom/zsh-goenv.zsh.j2
+    dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-goenv.zsh"
+    mode: "0644"
+  when: "omz_zshrc_goenv_folder.stat.exists and omz_zshrc_goenv_folder.stat.isdir"
+
+- name: Template git_acp.zsh
+  ansible.builtin.template:
+    src: zsh-custom/scripts/git_acp.zsh.j2
+    dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/scripts/git_acp.zsh"
+    mode: "0644"
+  register: omz_zshrc_git_acp_installed
+  when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"

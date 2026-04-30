@@ -1,0 +1,5 @@
+---
+- name: Upgrade GitHub CLI extensions
+  ansible.builtin.command: gh extension upgrade {{ item }}
+  loop: "{{ gh_extensions_list }}"
+  changed_when: true

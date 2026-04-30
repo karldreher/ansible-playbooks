@@ -5,10 +5,12 @@
     state: present
   when: ansible_facts["os_family"] == "Darwin"
 
-- name: Install rtk via install script
+- name: Install rtk via install script  # noqa: command-instead-of-module
   ansible.builtin.shell: |
+    set -o pipefail
     curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
   args:
     creates: "{{ homedir.stdout }}/.local/bin/rtk"
+    executable: /bin/bash
   when: ansible_facts["os_family"] == "Debian"
-  register: rtk_install
+  register: claude_rtk_install

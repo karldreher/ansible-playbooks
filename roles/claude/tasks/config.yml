@@ -9,38 +9,42 @@
 - name: Read existing settings.json
   ansible.builtin.slurp:
     src: "{{ homedir.stdout }}/.claude/settings.json"
-  register: existing_settings_raw
+  register: claude_existing_settings_raw
   when: claude_settings_file.stat.exists
 
 - name: Parse existing settings
   ansible.builtin.set_fact:
-    existing_claude_settings: "{{ existing_settings_raw.content | b64decode | from_json }}"
+    claude_existing_settings: "{{ claude_existing_settings_raw.content | b64decode | from_json }}"
   when: claude_settings_file.stat.exists
 
 - name: Set empty settings when file does not exist
   ansible.builtin.set_fact:
-    existing_claude_settings: {}
+    claude_existing_settings: {}
   when: not claude_settings_file.stat.exists
 
 - name: Build merged settings
   ansible.builtin.set_fact:
-    merged_claude_settings: >-
+    claude_merged_settings: >-
       {{
-        existing_claude_settings
+        claude_existing_settings
         | combine(claude_settings, recursive=true)
         | combine({
             'permissions': {
               'allow': (
-                (existing_claude_settings.permissions.allow | default([]))
+                (claude_existing_settings.permissions.allow | default([]))
                 + claude_settings.permissions.allow
               ) | unique
             }
           }, recursive=true)
       }}
 
+# Conditionally merge rtk hooks into claude_merged_settings before writing.
+- name: Configure rtk hooks
+  ansible.builtin.include_tasks: rtk_hooks.yml
+
 - name: Write merged settings.json
   ansible.builtin.copy:
-    content: "{{ merged_claude_settings | to_nice_json }}\n"
+    content: "{{ claude_merged_settings | to_nice_json }}\n"
     dest: "{{ homedir.stdout }}/.claude/settings.json"
     mode: "0644"
 

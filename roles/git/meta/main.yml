@@ -1,5 +1,6 @@
+---
 dependencies:
-  - role: omz-zshrc
-    # Only handle the omz-zshrc role on macOS systems
+  - role: omz_zshrc
+    # Only handle the omz_zshrc role on macOS systems
     when: ansible_facts["os_family"] == "Darwin"
   - role: facts

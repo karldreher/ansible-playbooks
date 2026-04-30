@@ -1,0 +1,33 @@
+---
+# Variables for misc-packages role
+
+misc_packages_linux_apt_packages:
+  - diceware
+  - gh
+  - tmux
+  - tree
+  - yq
+  - zsh
+
+misc_packages_macos_brew_taps:
+  - warrensbox/tap
+
+misc_packages_macos_brew_packages:
+  - diceware
+  - gh
+  - httpie
+  - jq
+  - kubectx
+  - parallel
+  - pyenv
+  - rsync
+  - tmux
+  - tree
+  - yq
+  - zip
+  - warrensbox/tap/tfswitch
+
+misc_packages_macos_brew_casks:
+  - ghostty
+  - raycast
+  - rectangle

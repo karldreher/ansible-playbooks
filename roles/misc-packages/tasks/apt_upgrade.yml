@@ -1,8 +1,0 @@
----
-- name: Upgrade linux apt packages
-  ansible.builtin.apt:
-    name: "{{ item }}"
-    state: latest
-    update_cache: yes
-  loop: "{{ linux_apt_packages }}"
-  become: yes

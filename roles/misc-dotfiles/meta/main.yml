@@ -1,3 +1,0 @@
-dependencies:
-  - role: facts
-  - role: misc-packages

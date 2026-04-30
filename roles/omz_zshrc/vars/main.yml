@@ -1,0 +1,58 @@
+---
+omz_zshrc_aliases:
+  - alias: clone
+    command: git clone
+    description: git clone
+
+  - alias: cleanup-branch
+    command: cleanup-branch
+    description: Cleanup current git branch and return to master/main
+
+  - alias: download
+    command: curl -OJL
+    description: Download with Curl, 'curl -OJL <file>'.
+
+  - alias: docker_build_this
+    command: docker_build_this
+    description: Build a Docker image with CWD as context and tag.
+
+  - alias: docker_run_this
+    command: docker_run_this
+    description: Run a Docker container with CWD as tag.
+
+  - alias: gtfo
+    command: cleanup-branch
+    description: Cleanup current git branch and return to default branch.
+
+  - alias: flatten-json
+    command: jq -c
+    description: Flatten JSON document to one line.
+
+  - alias: k
+    command: kubectl
+    description: Alias 'k' to kubectl.
+
+  - alias: kns
+    command: kubens
+    description: Set kubernetes namespace with 'kubens'.
+
+  - alias: stash
+    command: git stash
+    description: git stash
+
+  - alias: unstash
+    command: git unstash
+    description: git unstash
+
+  - alias: ve
+    command: ve
+    description: Wrap the venv command and infer current working directory for venv name.
+
+
+# To enable more omz plugins, add them here.
+omz_zshrc_omz_plugin_list:
+  - git
+  - venv-wrapper
+  - terraform
+  - nvm
+  - pyenv

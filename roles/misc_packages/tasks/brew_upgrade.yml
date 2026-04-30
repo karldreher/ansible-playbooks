@@ -1,0 +1,14 @@
+---
+- name: Update homebrew
+  community.general.homebrew:
+    update_homebrew: true
+
+- name: Upgrade misc MacOS brew packages  # noqa: package-latest
+  community.general.homebrew:
+    name: "{{ misc_packages_macos_brew_packages }}"
+    state: latest
+
+- name: Upgrade misc MacOS casks  # noqa: package-latest
+  community.general.homebrew_cask:
+    name: "{{ misc_packages_macos_brew_casks }}"
+    state: latest
