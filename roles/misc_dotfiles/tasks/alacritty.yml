@@ -3,6 +3,7 @@
   ansible.builtin.file:
     path: "{{ homedir.stdout }}/.config/alacritty"
     state: directory
+    mode: "0755"
 
 - name: Template alacritty config to $HOME/.config/alacritty/alacritty.toml
   ansible.builtin.template:

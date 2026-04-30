@@ -6,14 +6,14 @@
     paths: "{{ role_path }}/templates/skills"
     patterns: "SKILL.md.j2"
     recurse: true
-  register: skill_templates
+  register: claude_skill_templates
 
 - name: Create skill directories
   ansible.builtin.file:
     path: "{{ homedir.stdout }}/.claude/skills/{{ item.path | dirname | basename }}"
     state: directory
     mode: "0755"
-  loop: "{{ skill_templates.files }}"
+  loop: "{{ claude_skill_templates.files }}"
   loop_control:
     label: "{{ item.path | dirname | basename }}"
 
@@ -22,6 +22,6 @@
     src: "{{ item.path }}"
     dest: "{{ homedir.stdout }}/.claude/skills/{{ item.path | dirname | basename }}/SKILL.md"
     mode: "0644"
-  loop: "{{ skill_templates.files }}"
+  loop: "{{ claude_skill_templates.files }}"
   loop_control:
     label: "{{ item.path | dirname | basename }}"

@@ -1,5 +1,5 @@
 ---
-# Conditionally add the rtk Bash rewrite hook to merged_claude_settings.
+# Conditionally add the rtk Bash rewrite hook to claude_merged_settings.
 # The hook script must exist on disk (placed by rtk init -g) before we write it
 # into settings.json — otherwise the hook entry would reference a missing file.
 
@@ -10,9 +10,9 @@
 
 - name: Merge rtk hook into settings
   ansible.builtin.set_fact:
-    merged_claude_settings: >-
+    claude_merged_settings: >-
       {{
-        merged_claude_settings
+        claude_merged_settings
         | combine(
             {
               'hooks': {

@@ -1,8 +1,8 @@
 ---
-- name: Upgrade linux apt packages
+- name: Upgrade linux apt packages  # noqa: package-latest
   ansible.builtin.apt:
     name: "{{ item }}"
     state: latest
-    update_cache: yes
-  loop: "{{ linux_apt_packages }}"
-  become: yes
+    update_cache: true
+  loop: "{{ misc_packages_linux_apt_packages }}"
+  become: true

@@ -1,14 +1,18 @@
 ---
-- name: Install bun (JavaScript runtime)
+- name: Install bun (JavaScript runtime)  # noqa: command-instead-of-module
   ansible.builtin.shell: |
+    set -o pipefail
     curl -fsSL https://bun.sh/install | bash
   args:
     creates: "{{ homedir.stdout }}/.bun/bin/bun"
-  register: bun_install
+    executable: /bin/bash
+  register: misc_packages_bun_install
 
-- name: Install uv
+- name: Install uv  # noqa: command-instead-of-module
   ansible.builtin.shell: |
+    set -o pipefail
     curl -LsSf https://astral.sh/uv/install.sh | sh
   args:
     creates: "{{ homedir.stdout }}/.local/bin/uv"
-  register: uv_install
+    executable: /bin/bash
+  register: misc_packages_uv_install

@@ -1,9 +1,10 @@
-
+---
 # tasks file for misc-dotfiles
 - name: Create tfswitch directory
   ansible.builtin.file:
     path: "{{ homedir.stdout }}/.tfswitch"
     state: directory
+    mode: "0755"
 
 - name: Template tfswitch.toml
   ansible.builtin.template:
@@ -15,6 +16,7 @@
   ansible.builtin.file:
     path: "{{ homedir.stdout }}/.config/ghostty"
     state: directory
+    mode: "0755"
 
 - name: Template ghostty config to $HOME/.config/ghostty/config
   ansible.builtin.template:
