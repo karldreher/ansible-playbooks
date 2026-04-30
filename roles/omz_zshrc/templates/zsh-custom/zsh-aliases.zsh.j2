@@ -73,7 +73,7 @@ function zah(){
     zalias_title "Custom Zsh Aliases:"
     tput setaf 7
 
-{% for item in (aliases | sort(attribute='alias')) %}
+{% for item in (omz_zshrc_aliases | sort(attribute='alias')) %}
     printf '  %-20s %s\n' '{{ item.alias }}' '{{ item.description | replace("'", "'\\''") }}'
 {% endfor %}
 
@@ -82,8 +82,8 @@ function zah(){
     echo ""
 }
 
-## Register non-git aliases
-{% for item in aliases %}
+## Register non-git omz_zshrc_aliases
+{% for item in omz_zshrc_aliases %}
 alias {{ item.alias }}="{{ item.command }}"
 {% endfor %}
 

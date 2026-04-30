@@ -6,18 +6,18 @@ claude_settings:
     commit: ""
     pr: ""
   permissions:
-    # Always allow these tools, and never ask for permission to use them. 
+    # Always allow these tools, and never ask for permission to use them.
     # Add entries in alphabetical order for readability.  Maintain the sections.
     allow:
       - "Bash(cat*)"
       - "Bash(find*)"
-      # Super cool cheatcodes. 
+      # Super cool cheatcodes.
       - "Bash(* --version)"
       - "Bash(* --help *)"
       # Gcloud
       - "Bash(gcloud run services describe*)"
       - "Bash(gcloud logging read*)"
-      # GH cli, mostly read oriented.  
+      # GH cli, mostly read oriented.
       - "Bash(gh issue list*)"
       - "Bash(gh issue view*)"
       - "Bash(gh pr checks*)"
@@ -32,7 +32,7 @@ claude_settings:
       - "Bash(gh run view*)"
       - "Bash(gh run watch*)"
       - "Bash(gh search*)"
-      # Git commands that are safe to allow without confirmation.  
+      # Git commands that are safe to allow without confirmation.
       - "Bash(git add*)"
       - "Bash(git commit*)"
       - "Bash(git diff*)"
@@ -69,6 +69,7 @@ claude_settings:
       - "Bash(bun pm*)"
       - "Bash(bun run lint*)"
       - "Bash(bun run test*)"
+      - "Bash(bun run tsc*)"
       - "Bash(bun view*)"
       - "Bash(bunx gitignore*)"
       # UV Python package/project manager.

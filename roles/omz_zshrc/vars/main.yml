@@ -1,5 +1,5 @@
 ---
-aliases:
+omz_zshrc_aliases:
   - alias: clone
     command: git clone
     description: git clone
@@ -50,7 +50,7 @@ aliases:
 
 
 # To enable more omz plugins, add them here.
-omz_plugin_list:
+omz_zshrc_omz_plugin_list:
   - git
   - venv-wrapper
   - terraform

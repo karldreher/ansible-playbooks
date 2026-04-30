@@ -1,7 +1,7 @@
 ---
 - name: Get Home Directory
   ansible.builtin.command: echo ~
-  register: homedir
+  register: homedir # noqa: var-naming[no-role-prefix]
   changed_when: false
 
 - name: "Check mandatory variables are defined"

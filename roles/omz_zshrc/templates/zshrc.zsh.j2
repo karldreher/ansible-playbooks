@@ -3,11 +3,11 @@
 {%- set path_entries = [homedir.stdout ~ '/.local/bin'] -%}
 
 {#- Optionally add .tfswitch if enabled -#}
-{%- if bun_install|default(false) -%}
+{%- if misc_packages_bun_install|default(false) -%}
     {#- Add bun to PATH if installed -#}
     {%- set _ = path_entries.insert(0, homedir.stdout ~ '/.bun/bin') -%}
 {%- endif -%}
-{%- if tfswitch_enabled|default(false) -%}
+{%- if omz_zshrc_tfswitch_enabled|default(false) -%}
     {%- set _ = path_entries.append(homedir.stdout ~ '/.tfswitch') -%}
 {%- endif -%}
 {#- Export the constructed PATH #}
@@ -24,7 +24,7 @@ ZSH_THEME="half-life"
 unsetopt autocd
 
 # Configuration of plugins
-plugins=( {{ omz_plugin_list | join(" ") }} )
+plugins=( {{ omz_zshrc_omz_plugin_list | join(" ") }} )
 zstyle ':omz:plugins:nvm' autoload yes
 
 # Autocompletions - Must precede sourcing omz
@@ -36,7 +36,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR=vim
 
-{% if bun_install  %}
+{% if misc_packages_bun_install|default(false) %}
 # bun completions
 [ -s "{{ homedir.stdout }}/.bun/_bun" ] && source "{{ homedir.stdout }}/.bun/_bun"
 
