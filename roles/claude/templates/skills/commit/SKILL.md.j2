@@ -11,8 +11,12 @@ Commit, push, and ensure a PR exists. If the user provided a description, use it
 1. **Status**: `git status` — stop if on main/master.
 2. **Diff unstaged**: `git diff` — review changes.
 3. **Diff staged**: `git diff --staged` — stop if nothing to commit.
-4. **Stage**: `git add` specific files (skip `.env`, `*.pem`, credentials). Never `git add -A`.
-5. **Commit**: conventional commit — lowercase, imperative, no period, under 72 chars. Subject line only — no body, no trailers, nothing else.
-6. **Push**: `git push -u origin HEAD`. Never force push.
-7. **PR**: `gh pr view --json url 2>/dev/null` — if none exists, `gh pr create`. Title matches commit style. Body: `## Summary` (bullets), `## Test plan` (checklist). Base the summary on `git log main..HEAD`, not just the last commit.
+4. **Stage**: `git add .` — stage everything. Never `git add -A`, never guess individual files.
+5. **Commit**: `git commit -q -m "..."` — conventional commit, lowercase, imperative, no period, under 72 chars. Subject line only — no body, no trailers, nothing else.
+6. **Push**: `git push -q -u origin HEAD`. Never force push.
+7. **PR**: `gh pr view --json url --jq '.url' 2>/dev/null` — if none exists, `gh pr create`. Title matches commit style. Body: `## Summary` (bullets), `## Test plan` (checklist). Base the summary on `git log main..HEAD`, not just the last commit.
 8. **Report**: one line — what changed + PR URL.
+{% if claude_rtk_hook.stat.exists %}
+
+**RTK rule**: run each command as a separate Bash call. Never `&&`-chain commands.
+{% endif %}
