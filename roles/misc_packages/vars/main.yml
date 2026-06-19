@@ -30,3 +30,6 @@ misc_packages_macos_brew_packages:
 misc_packages_macos_brew_casks:
   - ghostty
   - rectangle
+
+misc_packages_macos_brew_remove_casks:
+  - raycast
