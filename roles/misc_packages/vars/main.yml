@@ -20,6 +20,7 @@ misc_packages_macos_brew_packages:
   - kubectx
   - parallel
   - pyenv
+  - rbenv
   - rsync
   - tmux
   - tree

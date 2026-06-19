@@ -11,6 +11,11 @@
     path: "{{ homedir.stdout }}/.goenv"
   register: omz_zshrc_goenv_folder
 
+- name: Check that rbenv folder exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.rbenv"
+  register: omz_zshrc_rbenv_folder
+
 - name: Tfswitch enabled
   # TODO: Refactor this more elegantly later, but this is more of a
   # matter of placement.  Syntactically it is correct.
@@ -56,6 +61,13 @@
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-goenv.zsh"
     mode: "0644"
   when: "omz_zshrc_goenv_folder.stat.exists and omz_zshrc_goenv_folder.stat.isdir"
+
+- name: Template rbenv
+  ansible.builtin.template:
+    src: zsh-custom/zsh-rbenv.zsh.j2
+    dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-rbenv.zsh"
+    mode: "0644"
+  when: "omz_zshrc_rbenv_folder.stat.exists and omz_zshrc_rbenv_folder.stat.isdir"
 
 - name: Template git_acp.zsh
   ansible.builtin.template:
