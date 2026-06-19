@@ -1,0 +1,5 @@
+---
+- name: Remove misc MacOS casks
+  community.general.homebrew_cask:
+    name: "{{ misc_packages_macos_brew_remove_casks }}"
+    state: absent

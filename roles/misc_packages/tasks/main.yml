@@ -5,6 +5,10 @@
   ansible.builtin.include_tasks: brew_packages.yml
   when: ansible_facts["os_family"] == "Darwin"
 
+- name: Remove macos homebrew packages
+  ansible.builtin.include_tasks: brew_remove.yml
+  when: ansible_facts["os_family"] == "Darwin"
+
 
 - name: Install script-based packages
   ansible.builtin.include_tasks: script-packages.yml
