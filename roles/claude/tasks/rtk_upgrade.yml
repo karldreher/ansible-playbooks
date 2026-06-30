@@ -4,3 +4,7 @@
     name: rtk
     state: latest
   when: ansible_facts["os_family"] == "Darwin"
+
+- name: Refresh rtk global configuration
+  ansible.builtin.command: rtk init -g --auto-patch
+  changed_when: true

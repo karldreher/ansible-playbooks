@@ -5,14 +5,8 @@
   failed_when: false
   changed_when: false
 
-- name: Check if rtk hook is installed
-  ansible.builtin.stat:
-    path: "{{ homedir.stdout }}/.claude/hooks/.rtk-hook.sha256"
-  register: claude_rtk_hook
-
 - name: Initialize rtk globally
-  ansible.builtin.command: rtk init -g
-  changed_when: true
-  when:
-    - claude_which_claude.rc == 0
-    - not claude_rtk_hook.stat.exists
+  ansible.builtin.command: rtk init -g --auto-patch
+  args:
+    creates: "{{ homedir.stdout }}/.claude/RTK.md"
+  when: claude_which_claude.rc == 0

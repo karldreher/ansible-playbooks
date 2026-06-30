@@ -16,7 +16,5 @@ Commit, push, and ensure a PR exists. If the user provided a description, use it
 6. **Push**: `git push -q -u origin HEAD`. Never force push.
 7. **PR**: `gh pr view --json url --jq '.url' 2>/dev/null` — if none exists, `gh pr create`. Title matches commit style. Body: `## Summary` (bullets), `## Test plan` (checklist). Base the summary on `git log main..HEAD`, not just the last commit.
 8. **Report**: one line — what changed + PR URL.
-{% if claude_rtk_hook.stat.exists %}
 
 **RTK rule**: run each command as a separate Bash call. Never `&&`-chain commands.
-{% endif %}

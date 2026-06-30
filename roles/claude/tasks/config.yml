@@ -38,10 +38,6 @@
           }, recursive=true)
       }}
 
-# Conditionally merge rtk hooks into claude_merged_settings before writing.
-- name: Configure rtk hooks
-  ansible.builtin.include_tasks: rtk_hooks.yml
-
 - name: Write merged settings.json
   ansible.builtin.copy:
     content: "{{ claude_merged_settings | to_nice_json }}\n"
