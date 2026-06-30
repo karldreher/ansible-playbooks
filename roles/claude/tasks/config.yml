@@ -38,6 +38,11 @@
           }, recursive=true)
       }}
 
+- name: Check if RTK.md exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.claude/RTK.md"
+  register: claude_rtk_md
+
 - name: Write merged settings.json
   ansible.builtin.copy:
     content: "{{ claude_merged_settings | to_nice_json }}\n"
