@@ -18,3 +18,7 @@
 
 - name: Install claude skills
   ansible.builtin.include_tasks: skills.yml
+
+- name: Upgrade rtk
+  ansible.builtin.import_tasks: rtk_upgrade.yml
+  tags: [upgrade, never]

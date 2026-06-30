@@ -1,0 +1,6 @@
+---
+- name: Upgrade rtk via Homebrew  # noqa: package-latest
+  community.general.homebrew:
+    name: rtk
+    state: latest
+  when: ansible_facts["os_family"] == "Darwin"
