@@ -20,10 +20,11 @@ Role directories must use `snake_case` (underscores only, no hyphens). This is e
 
 ## Skill Marketplace
 
-The Claude Code skill marketplace is at https://skillsmp.com/. When the user says "look for skills", "skill marketplace", or asks about installable Claude Code skills, this is the source.
+The Claude Code skill marketplace is https://skills.sh/. When the user says "look for skills",
+"skill marketplace", or asks about installable Claude Code skills, use this source.
 
-- **Install** globally: `bunx skills add -g <owner/repo> --skill <skill-name>`
-- **Search**: `bunx skills find <keyword>`
-- **Reputation**: report star count as the trust signal (e.g., ⭐ 219.4k)
-
-Skills in this role are declared in `roles/claude/vars/main.yml` under `claude_marketplace_skills` and installed via `roles/claude/tasks/marketplace_skills.yml`.
+- **Search**: `bunx skills find <keyword>` — only unauthenticated search path; compact output
+  (2 lines per result); rank by install count (e.g. 347.8K installs)
+- **Reputation**: install count shown in `bunx skills find` output is the trust signal
+- To add a skill to this machine, declare it in `roles/claude/vars/main.yml` under
+  `claude_marketplace_skills` and run the playbook — do not install ad-hoc
