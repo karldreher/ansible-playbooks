@@ -2,13 +2,13 @@
 # https://code.claude.com/docs/en/settings.md
 # https://code.claude.com/docs/en/permissions.md
 
-# Skills from https://skillsmp.com/
+# Skills from https://skills.sh/
 # Each entry: { repo: "<owner/repo>", skill: "<skill-name>" }
 claude_marketplace_skills:
-  - repo: "affaan-m/ECC"
-    skill: "codebase-onboarding"    # 219.4k ⭐ codebase architecture + onboarding guide
-  - repo: "affaan-m/ECC"
-    skill: "token-budget-advisor"   # 219.4k ⭐ advises depth before consuming tokens
+  - repo: "mattpocock/skills"
+    skill: "codebase-design"         # 66.5K installs — design-level codebase understanding
+  - repo: "delphine-l/claude_global"
+    skill: "token-efficiency"        # 1.6K installs — reduce token waste in responses
 
 # Skills to uninstall — same format as claude_marketplace_skills
 claude_marketplace_skills_remove: []
