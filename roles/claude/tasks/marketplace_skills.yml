@@ -6,7 +6,6 @@
   loop: "{{ claude_marketplace_skills }}"
   loop_control:
     label: "{{ item.skill }}"
-  when: ansible_facts["os_family"] == "Darwin"
 
 - name: Remove marketplace skills
   ansible.builtin.command: bunx skills remove -g {{ item.repo }} --skill {{ item.skill }} --yes
@@ -15,4 +14,3 @@
   loop: "{{ claude_marketplace_skills_remove }}"
   loop_control:
     label: "{{ item.skill }}"
-  when: ansible_facts["os_family"] == "Darwin"
