@@ -5,6 +5,15 @@
     state: latest
   when: ansible_facts["os_family"] == "Darwin"
 
+- name: Upgrade rtk via install script  # noqa: command-instead-of-module
+  ansible.builtin.shell: |
+    set -o pipefail
+    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+  args:
+    executable: /bin/bash
+  changed_when: true
+  when: ansible_facts["os_family"] == "Debian"
+
 - name: Refresh rtk global configuration
   ansible.builtin.command: rtk init -g --auto-patch
   changed_when: true
