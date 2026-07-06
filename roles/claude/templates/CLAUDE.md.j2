@@ -32,7 +32,8 @@ This system is a Linux Debian system. Use `apt` for package management. Use `xdg
 
 ## GitHub
 
-- Always use `gh` CLI to view any GitHub URL presented (PRs, issues, repos, etc.) — never use WebFetch for GitHub
+- Always use `gh` CLI to view any GitHub URL presented (PRs, issues, repos, etc.) — never use WebFetch or `curl` for GitHub
+- When searching GitHub (code, issues, PRs, repos, etc.), always use `gh` CLI (e.g. `gh search`, `gh api`) — never use WebFetch or `curl`
 - Commits and PR titles: use conventional commit style, lowercase, prefixed with `feat:`, `fix:`, `refactor:`, etc.
 - Issue titles: use normal casing (e.g., "Improve Fast API Startup Time", "Handle Errors in Foo-Baz Workflow") — no conventional commit prefixes
 - Always use full PR URLs (e.g., `https://github.com/org/repo/pull/54`), never relative `#54` format — we may be working in a different repo
