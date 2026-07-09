@@ -1,0 +1,24 @@
+---
+# Manage claude custom subagents
+
+- name: Find agent templates
+  ansible.builtin.find:
+    paths: "{{ role_path }}/templates/agents"
+    patterns: "*.md.j2"
+    recurse: false
+  register: claude_agent_templates
+
+- name: Create agents directory
+  ansible.builtin.file:
+    path: "{{ homedir.stdout }}/.claude/agents"
+    state: directory
+    mode: "0755"
+
+- name: Template agents
+  ansible.builtin.template:
+    src: "{{ item.path }}"
+    dest: "{{ homedir.stdout }}/.claude/agents/{{ item.path | basename | replace('.j2', '') }}"
+    mode: "0644"
+  loop: "{{ claude_agent_templates.files }}"
+  loop_control:
+    label: "{{ item.path | basename }}"

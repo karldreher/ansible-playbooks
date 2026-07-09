@@ -43,6 +43,26 @@
     path: "{{ homedir.stdout }}/.claude/RTK.md"
   register: claude_rtk_md
 
+# Coupled to rtk's `rtk init -g --auto-patch` output shape (command "rtk hook claude",
+# matcher "Bash"). If a future rtk version changes that, this will read as false even
+# though RTK is working.
+- name: Determine whether the RTK Bash hook is registered
+  ansible.builtin.set_fact:
+    claude_rtk_hook_installed: >-
+      {{
+        (claude_merged_settings.hooks.PreToolUse | default([]))
+        | selectattr('matcher', 'equalto', 'Bash')
+        | map(attribute='hooks')
+        | flatten
+        | selectattr('command', 'equalto', 'rtk hook claude')
+        | list
+        | length > 0
+      }}
+
+- name: Determine whether RTK is fully active
+  ansible.builtin.set_fact:
+    claude_rtk_active: "{{ claude_rtk_md.stat.exists and claude_rtk_hook_installed }}"
+
 - name: Write merged settings.json
   ansible.builtin.copy:
     content: "{{ claude_merged_settings | to_nice_json }}\n"
