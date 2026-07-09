@@ -6,8 +6,6 @@ disable-model-invocation: true
 context: fork
 agent: commit-executor
 ---
-{% set git = "rtk git" if claude_rtk_md.stat.exists else "git" %}
-{% set gh = "rtk gh" if claude_rtk_md.stat.exists else "gh" %}
 
 Commit, push, and ensure a PR exists for the current branch.
 
@@ -15,18 +13,18 @@ Description of the changes, if provided: $ARGUMENTS
 
 ## Steps
 
-1. **Status**: `{{ git }} status -sb` — stop and report back if on `main` or `master`, or if there's nothing to commit.
+1. **Status**: `git status -sb` — stop and report back if on `main` or `master`, or if there's nothing to commit.
 2. **Build the message**:
    - **If a description was provided above**: it is the basis for the commit message — do not run any diff or log command for this. Derive the type prefix directly from the description text using the rules in step 4.
-   - **If no description was provided**: `{{ git }} log --oneline -8` to match this repo's style, then `{{ git }} diff` and `{{ git }} diff --staged` to read the full change and write an accurate summary.
-3. **Stage**: `{{ git }} add .` — stage everything. Never `git add -A`, never guess individual files.
-4. **Commit**: `{{ git }} commit -q -m "<type>: <description>"`. The subject line MUST match this exact pattern — verify it before running the command, and rewrite it if it doesn't match:
+   - **If no description was provided**: `git log --oneline -8` to match this repo's style, then `git diff` and `git diff --staged` to read the full change and write an accurate summary.
+3. **Stage**: `git add .` — stage everything. Never `git add -A`, never guess individual files.
+4. **Commit**: `git commit -q -m "<type>: <description>"`. The subject line MUST match this exact pattern — verify it before running the command, and rewrite it if it doesn't match:
    - Starts with exactly one of these type prefixes, followed by `: `: `feat`, `fix`, `docs`, `refactor`, `chore`, `style`, `test`, `perf`, `build`, `ci`, `revert`.
    - Pick the single type matching the primary effect of the change: `feat` = new capability, `fix` = corrects a bug, `docs` = docs-only, `refactor` = behavior-preserving restructuring, `chore` = tooling/config/deps/cleanup with no user-facing behavior change. If a diff touches multiple concerns, pick the type of its most significant effect — do not hedge or combine types.
    - Everything after the colon is lowercase (including the first word), imperative mood (`add`, not `added`/`adds`), no trailing period, entire line under 72 characters.
    - Subject line only — no body, no trailers, nothing else.
-5. **Push**: `{{ git }} push -q -u origin HEAD`. Never force push.
-6. **PR**: `{{ gh }} pr view --json url --jq '.url' 2>/dev/null` — if none exists, `{{ gh }} pr create`. Title matches the exact same format and verification rule as the commit subject in step 4. Body: `## Summary` (bullets), `## Test plan` (checklist). Base the summary on `{{ git }} log main..HEAD`, not just the last commit.
+5. **Push**: `git push -q -u origin HEAD`. Never force push.
+6. **PR**: `gh pr view --json url --jq '.url' 2>/dev/null` — if none exists, `gh pr create`. Title matches the exact same format and verification rule as the commit subject in step 4. Body: `## Summary` (bullets), `## Test plan` (checklist). Base the summary on `git log main..HEAD`, not just the last commit.
 {% if claude_rtk_md.stat.exists %}
 
 **RTK rule**: run each command as a separate Bash call. Never `&&`-chain commands.

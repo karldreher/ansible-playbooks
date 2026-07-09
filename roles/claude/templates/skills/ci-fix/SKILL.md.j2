@@ -3,22 +3,20 @@ name: ci-fix
 description: Fixes failing CI checks on the current PR. Only invoke on the explicit slash command "/ci-fix".
 argument-hint: "[optional: hint about what's failing]"
 ---
-{% set git = "rtk git" if claude_rtk_md.stat.exists else "git" %}
-{% set gh = "rtk gh" if claude_rtk_md.stat.exists else "gh" %}
 
 You are fixing failing CI on the current PR. Work in a loop: investigate → fix → push → watch → repeat until all checks are green.
 
 ## Step 1: Orient
 
 ```bash
-{{ git }} branch --show-current    # Confirm not on main/master — stop if so
-{{ gh }} pr checks --json name,state,link,bucket
+git branch --show-current    # Confirm not on main/master — stop if so
+gh pr checks --json name,state,link,bucket
 ```
 
 Parse the failed checks (state == "failure" or bucket == "fail"). Extract run IDs from the `link` field — URLs end with the run ID: `.../actions/runs/<run-id>`.
 
 ```bash
-{{ gh }} pr checks --json name,state,link \
+gh pr checks --json name,state,link \
   --jq '.[] | select(.state=="failure") | {name, runId: (.link | split("/") | last)}'
 ```
 
@@ -27,7 +25,7 @@ Parse the failed checks (state == "failure" or bucket == "fail"). Extract run ID
 For each failing run:
 
 ```bash
-{{ gh }} run view <run-id> --log-failed
+gh run view <run-id> --log-failed
 ```
 
 Also read the CI workflow definition to understand exactly what commands are run, in what environment, and with what flags:
@@ -46,7 +44,7 @@ Run the same command CI runs. Confirming you can reproduce the failure before to
 - Tests: run the test suite
 - Build: run the build command
 
-If the failure looks flaky or intermittent (random timeout, network error), try `{{ gh }} run rerun <run-id> --failed` first before making code changes.
+If the failure looks flaky or intermittent (random timeout, network error), try `gh run rerun <run-id> --failed` first before making code changes.
 
 ## Step 4: Fix
 
@@ -55,9 +53,9 @@ Apply the minimum change that addresses the root cause. CI fix commits should be
 ## Step 5: Commit and push
 
 ```bash
-{{ git }} add <specific files>
-{{ git }} commit -m "fix: <what was wrong>"
-{{ git }} push
+git add <specific files>
+git commit -m "fix: <what was wrong>"
+git push
 ```
 
 ## Step 6: Watch
@@ -67,10 +65,10 @@ Wait for the new run to register, then watch it to completion:
 ```bash
 sleep 8   # Give GitHub a moment after the push
 
-RUN_ID=$({{ gh }} run list --branch "$({{ git }} branch --show-current)" \
+RUN_ID=$(gh run list --branch "$(git branch --show-current)" \
   --limit 1 --json databaseId --jq '.[0].databaseId')
 
-{{ gh }} run watch "$RUN_ID" --exit-status --compact
+gh run watch "$RUN_ID" --exit-status --compact
 ```
 
 `--exit-status` exits non-zero on failure, zero on success — use the exit code to branch.
@@ -78,7 +76,7 @@ RUN_ID=$({{ gh }} run list --branch "$({{ git }} branch --show-current)" \
 ## Step 7: Assess and loop
 
 ```bash
-{{ gh }} run view "$RUN_ID" --json conclusion --jq '.conclusion'
+gh run view "$RUN_ID" --json conclusion --jq '.conclusion'
 ```
 
 - **"success"** — all checks pass. Report what was fixed and the now-passing run URL. Done.
