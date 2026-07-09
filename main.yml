@@ -9,3 +9,5 @@
       when: ansible_facts["os_family"] == "Darwin"
     - role: misc_dotfiles
     - role: claude
+    - role: antigravity
+      when: which_agy.rc == 0

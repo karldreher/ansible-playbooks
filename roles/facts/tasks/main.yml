@@ -4,6 +4,12 @@
   register: homedir # noqa: var-naming[no-role-prefix]
   changed_when: false
 
+- name: Check if agy (Antigravity CLI) is installed
+  ansible.builtin.command: which agy
+  register: which_agy # noqa: var-naming[no-role-prefix]
+  failed_when: false
+  changed_when: false
+
 - name: "Check mandatory variables are defined"
   ansible.builtin.assert:
     that:
