@@ -25,7 +25,7 @@ Description of the changes, if provided: $ARGUMENTS
    - Subject line only — no body, no trailers, nothing else.
 5. **Push**: `git push -q -u origin HEAD`. Never force push.
 6. **PR**: `gh pr view --json url --jq '.url' 2>/dev/null` — if none exists, `gh pr create`. Title matches the exact same format and verification rule as the commit subject in step 4. Body: `## Summary` (bullets), `## Test plan` (checklist). Base the summary on `git log main..HEAD`, not just the last commit.
-{% if claude_rtk_md.stat.exists %}
+{% if claude_rtk_active %}
 
 **RTK rule**: run each command as a separate Bash call. Never `&&`-chain commands.
 {% endif %}
