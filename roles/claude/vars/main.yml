@@ -9,6 +9,8 @@ claude_marketplace_skills:
     skill: "codebase-design"         # 66.5K installs — design-level codebase understanding
   - repo: "delphine-l/claude_global"
     skill: "token-efficiency"        # 1.6K installs — reduce token waste in responses
+  - repo: "agricidaniel/claude-seo"
+    skill: "seo-images"              # 3K installs — SEO image optimization (alt text, filenames, etc.)
 
 # Skills to uninstall — same format as claude_marketplace_skills
 claude_marketplace_skills_remove: []
