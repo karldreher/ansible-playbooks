@@ -1,0 +1,65 @@
+---
+# tasks file for antigravity
+# Role is only included from main.yml when which_agy.rc == 0 (see roles/facts).
+
+# TODO: once rtk ships a global (non-cwd-hardcoded) Antigravity integration, wire up
+# rtk install + GEMINI.md RTK guidance here, mirroring roles/claude's rtk_init.yml.
+
+- name: Create .gemini/antigravity-cli directory
+  ansible.builtin.file:
+    path: "{{ homedir.stdout }}/.gemini/antigravity-cli"
+    state: directory
+    mode: "0755"
+
+- name: Check if settings.json exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.gemini/antigravity-cli/settings.json"
+  register: antigravity_settings_file
+
+- name: Read existing settings.json
+  ansible.builtin.slurp:
+    src: "{{ homedir.stdout }}/.gemini/antigravity-cli/settings.json"
+  register: antigravity_existing_settings_raw
+  when: antigravity_settings_file.stat.exists
+
+- name: Parse existing settings
+  ansible.builtin.set_fact:
+    antigravity_existing_settings: "{{ antigravity_existing_settings_raw.content | b64decode | from_json }}"
+  when: antigravity_settings_file.stat.exists
+
+- name: Set empty settings when file does not exist
+  ansible.builtin.set_fact:
+    antigravity_existing_settings: {}
+  when: not antigravity_settings_file.stat.exists
+
+- name: Build merged settings
+  ansible.builtin.set_fact:
+    antigravity_merged_settings: >-
+      {{
+        antigravity_existing_settings
+        | combine(antigravity_settings, recursive=true)
+        | combine({
+            'permissions': {
+              'allow': (
+                (antigravity_existing_settings.permissions.allow | default([]))
+                + antigravity_settings.permissions.allow
+              ) | unique,
+              'deny': (
+                (antigravity_existing_settings.permissions.deny | default([]))
+                + antigravity_settings.permissions.deny
+              ) | unique
+            }
+          }, recursive=true)
+      }}
+
+- name: Write merged settings.json
+  ansible.builtin.copy:
+    content: "{{ antigravity_merged_settings | to_nice_json }}\n"
+    dest: "{{ homedir.stdout }}/.gemini/antigravity-cli/settings.json"
+    mode: "0644"
+
+- name: Template GEMINI.md
+  ansible.builtin.template:
+    src: templates/GEMINI.md.j2
+    dest: "{{ homedir.stdout }}/.gemini/GEMINI.md"
+    mode: "0644"

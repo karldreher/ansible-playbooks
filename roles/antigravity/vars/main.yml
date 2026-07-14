@@ -1,0 +1,19 @@
+# Reference (best-effort, no fetchable primary doc page as of writing):
+# https://antigravity.google/docs/cli-permissions
+# Global settings live at ~/.gemini/antigravity-cli/settings.json
+
+antigravity_settings:
+  toolPermission: "request-review" # verify key name against real settings.json
+  permissions:
+    # Always allow these tools, and never ask for permission to use them.
+    # Add entries in alphabetical order for readability.
+    allow:
+      - "command(cat)"
+      - "command(find)"
+      - "command(gh pr list)"
+      - "command(gh pr view)"
+      - "command(git diff)"
+      - "command(git log)"
+      - "command(git status)"
+    deny:
+      - "command(rm -rf)"
