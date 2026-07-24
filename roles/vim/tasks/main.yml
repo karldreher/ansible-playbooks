@@ -1,13 +1,31 @@
 ---
 # tasks file for vim
-- name: Create ~/.vim/ftplugin directory
-  ansible.builtin.file:
-    path: "{{ homedir.stdout }}/.vim/ftplugin"
-    state: directory
-    mode: "0755"
+- name: Install vim via Homebrew
+  community.general.homebrew:
+    name: vim
+    state: present
+  when: ansible_facts["os_family"] == "Darwin"
+  register: vim_brew_install
 
-- name: Template gitcommit ftplugin
-  ansible.builtin.template:
-    src: templates/gitcommit.vim.j2
-    dest: "{{ homedir.stdout }}/.vim/ftplugin/gitcommit.vim"
-    mode: "0644"
+- name: Install vim via apt
+  ansible.builtin.apt:
+    name: vim
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_facts["os_family"] == "Debian"
+  register: vim_apt_install
+
+- name: Vim installed
+  ansible.builtin.set_fact:
+    vim_installed: true
+  when: >-
+    (vim_brew_install is defined and not vim_brew_install is failed) or
+    (vim_apt_install is defined and not vim_apt_install is failed)
+
+- name: Install vim-conventional-commits plugin
+  ansible.builtin.git:
+    repo: https://github.com/karldreher/vim-conventional-commits.git
+    dest: "{{ homedir.stdout }}/.vim/pack/vim-conventional-commits/start/vim-conventional-commits"
+    version: 6f86fff6fc056b64cbd27921cca834d5a971ccb0
+  when: vim_installed | default(false)
