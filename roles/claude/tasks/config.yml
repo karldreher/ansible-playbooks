@@ -33,6 +33,10 @@
               'allow': (
                 (claude_existing_settings.permissions.allow | default([]))
                 + claude_settings.permissions.allow
+              ) | unique,
+              'deny': (
+                (claude_existing_settings.permissions.deny | default([]))
+                + claude_settings.permissions.deny
               ) | unique
             }
           }, recursive=true)

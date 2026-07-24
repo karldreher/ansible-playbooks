@@ -1,10 +1,14 @@
 ## System
 
 {% if ansible_facts["os_family"] == "Darwin" %}
-This system is a MacOS device. Use `brew` for package management. Prefer `pbcopy`/`pbpaste` for clipboard. Use `open` to open files/URLs.
+This system is a MacOS device. Prefer `pbcopy`/`pbpaste` for clipboard. Use `open` to open files/URLs.
 {% elif ansible_facts["os_family"] == "Debian" %}
-This system is a Linux Debian system. Use `apt` for package management. Use `xdg-open` to open files/URLs.
+This system is a Linux Debian system. Use `xdg-open` to open files/URLs.
 {% endif %}
+
+## Package Management
+
+- Read-only `brew`/`apt`/`apt-get` commands (e.g. `list`, `info`, `search`, `show`) are fine. Mutating subcommands — `install`, `remove`, `uninstall`, `upgrade`, `update`, and similar — are not allowed and are blocked by settings. This is an Ansible-managed environment; package changes belong in the relevant role (e.g. `roles/misc_packages`), not ad-hoc shell commands.
 
 
 ## Interaction
