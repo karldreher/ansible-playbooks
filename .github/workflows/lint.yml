@@ -7,7 +7,7 @@ jobs:
   ansible-lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -20,3 +20,17 @@ jobs:
 
       - name: Run ansible-lint
         run: uvx ansible-lint
+
+  diagram-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Regenerate DAG.md
+        run: uv run scripts/update-diagram.py
+
+      - name: Fail if DAG.md is out of date
+        run: git diff --exit-code DAG.md
