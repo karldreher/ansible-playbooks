@@ -19,6 +19,7 @@ claude_settings:
   attribution:
     commit: ""
     pr: ""
+  autoMemoryEnabled: false
   permissions:
     # Always allow these tools, and never ask for permission to use them.
     # Add entries in alphabetical order for readability.  Maintain the sections.
