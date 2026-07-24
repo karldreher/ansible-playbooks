@@ -1,0 +1,13 @@
+---
+# tasks file for vim
+- name: Create ~/.vim/ftplugin directory
+  ansible.builtin.file:
+    path: "{{ homedir.stdout }}/.vim/ftplugin"
+    state: directory
+    mode: "0755"
+
+- name: Template gitcommit ftplugin
+  ansible.builtin.template:
+    src: templates/gitcommit.vim.j2
+    dest: "{{ homedir.stdout }}/.vim/ftplugin/gitcommit.vim"
+    mode: "0644"

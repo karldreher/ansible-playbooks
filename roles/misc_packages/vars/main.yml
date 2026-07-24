@@ -6,6 +6,7 @@ misc_packages_linux_apt_packages:
   - gh
   - tmux
   - tree
+  - vim
   - yq
   - zsh
 
@@ -24,6 +25,7 @@ misc_packages_macos_brew_packages:
   - rsync
   - tmux
   - tree
+  - vim
   - yq
   - zip
   - warrensbox/tap/tfswitch
