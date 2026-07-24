@@ -159,4 +159,8 @@ claude_settings:
       - "Bash(brew unlink*)"
       - "Bash(brew cleanup*)"
       - "Bash(brew services*)"
+      # Ansible — never run playbooks directly; they apply real changes to
+      # real machines and should only be run by the user.
+      - "Bash(ansible-playbook*)"
+      - "Bash(sudo ansible-playbook*)"
     defaultMode: "plan"
