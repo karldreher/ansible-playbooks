@@ -11,8 +11,6 @@ graph TD
     misc_packages
     omz_zshrc -->|depends on| facts
     omz_zshrc -->|depends on| misc_packages
-    vim -->|depends on| facts
-    vim -->|depends on| misc_packages
 
     classDef facts fill:#4a9eff,stroke:#2b7de9,color:#fff
     classDef role fill:#2d2d2d,stroke:#555,color:#fff
