@@ -29,6 +29,27 @@ claude_settings:
       # Super cool cheatcodes.
       - "Bash(* --version)"
       - "Bash(* --help *)"
+      # Apt (Linux), read-only subcommands only. Mutating subcommands (install,
+      # remove, upgrade, etc.) are denied below — package changes belong in
+      # roles/misc_packages, not ad-hoc commands.
+      - "Bash(apt list*)"
+      - "Bash(apt search*)"
+      - "Bash(apt show*)"
+      - "Bash(apt-cache policy*)"
+      - "Bash(apt-cache search*)"
+      - "Bash(apt-cache show*)"
+      # Homebrew (macOS), read-only subcommands only. Mutating subcommands (install,
+      # remove, upgrade, etc.) are denied below — package changes belong in
+      # roles/misc_packages, not ad-hoc commands.
+      - "Bash(brew config*)"
+      - "Bash(brew deps*)"
+      - "Bash(brew doctor*)"
+      - "Bash(brew info*)"
+      - "Bash(brew leaves*)"
+      - "Bash(brew list*)"
+      - "Bash(brew outdated*)"
+      - "Bash(brew search*)"
+      - "Bash(brew uses*)"
       # Gcloud
       - "Bash(gcloud run services describe*)"
       - "Bash(gcloud logging read*)"
@@ -100,4 +121,42 @@ claude_settings:
       - "Bash(yq*)"
       # Always allow searching
       - "WebSearch"
+    # Never allow these, even if the user would otherwise approve them. Package
+    # changes belong in the relevant Ansible role (e.g. roles/misc_packages), not
+    # ad-hoc shell commands. Read-only subcommands remain allowed above.
+    deny:
+      # Apt/apt-get (Linux) mutating subcommands.
+      - "Bash(apt install*)"
+      - "Bash(apt remove*)"
+      - "Bash(apt purge*)"
+      - "Bash(apt upgrade*)"
+      - "Bash(apt dist-upgrade*)"
+      - "Bash(apt autoremove*)"
+      - "Bash(apt update*)"
+      - "Bash(apt-get install*)"
+      - "Bash(apt-get remove*)"
+      - "Bash(apt-get purge*)"
+      - "Bash(apt-get upgrade*)"
+      - "Bash(apt-get dist-upgrade*)"
+      - "Bash(apt-get autoremove*)"
+      - "Bash(apt-get update*)"
+      # Mutating apt/apt-get commands nearly always require sudo, while the
+      # read-only ones allowed above never do — so deny sudo apt/apt-get outright.
+      - "Bash(sudo apt*)"
+      - "Bash(sudo apt-get*)"
+      # Homebrew (macOS) mutating subcommands.
+      - "Bash(brew install*)"
+      - "Bash(brew reinstall*)"
+      - "Bash(brew uninstall*)"
+      - "Bash(brew remove*)"
+      - "Bash(brew upgrade*)"
+      - "Bash(brew update*)"
+      - "Bash(brew tap*)"
+      - "Bash(brew untap*)"
+      - "Bash(brew pin*)"
+      - "Bash(brew unpin*)"
+      - "Bash(brew link*)"
+      - "Bash(brew unlink*)"
+      - "Bash(brew cleanup*)"
+      - "Bash(brew services*)"
     defaultMode: "plan"
