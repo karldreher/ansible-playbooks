@@ -34,6 +34,24 @@ FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
 
+{# History options: https://zsh.sourceforge.io/Doc/Release/Options.html#History #}
+{# Placed after sourcing omz to override its lib/history.zsh defaults. #}
+
+{# https://zsh.sourceforge.io/Doc/Release/Options.html#index-HIST_005fIGNORE_005fALL_005fDUPS #}
+{# Supersedes omz's default HIST_IGNORE_DUPS (only catches consecutive dups). #}
+setopt hist_ignore_all_dups
+
+{# https://zsh.sourceforge.io/Doc/Release/Options.html#index-HIST_005fSAVE_005fNO_005fDUPS #}
+{# Safety net for dups merged in via omz's SHARE_HISTORY. #}
+setopt hist_save_no_dups
+
+{# https://zsh.sourceforge.io/Doc/Release/Options.html#index-HIST_005fIGNORE_005fSPACE #}
+{# Already an omz default; restated to pin it explicitly. #}
+setopt hist_ignore_space
+
+{# https://zsh.sourceforge.io/Doc/Release/Options.html#index-HIST_005fNO_005fFUNCTIONS #}
+setopt hist_no_functions
+
 export EDITOR=vim
 
 {% if misc_packages_bun_install|default(false) %}
