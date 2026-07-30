@@ -2,24 +2,13 @@
 # https://code.claude.com/docs/en/settings.md
 # https://code.claude.com/docs/en/permissions.md
 
-# Skills from https://skills.sh/
-# Each entry: { repo: "<owner/repo>", skill: "<skill-name>" }
-claude_marketplace_skills:
-  - repo: "mattpocock/skills"
-    skill: "codebase-design"         # 66.5K installs — design-level codebase understanding
-  - repo: "delphine-l/claude_global"
-    skill: "token-efficiency"        # 1.6K installs — reduce token waste in responses
-  - repo: "agricidaniel/claude-seo"
-    skill: "seo-images"              # 3K installs — SEO image optimization (alt text, filenames, etc.)
-
-# Skills to uninstall — same format as claude_marketplace_skills
-claude_marketplace_skills_remove: []
-
 claude_settings:
   attribution:
     commit: ""
     pr: ""
   autoMemoryEnabled: false
+  # https://code.claude.com/docs/en/output-styles#built-in-output-styles
+  outputStyle: "Explanatory"
   permissions:
     # Always allow these tools, and never ask for permission to use them.
     # Add entries in alphabetical order for readability.  Maintain the sections.
