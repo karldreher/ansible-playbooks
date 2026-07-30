@@ -1,65 +1,34 @@
-## System
-
-{% if ansible_facts["os_family"] == "Darwin" %}
-This system is a MacOS device. Prefer `pbcopy`/`pbpaste` for clipboard. Use `open` to open files/URLs.
-{% elif ansible_facts["os_family"] == "Debian" %}
-This system is a Linux Debian system. Use `xdg-open` to open files/URLs.
-{% endif %}
-
-## Package Management
-
-- Read-only `brew`/`apt`/`apt-get` commands (e.g. `list`, `info`, `search`, `show`) are fine. Mutating subcommands — `install`, `remove`, `uninstall`, `upgrade`, `update`, and similar — are not allowed and are blocked by settings. This is an Ansible-managed environment; package changes belong in the relevant role (e.g. `roles/misc_packages`), not ad-hoc shell commands.
-
-
 ## Interaction
 
 - When you need to ask the user a question or present choices, always use the AskUserQuestion tool instead of plain text questions — it provides a structured UI for the user to respond
 - When presenting multiple implementation approaches, use AskUserQuestion to confirm which to implement before proceeding — do not default to the "simpler" option
 
-## Approach
-- Think before acting. Read existing files before writing code.
-- Be concise in output but thorough in reasoning.
-- Prefer editing over rewriting whole files.
-- Do not re-read files you have already read unless the file may have changed.
-- Test your code before declaring done.
-- No sycophantic openers or closing fluff.
-- Keep solutions simple and direct. No over-engineering.
-- If unsure: say so. Never guess or invent file paths.
-- User instructions always override this file.
-
 ## Efficiency
 - Read before writing. Understand the problem before coding.
 - No redundant file reads. Read each file once.
 - One focused coding pass. Avoid write-delete-rewrite cycles.
-- Test once, fix if needed, verify once. No unnecessary iterations.
-- Budget: 50 tool calls maximum. Work efficiently.
 
 ## GitHub
 
 - Always use `gh` CLI to view any GitHub URL presented (PRs, issues, repos, etc.) — never use WebFetch or `curl` for GitHub
-- When searching GitHub (code, issues, PRs, repos, etc.), always use `gh` CLI (e.g. `gh search`, `gh api`) — never use WebFetch or `curl`
+- When searching GitHub (code, issues, PRs, repos, etc.), always use `gh` CLI (e.g. `gh search`, `gh api`) — never use WebFetch or `curl`.  Assume repos are private.
 - Commits and PR titles: use conventional commit style, lowercase, prefixed with `feat:`, `fix:`, `refactor:`, etc.
 - Issue titles: use normal casing (e.g., "Improve Fast API Startup Time", "Handle Errors in Foo-Baz Workflow") — no conventional commit prefixes
-- Always use full PR URLs (e.g., `https://github.com/org/repo/pull/54`), never relative `#54` format — we may be working in a different repo
-
-## .gitignore Generation
-
-- Use `bunx gitignore <template>` to generate `.gitignore` files when initializing new projects or when a project is missing a `.gitignore`
-- Run `bunx gitignore -types` to see available templates
-- Select the most relevant template(s) for the project type, and place the `.gitignore` in the most relevant location (e.g., the root, or a specific subdirectory in multilanguage projects)
-- Do not overwrite an existing `.gitignore` without asking the user first
+- Always use full PR URLs in issues and pull requests. (e.g., `https://github.com/org/repo/pull/54`).  Do not use `#54` format — we may be working in a different repo
 
 ## Terminology — Inclusive Language
 
-Favor inclusive language in code, docs, and discussions — it's also just more precise.
-Apply to new code and docs. Don't rename existing identifiers unless refactoring that code anyway.
+Favor inclusive language in code, comments, and documentation.
+Apply only to new code and docs. Do not rename existing identifiers unless refactoring that code.
+
+Examples: 
 
 | Instead of | Use |
 |------------|-----|
 | whitelist / blacklist | allowlist / denylist |
 | master / slave | primary / replica |
 | sanity check | validation, smoke test |
-| dummy | placeholder, stub |
+| dummy | placeholder |
 
 ## Incident & Root Cause Discussions
 
