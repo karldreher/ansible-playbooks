@@ -1,6 +1,12 @@
 ## When a new alias is added, it should be added to the "omz-zshrc/vars/main.yml" definition.
 ## In the case that it is a complex alias, the function can be defined within this .zsh file.
 
+function clone(){
+    # Normalize a supplied https://github.com/owner/repo URL down to "owner/repo" for gh.
+    repo="${1#https://github.com/}"
+    gh repo clone "$repo"
+}
+
 function docker_build_this(){
     # Build the Dockerfile in the current directory.
     docker build -t $(basename $(pwd)) .

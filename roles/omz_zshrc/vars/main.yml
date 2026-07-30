@@ -1,8 +1,8 @@
 ---
 omz_zshrc_aliases:
   - alias: clone
-    command: git clone
-    description: git clone
+    command: clone
+    description: Clone a GitHub repo via 'gh repo clone'; accepts owner/repo or a github.com URL
 
   - alias: cleanup-branch
     command: cleanup-branch
