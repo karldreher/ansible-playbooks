@@ -20,6 +20,8 @@ claude_settings:
     commit: ""
     pr: ""
   autoMemoryEnabled: false
+  # https://code.claude.com/docs/en/output-styles#built-in-output-styles
+  outputStyle: "Explanatory"
   permissions:
     # Always allow these tools, and never ask for permission to use them.
     # Add entries in alphabetical order for readability.  Maintain the sections.
