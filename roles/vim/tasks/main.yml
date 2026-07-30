@@ -27,5 +27,5 @@
   ansible.builtin.git:
     repo: https://github.com/karldreher/vim-conventional-commits.git
     dest: "{{ homedir.stdout }}/.vim/pack/vim-conventional-commits/start/vim-conventional-commits"
-    version: 6f86fff6fc056b64cbd27921cca834d5a971ccb0
+    version: 7054464abde51172ecd088787077806b56398415
   when: vim_installed | default(false)
