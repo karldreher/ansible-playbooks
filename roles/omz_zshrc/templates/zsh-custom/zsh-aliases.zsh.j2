@@ -63,14 +63,13 @@ function zalias_title(){
 
 function zah(){
     zalias_title "Available Git Aliases: (usage: git <alias>)"
-    if (git config --list | grep -q alias); then
-        git config --list | grep alias | while read line
-            do
-                alias_name=$(echo $line | sed 's/^alias\.//' | sed 's/=.*//')
-                alias_cmd=$(echo $line | sed 's/^alias\.[^=]*=//')
-                printf '\033[37m  %-20s %s\033[0m\n' "$alias_name" "$alias_cmd"
-            done
-    fi
+    git config --list | grep alias | while read line
+        do
+            alias_name=${line#alias.}
+            alias_name=${alias_name%%=*}
+            alias_cmd=${line#*=}
+            printf '\033[37m  %-20s %s\033[0m\n' "$alias_name" "$alias_cmd"
+        done
     echo ""
 
     zalias_title "Custom Zsh Aliases:"
