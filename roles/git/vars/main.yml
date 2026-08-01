@@ -4,8 +4,8 @@
 git_gitconfig:
   - name: alias.acp
     value: >-
-      !b=$(git branch --show-current); case "$b" in
-      main|master) echo "On main/master. Aborting."; exit 1;;
+      !case "$(git symbolic-ref --short HEAD 2>/dev/null)" in
+      main|master) printf '\033[31m%s\033[0m\n' "On main/master. Aborting."; exit 1;;
       esac; git add . && git commit && git push
   - name: alias.ac
     value: "!git add .; git commit"
