@@ -5,11 +5,11 @@ graph TD
     facts
     gh_extensions -->|depends on| misc_packages
     git -->|depends on| facts
-    git -->|depends on| omz_zshrc
     misc_dotfiles -->|depends on| facts
     misc_dotfiles -->|depends on| misc_packages
     misc_packages
     omz_zshrc -->|depends on| facts
+    omz_zshrc -->|depends on| git
     omz_zshrc -->|depends on| misc_packages
     vim -->|depends on| facts
 
