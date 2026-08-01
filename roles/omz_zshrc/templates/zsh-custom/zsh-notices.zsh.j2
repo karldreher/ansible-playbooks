@@ -1,0 +1,36 @@
+{% raw %}# Echoes any active (non-comment) lines from a notice file (experiments.txt,
+# reminders.txt) on shell startup, as a reminder to reconcile in-progress
+# profile experiments.
+#
+# Deliberately uses only zsh builtins.  This runs on every shell start and the
+# notice files are a handful of lines, so process spawns dominate: forking rg
+# to filter costs ~2.6ms and the six tput calls cost ~8.9ms, while the builtin
+# loop plus a single printf comes in at ~0.13ms.
+
+function _omz_zshrc_show_notice(){
+    local notice_file="$1"
+    local notice_title="$2"
+    local notice_lines=()
+    local notice_line
+
+    [[ -f "$notice_file" ]] || return
+
+    while IFS= read -r notice_line; do
+        [[ "$notice_line" == '#'* ]] && continue
+        [[ -z "${notice_line//[[:space:]]/}" ]] && continue
+        notice_lines+=("$notice_line")
+    done < "$notice_file"
+
+    # Nothing active in the file: stay silent.
+    (( ${#notice_lines[@]} )) || return
+
+    # \033[1m bold, \033[37m white, \033[0m reset.  Title is white bold, list
+    # items are white.  (F) joins the array with newlines.
+    printf '\033[1m\033[37m%s\033[0m\n\033[37m%s\033[0m\nSee %s\n\n' \
+        "$notice_title" "${(F)notice_lines}" "${notice_file/#$HOME/~}"
+}
+{% endraw %}
+
+{% for item in omz_zshrc_notices %}
+_omz_zshrc_show_notice "$HOME/{{ item.file }}" "{{ item.title }}"
+{% endfor %}
