@@ -56,3 +56,21 @@ omz_zshrc_omz_plugin_list:
   - terraform
   - nvm
   - pyenv
+
+# Notice files for profile experiments and reminders
+omz_zshrc_notices:
+  - file: experiments.txt
+    title: Experiments
+    header: |
+      # Notification area for profile experiments in progress.  This file serves
+      # as a reminder to self to re-apply the playbook and reconcile any
+      # experiments once they are complete.
+      # Add experiments as list items below.  Remove when no longer relevant.
+
+  - file: reminders.txt
+    title: Reminders
+    header: |
+      # Notification area for general reminders.  This file serves as a
+      # reminder to self to re-apply the playbook and reconcile any reminders
+      # once they are complete.
+      # Add reminders as list items below.  Remove when no longer relevant.

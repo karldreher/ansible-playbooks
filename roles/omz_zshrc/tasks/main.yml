@@ -28,6 +28,16 @@
     version: 81af4239bc5bb99eaa98117b2988a29fdd5b7eb7
   when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
 
+- name: Create notice files if they do not exist
+  ansible.builtin.copy:
+    dest: "{{ homedir.stdout }}/{{ item.file }}"
+    content: "{{ item.header }}"
+    force: false
+    mode: "0644"
+  loop: "{{ omz_zshrc_notices }}"
+  loop_control:
+    label: "{{ item.file }}"
+
 - name: Template zsh configuration files
   ansible.builtin.template:
     src: "{{ item.src }}"
@@ -40,6 +50,8 @@
       dest: ".zshrc"
     - src: "zsh-custom/zsh-aliases.zsh.j2"
       dest: ".oh-my-zsh/custom/zsh-aliases.zsh"
+    - src: "zsh-custom/zsh-notices.zsh.j2"
+      dest: ".oh-my-zsh/custom/zsh-notices.zsh"
   when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
 
 - name: Custom scripts directory
