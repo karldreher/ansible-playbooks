@@ -1,12 +1,14 @@
 ---
 # vars file for git
+
+git_alias_acp: &git_alias_acp >-
+  !b=$(git branch --show-current); case "$b" in
+  main|master) echo "On main/master. Aborting."; exit 1;;
+  esac; git add . && git commit && git push
+
 git_gitconfig:
   - name: alias.acp
-    value: >-
-      {{ '!zsh ~/.oh-my-zsh/custom/scripts/git_acp.zsh'
-         if (git_acp_installed is defined
-             and not git_acp_installed.skipped | default(false))
-         else '!git add .; git commit; git push' }}
+    value: *git_alias_acp
   - name: alias.ac
     value: "!git add .; git commit"
   - name: alias.gafp
