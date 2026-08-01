@@ -58,33 +58,27 @@ function cleanup-branch(){
 }
 
 function zalias_title(){
-    tput setaf 3
-    echo $1
-    tput sgr 0
+    printf '\033[33m%s\033[0m\n' "$1"
 }
 
 function zah(){
     zalias_title "Available Git Aliases: (usage: git <alias>)"
-    tput setaf 7
-    if (git config --list | grep -q alias); then
-        git config --list | grep alias | while read line
-            do
-                alias_name=$(echo $line | sed 's/^alias\.//' | sed 's/=.*//')
-                alias_cmd=$(echo $line | sed 's/^alias\.[^=]*=//')
-                printf '  %-20s %s\n' "$alias_name" "$alias_cmd"
-            done
-    fi
+    git config --list | grep alias | while read line
+      # todo: not dynamic.  This can be pulled from the git role, at which point this can be templated.
+        do
+            alias_name=${line#alias.}
+            alias_name=${alias_name%%=*}
+            alias_cmd=${line#*=}
+            printf '\033[37m  %-20s %s\033[0m\n' "$alias_name" "$alias_cmd"
+        done
     echo ""
 
     zalias_title "Custom Zsh Aliases:"
-    tput setaf 7
 
 {% for item in (omz_zshrc_aliases | sort(attribute='alias')) %}
-    printf '  %-20s %s\n' '{{ item.alias }}' '{{ item.description | replace("'", "'\\''") }}'
+    printf '\033[37m  %-20s %s\033[0m\n' '{{ item.alias }}' '{{ item.description | replace("'", "'\\''") }}'
 {% endfor %}
 
-    #revert colors
-    tput sgr 0
     echo ""
 }
 
@@ -93,7 +87,5 @@ function zah(){
 alias {{ item.alias }}="{{ item.command }}"
 {% endfor %}
 
-tput setaf 3
-echo "Alias help: type 'zah'"
+zalias_title "Alias help: type 'zah'"
 echo ""
-tput sgr 0
