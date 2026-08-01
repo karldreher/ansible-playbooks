@@ -1,12 +1,12 @@
 ---
 # vars file for git
+
 git_gitconfig:
   - name: alias.acp
     value: >-
-      {{ '!zsh ~/.oh-my-zsh/custom/scripts/git_acp.zsh'
-         if (git_acp_installed is defined
-             and not git_acp_installed.skipped | default(false))
-         else '!git add .; git commit; git push' }}
+      !case "$(git symbolic-ref --short HEAD 2>/dev/null)" in
+      main|master) printf '\033[31m%s\033[0m\n' "On main/master. Aborting."; exit 1;;
+      esac; git add . && git commit && git push
   - name: alias.ac
     value: "!git add .; git commit"
   - name: alias.gafp

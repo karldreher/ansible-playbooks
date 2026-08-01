@@ -70,9 +70,7 @@
   when: "omz_zshrc_goenv_folder.stat.exists and omz_zshrc_goenv_folder.stat.isdir"
 
 - name: Template git_acp.zsh
-  ansible.builtin.template:
-    src: zsh-custom/scripts/git_acp.zsh.j2
-    dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/scripts/git_acp.zsh"
-    mode: "0644"
-  register: omz_zshrc_git_acp_installed
-  when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
+  # TODO: remove upon next update
+  ansible.builtin.file:
+    path: "{{ homedir.stdout }}/.oh-my-zsh/custom/scripts/git_acp.zsh"
+    state: absent
