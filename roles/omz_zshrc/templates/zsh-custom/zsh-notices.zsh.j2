@@ -4,30 +4,26 @@
 function _omz_zshrc_show_notice(){
     local notice_file="$1"
     local notice_title="$2"
-    local notice_lines=()
-    local notice_line
 
-    if [[ -f "$notice_file" ]]; then
-        while IFS= read -r notice_line; do
-            [[ "$notice_line" == '#'* ]] && continue
-            [[ -z "${notice_line//[[:space:]]/}" ]] && continue
-            notice_lines+=("$notice_line")
-        done < "$notice_file"
-    fi
+    [[ ! -f "$notice_file" ]] && return
 
-    if (( ${#notice_lines[@]} > 0 )); then
-        tput bold
-        tput setaf 7
-        echo "$notice_title"
-        tput sgr 0
-        tput setaf 7
-        for notice_line in "${notice_lines[@]}"; do
-            echo "$notice_line"
-        done
-        tput sgr 0
-        echo "See ${notice_file/#$HOME/~}"
-        echo ""
-    fi
+    # Use rg to find non-comment, non-blank lines in one pass
+    local notice_lines
+    notice_lines=$(rg -v '^\s*($|#)' "$notice_file" 2>/dev/null)
+
+    # Early exit if no matches (opportunistic)
+    [[ -z "$notice_lines" ]] && return
+
+    # Print title and lines with color
+    tput bold
+    tput setaf 7
+    echo "$notice_title"
+    tput sgr 0
+    tput setaf 7
+    echo "$notice_lines"
+    tput sgr 0
+    echo "See ${notice_file/#$HOME/~}"
+    echo ""
 }
 {% endraw %}
 
