@@ -63,14 +63,17 @@ function zalias_title(){
 
 function zah(){
     zalias_title "Available Git Aliases: (usage: git <alias>)"
-    git config --list | grep alias | while read line
-      # todo: not dynamic.  This can be pulled from the git role, at which point this can be templated.
-        do
-            alias_name=${line#alias.}
-            alias_name=${alias_name%%=*}
-            alias_cmd=${line#*=}
-            printf '\033[37m  %-20s %s\033[0m\n' "$alias_name" "$alias_cmd"
-        done
+{% for git_item in (git_gitconfig | selectattr('name', 'match', '^alias\\.') | sort(attribute='name')) %}
+{% set git_alias_name = git_item.name | regex_replace('^alias\\.', '') %}
+{# acp uses inline bash; show a concise description instead of the full command. #}
+{# This is an exception, which we manage here rather than extending the role vars for git.#}
+{% if git_alias_name == 'acp' %}
+{% set git_alias_description = 'Add files, commit, and push' %}
+{% else %}
+{% set git_alias_description = git_item.value | string %}
+{% endif %}
+    printf '\033[37m  %-20s %s\033[0m\n' '{{ git_alias_name }}' '{{ git_alias_description | replace("'", "'\\''") }}'
+{% endfor %}
     echo ""
 
     zalias_title "Custom Zsh Aliases:"

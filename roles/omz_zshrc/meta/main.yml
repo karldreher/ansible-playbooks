@@ -2,3 +2,4 @@
 dependencies:
   - role: facts
   - role: misc_packages
+  - role: git
