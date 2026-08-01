@@ -64,6 +64,7 @@ function zalias_title(){
 function zah(){
     zalias_title "Available Git Aliases: (usage: git <alias>)"
     git config --list | grep alias | while read line
+      # todo: not dynamic.  This can be pulled from the git role, at which point this can be templated.
         do
             alias_name=${line#alias.}
             alias_name=${alias_name%%=*}
