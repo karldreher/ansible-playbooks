@@ -44,18 +44,12 @@ omz_zshrc_aliases:
     command: git unstash
     description: git unstash
 
-  - alias: ve
-    command: ve
-    description: Wrap the venv command and infer current working directory for venv name.
-
 
 # To enable more omz plugins, add them here.
 omz_zshrc_omz_plugin_list:
   - git
-  - venv-wrapper
   - terraform
   - nvm
-  - pyenv
 
 # Notice files for profile experiments and reminders
 omz_zshrc_notices:

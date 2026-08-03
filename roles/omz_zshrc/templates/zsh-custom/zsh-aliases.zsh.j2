@@ -9,7 +9,7 @@ function clone(){
 
 function docker_build_this(){
     # Build the Dockerfile in the current directory.
-    docker build -t $(basename $(pwd)) .
+    docker build -t ${PWD:t} .
 }
 
 function docker_run_this(){
@@ -25,26 +25,13 @@ function docker_run_this(){
     else
         PORT=""
     fi
-    docker run -it --rm $PORT $(basename $(pwd))
-}
-
-function ve(){
-    # Wrap the venv command and infer current working directory.
-    name=$(basename $(pwd))
-    # IF the directory does not have a .git directory, see if the one above does
-    if [[ ! -d .git ]]; then
-        if [[ -d ../.git ]]; then
-            # Use a combination of parent path and leaf
-            parent=$(basename $(dirname $(pwd)))
-            name=$parent--$name
-        fi
-    fi
-    venv $name
+    docker run -it --rm $PORT ${PWD:t}
 }
 
 function cleanup-branch(){
     branch_to_delete=$(git branch --show-current)
-    dest_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@')
+    dest_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null)
+    dest_branch=${dest_branch#origin/}
     if [[ -z "$dest_branch" ]]; then
         echo "No default branch found."
         return 1

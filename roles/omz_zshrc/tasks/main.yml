@@ -21,13 +21,6 @@
     - "misc_packages_brew_packages is defined"
     - "not misc_packages_brew_packages is failed"
 
-- name: Install venv plugin
-  ansible.builtin.git:
-    repo: https://github.com/glostis/venv-wrapper.git
-    dest: "{{ homedir.stdout }}/.oh-my-zsh/plugins/venv-wrapper"
-    version: 81af4239bc5bb99eaa98117b2988a29fdd5b7eb7
-  when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
-
 - name: Create notice files if they do not exist
   ansible.builtin.copy:
     dest: "{{ homedir.stdout }}/{{ item.file }}"
