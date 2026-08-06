@@ -1,11 +1,9 @@
-{% raw %}# Echoes any active (non-comment) lines from a notice file (experiments.txt,
-# reminders.txt) on shell startup, as a reminder to reconcile in-progress
-# profile experiments.
-#
-# Deliberately uses only zsh builtins.  This runs on every shell start and the
-# notice files are a handful of lines, so process spawns dominate: forking rg
-# to filter costs ~2.6ms and the six tput calls cost ~8.9ms, while the builtin
-# loop plus a single printf comes in at ~0.13ms.
+{% raw %}# Notice files (experiments.txt, reminders.txt) hold in-progress profile
+# experiments and general reminders.  On shell startup we only check whether
+# any notice file has active (non-comment) content and print a short hint if
+# so; the full listing is shown on demand via 'reminders', to avoid dumping
+# notice content on every shell launch.  Uses only zsh builtins, since this
+# runs on every shell start.
 
 function _omz_zshrc_show_notice(){
     local notice_file="$1"
@@ -29,8 +27,38 @@ function _omz_zshrc_show_notice(){
     printf '\033[1m\033[37m%s\033[0m\n\033[37m%s\033[0m\nSee %s\n\n' \
         "$notice_title" "${(F)notice_lines}" "${notice_file/#$HOME/~}"
 }
+
+function _omz_zshrc_notice_has_content(){
+    local notice_file="$1"
+    local notice_line
+
+    [[ -f "$notice_file" ]] || return 1
+
+    while IFS= read -r notice_line; do
+        [[ "$notice_line" == '#'* ]] && continue
+        [[ -z "${notice_line//[[:space:]]/}" ]] && continue
+        return 0
+    done < "$notice_file"
+
+    return 1
+}
+
+function reminders(){
+{% endraw %}
+{% for item in omz_zshrc_notices %}
+    _omz_zshrc_show_notice "$HOME/{{ item.file }}" "{{ item.title }}"
+{% endfor %}
+{% raw %}
+}
 {% endraw %}
 
+{% raw %}
+_omz_zshrc_pending_notice=""
+{% endraw %}
 {% for item in omz_zshrc_notices %}
-_omz_zshrc_show_notice "$HOME/{{ item.file }}" "{{ item.title }}"
+[[ -z "$_omz_zshrc_pending_notice" ]] && _omz_zshrc_notice_has_content "$HOME/{{ item.file }}" && _omz_zshrc_pending_notice=1
 {% endfor %}
+{% raw %}
+[[ -n "$_omz_zshrc_pending_notice" ]] && printf '\033[1m\033[37m%s\033[0m\n\n' "Pending notices — run 'reminders' to review."
+unset _omz_zshrc_pending_notice
+{% endraw %}
