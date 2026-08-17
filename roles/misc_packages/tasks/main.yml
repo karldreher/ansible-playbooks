@@ -25,3 +25,7 @@
   ansible.builtin.import_tasks: apt_upgrade.yml
   when: ansible_facts["os_family"] == "Debian"
   tags: [upgrade, never]
+
+- name: Upgrade script-based packages
+  ansible.builtin.import_tasks: script-packages-upgrade.yml
+  tags: [upgrade, never]
