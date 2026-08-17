@@ -1,16 +1,8 @@
 ---
-- name: Upgrade bun (JavaScript runtime)  # noqa: command-instead-of-module
-  ansible.builtin.shell: |
-    set -o pipefail
-    curl -fsSL https://bun.sh/install | bash
-  args:
-    executable: /bin/bash
+- name: Upgrade bun (JavaScript runtime)
+  ansible.builtin.command: bun upgrade
   changed_when: true
 
-- name: Upgrade uv  # noqa: command-instead-of-module
-  ansible.builtin.shell: |
-    set -o pipefail
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-  args:
-    executable: /bin/bash
+- name: Upgrade uv
+  ansible.builtin.command: uv self update
   changed_when: true
