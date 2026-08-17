@@ -1,0 +1,14 @@
+---
+- name: Upgrade vim via Homebrew  # noqa: package-latest
+  community.general.homebrew:
+    name: vim
+    state: latest
+  when: ansible_facts["os_family"] == "Darwin"
+
+- name: Upgrade vim via apt  # noqa: package-latest
+  ansible.builtin.apt:
+    name: vim
+    state: latest
+    update_cache: true
+  become: true
+  when: ansible_facts["os_family"] == "Debian"

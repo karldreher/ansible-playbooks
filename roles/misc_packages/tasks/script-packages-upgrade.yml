@@ -1,0 +1,8 @@
+---
+- name: Upgrade bun (JavaScript runtime)
+  ansible.builtin.command: bun upgrade
+  changed_when: true
+
+- name: Upgrade uv
+  ansible.builtin.command: uv self update
+  changed_when: true
