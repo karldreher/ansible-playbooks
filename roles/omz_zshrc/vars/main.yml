@@ -50,6 +50,7 @@ omz_zshrc_omz_plugin_list:
   - git
   - terraform
   - nvm
+  - omz-vimtips  # custom plugin, cloned by tasks/main.yml
 
 # Notice files for profile experiments and reminders
 omz_zshrc_notices:

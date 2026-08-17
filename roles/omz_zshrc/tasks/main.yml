@@ -21,6 +21,13 @@
     - "misc_packages_brew_packages is defined"
     - "not misc_packages_brew_packages is failed"
 
+- name: Install omz-vimtips plugin
+  ansible.builtin.git:
+    repo: https://github.com/karldreher/omz-vimtips.git
+    dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/plugins/omz-vimtips"
+    version: c7cde5c19b78cccb629265915809c831f70209de
+  when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
+
 - name: Create notice files if they do not exist
   ansible.builtin.copy:
     dest: "{{ homedir.stdout }}/{{ item.file }}"
