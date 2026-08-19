@@ -7,7 +7,7 @@ graph TD
     git -->|depends on| facts
     misc_dotfiles -->|depends on| facts
     misc_dotfiles -->|depends on| misc_packages
-    misc_packages
+    misc_packages -->|depends on| facts
     omz_zshrc -->|depends on| facts
     omz_zshrc -->|depends on| git
     omz_zshrc -->|depends on| misc_packages
