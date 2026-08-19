@@ -16,12 +16,20 @@
   ansible.builtin.include_tasks: apt_packages.yml
   when: ansible_facts["os_family"] == "Debian"
 
+- name: Check that zsh binary exists
+  ansible.builtin.stat:
+    path: /usr/bin/zsh
+  register: misc_packages_zsh_binary
+  when: ansible_facts["os_family"] == "Debian"
+
 - name: Set zsh as default login shell
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
   become: true
-  when: ansible_facts["os_family"] == "Debian"
+  when:
+    - ansible_facts["os_family"] == "Debian"
+    - misc_packages_zsh_binary.stat.exists
 
 - name: Upgrade macOS homebrew packages
   ansible.builtin.import_tasks: brew_upgrade.yml
