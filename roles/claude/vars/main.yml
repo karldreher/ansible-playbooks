@@ -152,4 +152,24 @@ claude_settings:
       # real machines and should only be run by the user.
       - "Bash(ansible-playbook*)"
       - "Bash(sudo ansible-playbook*)"
+      # Kubernetes mutating subcommands — changing cluster state should be a
+      # deliberate, confirmed action, not an ad-hoc auto-approved command.
+      - "Bash(kubectl annotate*)"
+      - "Bash(kubectl apply*)"
+      - "Bash(kubectl cordon*)"
+      - "Bash(kubectl create*)"
+      - "Bash(kubectl delete*)"
+      - "Bash(kubectl drain*)"
+      - "Bash(kubectl edit*)"
+      - "Bash(kubectl exec*)"
+      - "Bash(kubectl label*)"
+      - "Bash(kubectl patch*)"
+      - "Bash(kubectl replace*)"
+      - "Bash(kubectl rollout*)"
+      - "Bash(kubectl scale*)"
+      - "Bash(kubectl set*)"
+      - "Bash(kubectl taint*)"
+      - "Bash(kubectl uncordon*)"
+      # File removal — destructive and irreversible.
+      - "Bash(rm*)"
     defaultMode: "plan"
