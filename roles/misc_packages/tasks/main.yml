@@ -24,7 +24,7 @@
 
 - name: Set zsh as default login shell
   ansible.builtin.user:
-    name: ansible_facts["user_id"]
+    name: "{{ ansible_facts['user_id'] }}"
     shell: /usr/bin/zsh
   become: true
   when:
