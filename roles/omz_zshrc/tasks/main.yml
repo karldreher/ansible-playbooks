@@ -6,10 +6,11 @@
     path: "{{ homedir.stdout }}/.oh-my-zsh"
   register: omz_zshrc_omz_folder
 
-- name: Check that goenv folder exists
-  ansible.builtin.stat:
-    path: "{{ homedir.stdout }}/.goenv"
-  register: omz_zshrc_goenv_folder
+- name: Check if goenv is installed
+  ansible.builtin.command: which goenv
+  register: omz_zshrc_goenv_binary
+  failed_when: false
+  changed_when: false
 
 - name: Tfswitch enabled
   # TODO: Refactor this more elegantly later, but this is more of a
@@ -67,7 +68,7 @@
     src: zsh-custom/zsh-goenv.zsh.j2
     dest: "{{ homedir.stdout }}/.oh-my-zsh/custom/zsh-goenv.zsh"
     mode: "0644"
-  when: "omz_zshrc_goenv_folder.stat.exists and omz_zshrc_goenv_folder.stat.isdir"
+  when: "omz_zshrc_goenv_binary.rc == 0"
 
 - name: Template git_acp.zsh
   # TODO: remove upon next update
