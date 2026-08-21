@@ -15,6 +15,7 @@ misc_packages_macos_brew_taps:
 misc_packages_macos_brew_packages:
   - diceware
   - gh
+  - goenv
   - httpie
   - jq
   - kubectx
