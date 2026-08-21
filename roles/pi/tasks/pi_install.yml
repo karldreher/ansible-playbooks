@@ -1,0 +1,16 @@
+---
+- name: Install pi via Homebrew
+  community.general.homebrew:
+    name: pi-coding-agent
+    state: present
+  when: ansible_facts["os_family"] == "Darwin"
+
+- name: Install pi via install script  # noqa: command-instead-of-module
+  ansible.builtin.shell: |
+    set -o pipefail
+    curl -fsSL https://pi.dev/install.sh | sh
+  args:
+    creates: "{{ homedir.stdout }}/.local/bin/pi"
+    executable: /bin/bash
+  when: ansible_facts["os_family"] == "Debian"
+  register: pi_install_script

@@ -1,0 +1,3 @@
+---
+# vars file for pi
+pi_llama_extension_repo: git:github.com/huggingface/pi-llama
