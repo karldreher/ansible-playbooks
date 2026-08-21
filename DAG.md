@@ -11,6 +11,7 @@ graph TD
     omz_zshrc -->|depends on| facts
     omz_zshrc -->|depends on| git
     omz_zshrc -->|depends on| misc_packages
+    pi -->|depends on| claude
     pi -->|depends on| facts
     vim -->|depends on| facts
 

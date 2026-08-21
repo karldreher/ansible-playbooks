@@ -1,0 +1,49 @@
+---
+# Point pi at the claude role's skills directory.
+# https://pi.dev/docs/latest/skills#using-skills-from-other-harnesses
+
+- name: Check if pi settings.json exists
+  ansible.builtin.stat:
+    path: "{{ homedir.stdout }}/.pi/settings.json"
+  register: pi_settings_file
+
+- name: Read existing pi settings.json
+  ansible.builtin.slurp:
+    src: "{{ homedir.stdout }}/.pi/settings.json"
+  register: pi_existing_settings_raw
+  when: pi_settings_file.stat.exists
+
+- name: Parse existing pi settings
+  ansible.builtin.set_fact:
+    pi_existing_settings: "{{ pi_existing_settings_raw.content | b64decode | from_json }}"
+  when: pi_settings_file.stat.exists
+
+- name: Set empty pi settings when file does not exist
+  ansible.builtin.set_fact:
+    pi_existing_settings: {}
+  when: not pi_settings_file.stat.exists
+
+- name: Build merged pi settings
+  ansible.builtin.set_fact:
+    pi_merged_settings: >-
+      {{
+        pi_existing_settings
+        | combine({
+            'skills': (
+              (pi_existing_settings.skills | default([]))
+              + [homedir.stdout + '/.claude/skills']
+            ) | unique
+          }, recursive=true)
+      }}
+
+- name: Create .pi directory
+  ansible.builtin.file:
+    path: "{{ homedir.stdout }}/.pi"
+    state: directory
+    mode: "0755"
+
+- name: Write merged pi settings.json
+  ansible.builtin.copy:
+    content: "{{ pi_merged_settings | to_nice_json }}\n"
+    dest: "{{ homedir.stdout }}/.pi/settings.json"
+    mode: "0644"
