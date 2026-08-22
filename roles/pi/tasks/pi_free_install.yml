@@ -1,0 +1,14 @@
+---
+# pi install has no built-in "already installed" no-op, and npm-based
+# packages don't land at a single predictable path we can use with
+# `creates:`, so check `pi list` first instead (same idiom as
+# gh_extensions/tasks/install.yml).
+- name: Get list of installed pi packages
+  ansible.builtin.command: pi list
+  register: pi_list_result
+  changed_when: false
+
+- name: Install pi-free extension
+  ansible.builtin.command: "pi install {{ pi_free_extension_package }}"
+  when: "'pi-free' not in pi_list_result.stdout"
+  changed_when: true

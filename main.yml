@@ -9,3 +9,4 @@
     - role: misc_dotfiles
     - role: vim
     - role: claude
+    - role: pi

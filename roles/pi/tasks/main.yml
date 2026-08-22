@@ -1,0 +1,18 @@
+---
+# tasks file for pi
+
+- name: Install pi
+  ansible.builtin.include_tasks: pi_install.yml
+
+- name: Configure pi to use claude skills
+  ansible.builtin.include_tasks: pi_settings.yml
+
+- name: Install pi-llama extension
+  ansible.builtin.include_tasks: pi_llama_install.yml
+
+- name: Install pi-free extension
+  ansible.builtin.include_tasks: pi_free_install.yml
+
+- name: Upgrade pi
+  ansible.builtin.import_tasks: pi_upgrade.yml
+  tags: [upgrade, never]
