@@ -2,6 +2,15 @@
 # https://code.claude.com/docs/en/settings.md
 # https://code.claude.com/docs/en/permissions.md
 
+# Skills from https://skills.sh/
+# Each entry: { repo: "<owner/repo>", skill: "<skill-name>", ref: "<optional branch/tag>" }
+claude_marketplace_skills:
+  - repo: "karldreher/oblique-skill"
+    skill: "oblique"
+
+# Skills to uninstall — same format as claude_marketplace_skills
+claude_marketplace_skills_remove: []
+
 claude_settings:
   attribution:
     commit: ""
