@@ -7,9 +7,6 @@
 - name: Configure pi to use claude skills
   ansible.builtin.include_tasks: pi_settings.yml
 
-- name: Install pi-llama extension
-  ansible.builtin.include_tasks: pi_llama_install.yml
-
 - name: Install pi-freerouter extension
   ansible.builtin.include_tasks: pi_freerouter_install.yml
 

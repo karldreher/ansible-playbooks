@@ -1,5 +1,0 @@
----
-- name: Install pi-llama extension
-  ansible.builtin.command: "pi install {{ pi_llama_extension_repo }}"
-  args:
-    creates: "{{ homedir.stdout }}/.pi/agent/packages/pi-llama"
