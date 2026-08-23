@@ -10,8 +10,8 @@
 - name: Install pi-llama extension
   ansible.builtin.include_tasks: pi_llama_install.yml
 
-- name: Install pi-free extension
-  ansible.builtin.include_tasks: pi_free_install.yml
+- name: Install pi-freerouter extension
+  ansible.builtin.include_tasks: pi_freerouter_install.yml
 
 - name: Upgrade pi
   ansible.builtin.import_tasks: pi_upgrade.yml

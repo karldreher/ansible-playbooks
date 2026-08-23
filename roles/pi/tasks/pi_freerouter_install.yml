@@ -8,7 +8,7 @@
   register: pi_list_result
   changed_when: false
 
-- name: Install pi-free extension
-  ansible.builtin.command: "pi install {{ pi_free_extension_package }}"
-  when: "'pi-free' not in pi_list_result.stdout"
+- name: Install pi-freerouter extension
+  ansible.builtin.command: "pi install {{ pi_freerouter_extension_package }}"
+  when: "'pi-freerouter' not in pi_list_result.stdout"
   changed_when: true
