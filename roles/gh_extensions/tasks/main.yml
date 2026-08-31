@@ -1,6 +1,10 @@
 ---
 # tasks file for gh-extensions
 
+- name: Check GitHub CLI authentication status
+  ansible.builtin.import_tasks: check_auth.yml
+  tags: always
+
 - name: Install GitHub CLI extensions
   ansible.builtin.import_tasks: install.yml
 
