@@ -1,0 +1,15 @@
+---
+- name: Check GitHub CLI authentication status
+  ansible.builtin.command: gh auth status --json hosts
+  register: gh_extensions_auth_status_result
+  changed_when: false
+  failed_when: false
+
+- name: Determine GitHub CLI authentication state
+  ansible.builtin.set_fact:
+    gh_extensions_authenticated: >-
+      {{ gh_extensions_auth_status_result.rc == 0 and
+      (gh_extensions_auth_status_result.stdout | from_json).hosts['github.com']
+      | selectattr('state', 'equalto', 'success')
+      | selectattr('active', 'equalto', true)
+      | list | length > 0 }}
