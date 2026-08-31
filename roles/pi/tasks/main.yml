@@ -1,15 +1,31 @@
 ---
 # tasks file for pi
 
+# pi installs its extensions from npm (see pi_freerouter_extension_package),
+# and nothing in this repo provides node/npm, so skip the whole role when
+# npm is absent rather than failing partway through.
+# `always` so the probe still runs under `--tags upgrade`, where the gated
+# import_tasks below would otherwise template an undefined variable.
+- name: Check if npm is installed
+  ansible.builtin.command: which npm
+  register: pi_which_npm
+  failed_when: false
+  changed_when: false
+  tags: [always]
+
 - name: Install pi
   ansible.builtin.include_tasks: pi_install.yml
+  when: pi_which_npm.rc == 0
 
 - name: Configure pi to use claude skills
   ansible.builtin.include_tasks: pi_settings.yml
+  when: pi_which_npm.rc == 0
 
 - name: Install pi-freerouter extension
   ansible.builtin.include_tasks: pi_freerouter_install.yml
+  when: pi_which_npm.rc == 0
 
 - name: Upgrade pi
   ansible.builtin.import_tasks: pi_upgrade.yml
+  when: pi_which_npm.rc == 0
   tags: [upgrade, never]
