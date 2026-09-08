@@ -1,5 +1,9 @@
 ---
 omz_zshrc_aliases:
+  - alias: actup
+    command: bunx actions-up --style preserve
+    description: Update Actions versions in the current repo.
+
   - alias: clone
     command: clone
     description: Clone a GitHub repo via 'gh repo clone'; accepts owner/repo or a github.com URL
