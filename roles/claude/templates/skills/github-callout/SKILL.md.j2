@@ -1,0 +1,105 @@
+---
+name: github-callout
+description: Create GitHub markdown callouts by mapping urgency or importance levels to the correct callout style (NOTE, TIP, IMPORTANT, WARNING, CAUTION). Ask clarifying questions if the user's request is ambiguous.
+argument-hint: "[level: note/tip/important/warning/caution/info/danger]"
+disable-model-invocation: true
+---
+
+## Purpose
+
+Help users create properly formatted GitHub markdown callouts for use in README files, markdown documents, or PR comments. Map the user's description of urgency or importance to the correct callout style.
+
+## GitHub Callout Styles
+
+```markdown
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
+
+> [!TIP]
+> Helpful advice for doing things better or more easily.
+
+> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
+
+> [!WARNING]
+> Urgent info that needs immediate user attention to avoid problems.
+
+> [!CAUTION]
+> Advises about risks or negative outcomes of certain actions.
+```
+
+## Instructions
+
+### Step 1: Parse the user's level
+
+The user provides a level that describes the callout's urgency or purpose. Map it to one of the 5 styles:
+
+- **"note"** or **"info"** → `[!NOTE]` — general information
+- **"tip"** or **"advice"** → `[!TIP]` — helpful guidance
+- **"important"** or **"critical"** → `[!IMPORTANT]` — key information to achieve a goal
+- **"warning"** or **"caution"** → `[!WARNING]` — needs immediate attention to avoid problems
+- **"danger"** or **"risk"** → `[!CAUTION]` — warns of risks or negative outcomes
+
+Special mappings (as specified):
+- "info" → NOTE
+- "danger" → CAUTION
+
+### Step 2: Handle ambiguous input
+
+If the user's level doesn't clearly match one of the 5 styles, ask for clarification using `AskUserQuestion`. Examples of ambiguous input:
+- "something urgent" (could be WARNING or CAUTION — ask which)
+- "remember this" (could be NOTE or IMPORTANT — depends on urgency vs general utility)
+- Generic terms like "level" without context
+
+Ask a single focused question that helps distinguish which style fits best. For example:
+
+**For "urgent":** "Is this something that needs immediate action to avoid a problem, or is it key information to achieve a goal? (CAUTION vs WARNING vs IMPORTANT)"
+
+**For "remember this":** "Is this useful general information (NOTE), helpful advice (TIP), or critical to success (IMPORTANT)?"
+
+### Step 3: Generate the callout template
+
+Once you've mapped the level, provide the markdown syntax:
+
+```markdown
+> [!STYLE]
+> Content goes here.
+```
+
+Replace `STYLE` with the mapped callout type.
+
+### Step 4: Present to the user
+
+Output the markdown callout template so the user can copy it and fill in their content. Format it in a code block (` ```markdown ... ``` `) so it's easy to copy-paste.
+
+Optionally, offer to help draft the callout content if the user provides text.
+
+## Example
+
+**Input:** `/github-callout warning`
+
+**Output:**
+
+```markdown
+> [!WARNING]
+> Add your warning text here.
+```
+
+---
+
+**Input:** `/github-callout info`
+
+**Output:**
+
+```markdown
+> [!NOTE]
+> Add your note text here.
+```
+
+---
+
+**Input:** `/github-callout something important about performance` (ambiguous)
+
+**Question:** "Is this a critical requirement users need to know (IMPORTANT), or a helpful tip for optimization (TIP)?"
+
+After user clarifies → provide the appropriate template.
