@@ -179,6 +179,4 @@ claude_settings:
       - "Bash(kubectl set*)"
       - "Bash(kubectl taint*)"
       - "Bash(kubectl uncordon*)"
-      # File removal — destructive and irreversible.
-      - "Bash(rm*)"
     defaultMode: "plan"
