@@ -4,6 +4,9 @@
   register: gh_extensions_auth_status_result
   changed_when: false
   failed_when: false
+  # Must run even in --check mode so rc/stdout are populated for the set_fact below.
+  # It is considered low risk, at worst gh is not installed yet.
+  check_mode: false
 
 - name: Determine GitHub CLI authentication state
   ansible.builtin.set_fact:
