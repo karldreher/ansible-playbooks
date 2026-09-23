@@ -4,7 +4,7 @@
     set -o pipefail
     curl -fsSL https://bun.sh/install | bash
   args:
-    creates: "{{ homedir.stdout }}/.bun/bin/bun"
+    creates: "{{ ansible_user_dir }}/.bun/bin/bun"
     executable: /bin/bash
   register: misc_packages_bun_install
 
@@ -13,6 +13,6 @@
     set -o pipefail
     curl -LsSf https://astral.sh/uv/install.sh | sh
   args:
-    creates: "{{ homedir.stdout }}/.local/bin/uv"
+    creates: "{{ ansible_user_dir }}/.local/bin/uv"
     executable: /bin/bash
   register: misc_packages_uv_install

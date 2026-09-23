@@ -3,12 +3,12 @@
 
 - name: Check if settings.json exists
   ansible.builtin.stat:
-    path: "{{ homedir.stdout }}/.claude/settings.json"
+    path: "{{ ansible_user_dir }}/.claude/settings.json"
   register: claude_settings_file
 
 - name: Read existing settings.json
   ansible.builtin.slurp:
-    src: "{{ homedir.stdout }}/.claude/settings.json"
+    src: "{{ ansible_user_dir }}/.claude/settings.json"
   register: claude_existing_settings_raw
   when: claude_settings_file.stat.exists
 
@@ -44,7 +44,7 @@
 
 - name: Check if RTK.md exists
   ansible.builtin.stat:
-    path: "{{ homedir.stdout }}/.claude/RTK.md"
+    path: "{{ ansible_user_dir }}/.claude/RTK.md"
   register: claude_rtk_md
 
 # Coupled to rtk's `rtk init -g --auto-patch` output shape (command "rtk hook claude",
@@ -70,11 +70,11 @@
 - name: Write merged settings.json
   ansible.builtin.copy:
     content: "{{ claude_merged_settings | to_nice_json }}\n"
-    dest: "{{ homedir.stdout }}/.claude/settings.json"
+    dest: "{{ ansible_user_dir }}/.claude/settings.json"
     mode: "0644"
 
 - name: Template CLAUDE.md
   ansible.builtin.template:
     src: templates/CLAUDE.md.j2
-    dest: "{{ homedir.stdout }}/.claude/CLAUDE.md"
+    dest: "{{ ansible_user_dir }}/.claude/CLAUDE.md"
     mode: "0644"
