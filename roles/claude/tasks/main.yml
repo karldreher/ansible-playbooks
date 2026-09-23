@@ -3,7 +3,7 @@
 
 - name: Create .claude directory
   ansible.builtin.file:
-    path: "{{ homedir.stdout }}/.claude"
+    path: "{{ ansible_user_dir }}/.claude"
     state: directory
     mode: "0755"
 

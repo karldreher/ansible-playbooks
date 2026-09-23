@@ -10,14 +10,14 @@
 
 - name: Create agents directory
   ansible.builtin.file:
-    path: "{{ homedir.stdout }}/.claude/agents"
+    path: "{{ ansible_user_dir }}/.claude/agents"
     state: directory
     mode: "0755"
 
 - name: Template agents
   ansible.builtin.template:
     src: "{{ item.path }}"
-    dest: "{{ homedir.stdout }}/.claude/agents/{{ item.path | basename | replace('.j2', '') }}"
+    dest: "{{ ansible_user_dir }}/.claude/agents/{{ item.path | basename | replace('.j2', '') }}"
     mode: "0644"
   loop: "{{ claude_agent_templates.files }}"
   loop_control:
