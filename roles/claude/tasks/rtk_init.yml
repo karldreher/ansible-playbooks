@@ -8,5 +8,5 @@
 - name: Initialize rtk globally
   ansible.builtin.command: rtk init -g --auto-patch
   args:
-    creates: "{{ homedir.stdout }}/.claude/RTK.md"
+    creates: "{{ ansible_user_dir }}/.claude/RTK.md"
   when: claude_which_claude.rc == 0

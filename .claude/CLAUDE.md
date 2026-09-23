@@ -12,7 +12,7 @@ Use `uvx ansible-lint` to run ansible-lint (no local install required).
 
 All variables defined within a role (in `vars/main.yml` or via `register:`) must be prefixed with the role name, using underscores (not hyphens). Example: a variable `foo` in role `my_role` must be named `my_role_foo`.
 
-This is enforced by the `var-naming[no-role-prefix]` ansible-lint rule. The only exception is `homedir` in the `facts` role, which is intentionally cross-role and suppressed with `# noqa: var-naming[no-role-prefix]`.
+This is enforced by the `var-naming[no-role-prefix]` ansible-lint rule.
 
 ### Role directory names
 
