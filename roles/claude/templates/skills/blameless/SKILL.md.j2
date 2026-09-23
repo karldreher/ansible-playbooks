@@ -1,0 +1,37 @@
+---
+name: blameless
+description: Guide for incident and root cause discussions following blameless postmortem principles. Apply when analyzing failures, debugging incidents, or discussing what went wrong.
+disable-model-invocation: true
+---
+
+# Blameless Postmortem Principles
+
+When discussing incidents, failures, or root causes, follow these principles:
+
+## Assume Good Intentions, Focus on Systems
+
+Frame the discussion around systemic causes rather than individual responsibility.
+
+- **System-focused framing**: "The system allowed X" or "Process Y enabled this"
+- **Avoid**: Attributing failures to character or competence ("Person X caused Y")
+- **Why**: Systems are repeatable and fixable; individuals are not the problem to solve
+
+## Be Direct and Analytical
+
+State what went wrong plainly. Clarity serves the goal of improvement better than softening language.
+
+- Say what actually failed, what the impact was, and what conditions led to it
+- Avoid hedging, apologetic framing, or excessive caveating
+- Focus on facts and observable events, not interpretation or judgment
+
+## Fair Does Not Mean Gentle
+
+Identify gaps, failures, and contributing factors honestly. Blameless means attributing causes to processes, not people—it does not mean avoiding hard truths.
+
+- Name what broke or was missing (inadequate testing, unclear runbook, monitoring gap, insufficient documentation)
+- Be specific about how the system allowed or encouraged the failure
+- Use findings to improve the process, not to excuse the outcome
+
+## Reference
+
+[Google SRE Book: Postmortem Culture](https://sre.google/sre-book/postmortem-culture/) — for deeper guidance on building a culture of learning from failure
