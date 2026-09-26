@@ -3,7 +3,7 @@
 
 - name: Check that OMZ folder exists
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.oh-my-zsh"
+    path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"
   register: omz_zshrc_omz_folder
 
 - name: Check if goenv is installed
@@ -25,13 +25,13 @@
 - name: Install omz-vimtips plugin
   ansible.builtin.git:
     repo: https://github.com/karldreher/omz-vimtips.git
-    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/omz-vimtips"
+    dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/plugins/omz-vimtips"
     version: c7cde5c19b78cccb629265915809c831f70209de
   when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
 
 - name: Create notice files if they do not exist
   ansible.builtin.copy:
-    dest: "{{ ansible_user_dir }}/{{ item.file }}"
+    dest: "{{ ansible_facts['user_dir'] }}/{{ item.file }}"
     content: "{{ item.header }}"
     force: false
     mode: "0644"
@@ -42,7 +42,7 @@
 - name: Template zsh configuration files
   ansible.builtin.template:
     src: "{{ item.src }}"
-    dest: "{{ ansible_user_dir }}/{{ item.dest }}"
+    dest: "{{ ansible_facts['user_dir'] }}/{{ item.dest }}"
     mode: "0644"
   loop:
     # src is relative to templates/ directory in this role
@@ -57,7 +57,7 @@
 
 - name: Custom scripts directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/scripts"
+    path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/scripts"
     state: directory
     mode: "0755"
   register: omz_zshrc_custom_scripts_dir
@@ -66,12 +66,12 @@
 - name: Template goenv
   ansible.builtin.template:
     src: zsh-custom/zsh-goenv.zsh.j2
-    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/zsh-goenv.zsh"
+    dest: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/zsh-goenv.zsh"
     mode: "0644"
   when: "omz_zshrc_goenv_binary.rc == 0"
 
 - name: Template git_acp.zsh
   # TODO: remove upon next update
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.oh-my-zsh/custom/scripts/git_acp.zsh"
+    path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/scripts/git_acp.zsh"
     state: absent

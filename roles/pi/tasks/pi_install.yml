@@ -10,7 +10,7 @@
     set -o pipefail
     curl -fsSL https://pi.dev/install.sh | sh
   args:
-    creates: "{{ ansible_user_dir }}/.local/bin/pi"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/pi"
     executable: /bin/bash
   when: ansible_facts["os_family"] == "Debian"
   register: pi_install_script

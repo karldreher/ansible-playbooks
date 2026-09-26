@@ -1,21 +1,21 @@
 {#- Set up PATH using Jinja templating -#}
 {#- Always include .local/bin -#}
-{%- set path_entries = [ansible_user_dir ~ '/.local/bin'] -%}
+{%- set path_entries = [ansible_facts['user_dir'] ~ '/.local/bin'] -%}
 
 {#- Optionally add .tfswitch if enabled -#}
 {%- if misc_packages_bun_install|default(false) -%}
     {#- Add bun to PATH if installed -#}
-    {%- set _ = path_entries.insert(0, ansible_user_dir ~ '/.bun/bin') -%}
+    {%- set _ = path_entries.insert(0, ansible_facts['user_dir'] ~ '/.bun/bin') -%}
 {%- endif -%}
 {%- if omz_zshrc_tfswitch_enabled|default(false) -%}
-    {%- set _ = path_entries.append(ansible_user_dir ~ '/.tfswitch') -%}
+    {%- set _ = path_entries.append(ansible_facts['user_dir'] ~ '/.tfswitch') -%}
 {%- endif -%}
 {#- Export the constructed PATH #}
 # PATH
 export PATH="{{- path_entries | join(':') -}}:$PATH"
 
 # Path to oh-my-zsh installation.
-export ZSH="{{ ansible_user_dir }}/.oh-my-zsh"
+export ZSH="{{ ansible_facts['user_dir'] }}/.oh-my-zsh"
 
 HIST_STAMPS="yyyy-mm-dd"
 ZSH_THEME="half-life"
@@ -58,8 +58,8 @@ export EDITOR=vim
 
 {% if misc_packages_bun_install|default(false) %}
 # bun completions
-[ -s "{{ ansible_user_dir }}/.bun/_bun" ] && source "{{ ansible_user_dir }}/.bun/_bun"
+[ -s "{{ ansible_facts['user_dir'] }}/.bun/_bun" ] && source "{{ ansible_facts['user_dir'] }}/.bun/_bun"
 
 # bun
-export BUN_INSTALL="{{ ansible_user_dir }}/.bun"
+export BUN_INSTALL="{{ ansible_facts['user_dir'] }}/.bun"
 {% endif %}

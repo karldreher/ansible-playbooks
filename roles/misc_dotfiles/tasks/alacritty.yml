@@ -1,12 +1,12 @@
 ---
 - name: Create alacritty config directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/alacritty"
+    path: "{{ ansible_facts['user_dir'] }}/.config/alacritty"
     state: directory
     mode: "0755"
 
 - name: Template alacritty config to $HOME/.config/alacritty/alacritty.toml
   ansible.builtin.template:
     src: templates/alacritty/alacritty.toml.j2
-    dest: "{{ ansible_user_dir }}/.config/alacritty/alacritty.toml"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/alacritty/alacritty.toml"
     mode: "0644"
