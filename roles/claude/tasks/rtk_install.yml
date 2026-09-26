@@ -10,7 +10,7 @@
     set -o pipefail
     curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
   args:
-    creates: "{{ ansible_user_dir }}/.local/bin/rtk"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/rtk"
     executable: /bin/bash
   when: ansible_facts["os_family"] == "Debian"
   register: claude_rtk_install
