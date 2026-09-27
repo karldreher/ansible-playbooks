@@ -7,6 +7,8 @@
 claude_marketplace_skills:
   - repo: "karldreher/oblique-skill"
     skill: "oblique"
+  - repo: "karldreher/tsdoc-skill"
+    skill: "tsdoc"
 
 # Skills to uninstall — same format as claude_marketplace_skills
 claude_marketplace_skills_remove: []
