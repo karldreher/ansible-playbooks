@@ -17,7 +17,17 @@ claude_settings:
   attribution:
     commit: ""
     pr: ""
+    # Documented setting (code.claude.com/docs/en/settings-reference#attributionsessionurl).
+    # Omits the claude.ai session link from cloud/Remote Control commits.
+    # See https://github.com/anthropics/claude-code/issues/96113 for the report
+    # that prompted this: includeCoAuthoredBy: false intermittently failed to
+    # suppress the Claude-Session line mid-session.
+    sessionUrl: false
   autoMemoryEnabled: false
+  env:
+    # https://github.com/anthropics/claude-code/issues/96113
+    # upon confirmation that attribution.sessionUrl works totally fine on its own, remove.
+    CLAUDE_CODE_SUPPRESS_SESSION_ATTRIBUTION: "1"
   # https://code.claude.com/docs/en/output-styles#built-in-output-styles
   outputStyle: "Explanatory"
   permissions:
