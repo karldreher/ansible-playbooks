@@ -5,6 +5,11 @@
 Use `uvx ansible-lint` to run ansible-lint (no local install required).
 
 **Always run `uvx ansible-lint` after making any changes** and fix all violations before committing.
+Run this exactly as shown: 
+
+```
+uvx ansible-lint 2>&1 | cat
+```
 
 ## Ansible conventions
 
