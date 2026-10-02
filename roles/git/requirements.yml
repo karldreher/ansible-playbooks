@@ -1,5 +1,6 @@
 ---
 collections:
-  # Install a collection from Ansible Galaxy.
+  # Latest version: https://galaxy.ansible.com/ui/repo/published/community/general/
   - name: community.general
+    version: "13.4.0"
     source: https://galaxy.ansible.com
