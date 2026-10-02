@@ -25,13 +25,8 @@ claude_settings:
     sessionUrl: false
   autoMemoryEnabled: false
   env:
-    # UNDOCUMENTED / UNCONFIRMED. Not in code.claude.com/docs/en/env-vars. Surfaced
-    # by extracting strings from the Claude Code 2.1.267 binary in
-    # https://github.com/anthropics/claude-code/issues/96113, where the reporter
-    # saw it suppress the session-attribution reminder in one observed session
-    # (single data point, control arm not re-confirmed). May change format or
-    # disappear in a future release without notice — attribution.sessionUrl
-    # above is the supported fix; this is a belt-and-suspenders addition.
+    # https://github.com/anthropics/claude-code/issues/96113
+    # upon confirmation that attribution.sessionUrl works totally fine on its own, remove.
     CLAUDE_CODE_SUPPRESS_SESSION_ATTRIBUTION: "1"
   # https://code.claude.com/docs/en/output-styles#built-in-output-styles
   outputStyle: "Explanatory"
