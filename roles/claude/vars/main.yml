@@ -24,10 +24,15 @@ claude_settings:
     # suppress the Claude-Session line mid-session.
     sessionUrl: false
   autoMemoryEnabled: false
+  # 0 disables session quality survey prompts.
+  feedbackSurveyRate: 0
   env:
     # https://github.com/anthropics/claude-code/issues/96113
     # upon confirmation that attribution.sessionUrl works totally fine on its own, remove.
     CLAUDE_CODE_SUPPRESS_SESSION_ATTRIBUTION: "1"
+    # Disables session quality surveys and feedback prompts.
+    # https://code.claude.com/docs/en/data-usage.md#session-quality-surveys
+    CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY: "1"
   # https://code.claude.com/docs/en/output-styles#built-in-output-styles
   outputStyle: "Explanatory"
   permissions:
