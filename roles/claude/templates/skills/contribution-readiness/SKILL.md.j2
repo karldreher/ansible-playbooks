@@ -12,23 +12,44 @@ A good issue answers three questions before a contributor writes a single line o
 
 ## Instructions
 
-### Step 1: Understand the request
+### Step 1: Ask which optional sections to include
 
-Parse the user's argument and any surrounding conversation context. Extract:
-- The feature, bug, or task being described
-- Who benefits (end users, developers, operators, the business)
-- Any constraints, deadlines, or dependencies mentioned
+User Story, Background, and Acceptance Criteria are always included. Do not ask about them.
 
-### Step 2: Fill in the gaps
+**Your first action is an `AskUserQuestion` tool call.** Do not write any output or call any other tool before it. Make this call ALWAYS — even when the request is detailed and even when it names sections. Never skip it and never ask in plain text.
 
-If the user's input clearly answers what, why, and for whom — skip straight to drafting. But if any of these are unclear, use the `AskUserQuestion` tool to ask before writing. This makes the interaction feel like a conversation rather than a wall of text — the user gets a focused prompt they can respond to directly.
+Call `AskUserQuestion` with this payload, copied exactly:
 
-Compose a single `AskUserQuestion` call that covers everything you need. Only ask what's genuinely missing; don't interrogate the user when they've already given you enough to work with. Questions to consider:
+```json
+{
+  "questions": [
+    {
+      "question": "Which optional sections should the issue include?",
+      "header": "Sections",
+      "multiSelect": true,
+      "options": [
+        {"label": "Technical Notes", "description": "Architecture pointers, relevant files, suggested approach"},
+        {"label": "Out of Scope", "description": "Explicit boundaries to prevent scope creep"},
+        {"label": "Open Questions", "description": "Unresolved decisions needing discussion"}
+      ]
+    }
+  ]
+}
+```
+
+If the user's argument and conversation leave what, why, or for whom unclear, append those as extra questions in the same call. Only ask what's genuinely missing; don't interrogate the user when they've already given you enough to work with. Questions to consider:
 
 - **What is the desired outcome?** What should exist or change when this is done?
 - **Why does this matter?** What problem does it solve, or what opportunity does it unlock?
 - **Who is the audience?** End users, internal developers, operators?
 - **Are there constraints?** Specific technologies, backward compatibility, timeline, related issues?
+
+### Step 2: Understand the request
+
+Using the argument, conversation context, and the answers from Step 1, extract:
+- The feature, bug, or task being described
+- Who benefits (end users, developers, operators, the business)
+- Any constraints, deadlines, or dependencies mentioned
 
 ### Step 3: Gather technical context (when in a repo)
 
@@ -41,7 +62,7 @@ This context makes the issue actionable rather than abstract. Skip this step if 
 
 ### Step 4: Draft the issue
 
-Write the issue in markdown with these required sections:
+Write the issue in markdown with the three required sections (User Story, Background, Acceptance Criteria) plus any optional sections the user selected in Step 2.
 
 #### User Story
 
@@ -71,7 +92,7 @@ Good criteria are specific and observable:
 
 Avoid vague criteria like "code is clean" or "performance is acceptable."
 
-#### Optional sections (include when they add value)
+#### Optional sections (include only when selected in Step 2)
 
 - **Technical Notes** — Architecture pointers, relevant files, suggested approach, or API contracts. Include this when the contributor would otherwise need significant exploration to figure out where to start.
 - **Out of Scope** — Explicit boundaries to prevent scope creep. Helpful when the feature is adjacent to other work that might be tempting to bundle in.
@@ -96,7 +117,7 @@ If the user wants to refine the draft, iterate with them — each revision shoul
 
 **Input:** `/contribution-readiness "Add rate limiting to the public API"`
 
-**Output:**
+**Output** (assumes the user selected every optional section in Step 2):
 
 ````markdown
 ## User Story
