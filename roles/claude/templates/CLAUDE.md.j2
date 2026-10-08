@@ -34,3 +34,11 @@ Examples:
 | master / slave | primary / replica |
 | sanity check | validation, smoke test |
 | dummy | placeholder |
+
+## Editing
+Use Edit for targeted changes; sed only for mechanical bulk renames.
+{% if ansible_facts["os_family"] == "Darwin" %}
+This is a macOS device (BSD sed): in-place is `sed -i '' -e 's/a/b/' file`; never bare `-i`.
+{% elif ansible_facts["os_family"] == "Debian" %}
+This is a Linux device (GNU sed): in-place is `sed -i -e 's/a/b/' file`; never `sed -i ''`.
+{% endif %}
