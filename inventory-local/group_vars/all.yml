@@ -1,2 +1,6 @@
 ---
-ansible_python_interpreter: auto
+# Empty when uv is not installed or has no Python available.
+uv_python_path: "{{ lookup('ansible.builtin.pipe', 'command -v uv >/dev/null && uv python find || true') }}"
+
+# Prefer UV python when installed, otherwise use Auto and provide ansible's warning..
+ansible_python_interpreter: "{{ uv_python_path if uv_python_path else 'auto' }}"
