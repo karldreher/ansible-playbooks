@@ -1,6 +1,10 @@
 ---
 - name: Configure local machine
   hosts: all
+  pre_tasks:
+    - name: Show selected Python interpreter
+      ansible.builtin.debug:
+        msg: "Selected Python interpreter: {{ ansible_python_interpreter }}"
   roles:
     - role: git
     - role: misc_packages
