@@ -25,3 +25,5 @@ git_gitconfig:
     value: true
   - name: fetch.prune
     value: true
+  - name: init.defaultBranch
+    value: main
