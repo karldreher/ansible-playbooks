@@ -19,6 +19,7 @@ misc_packages_macos_brew_packages:
   - httpie
   - jq
   - kubectx
+  - mole
   - parallel
   - ripgrep
   - rsync
