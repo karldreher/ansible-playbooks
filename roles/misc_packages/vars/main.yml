@@ -20,6 +20,7 @@ misc_packages_macos_brew_packages:
   - jq
   - kubectx
   - mole
+  - oxipng
   - parallel
   - ripgrep
   - rsync
