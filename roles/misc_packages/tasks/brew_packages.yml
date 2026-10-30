@@ -1,17 +1,8 @@
 ---
-- name: Add misc MacOS brew taps
-  community.general.homebrew_tap:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ misc_packages_macos_brew_taps }}"
-  register: misc_packages_brew_taps
-
 - name: Install misc MacOS brew packages
   community.general.homebrew:
     name: "{{ misc_packages_macos_brew_packages }}"
     state: present
-  when: misc_packages_brew_taps is not failed
-  register: misc_packages_brew_packages
 
 - name: Install misc MacOS casks
   # Certain apps are cask only, which requires the use of the

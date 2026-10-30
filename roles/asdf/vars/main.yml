@@ -1,0 +1,19 @@
+---
+# vars file for asdf
+
+# Release installed on Debian (macOS uses Homebrew).
+asdf_linux_version: v0.20.2
+asdf_linux_arch_map:
+  x86_64: amd64
+  aarch64: arm64
+
+# Plugins installed by the role and pinned globally in ~/.tool-versions.
+asdf_plugins:
+  - name: golang
+    version: 1.27.3
+  - name: nodejs
+    version: 26.13.0
+  - name: python
+    version: 3.15.2
+  - name: terraform
+    version: 1.17.1

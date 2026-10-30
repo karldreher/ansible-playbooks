@@ -8,6 +8,7 @@
   roles:
     - role: git
     - role: misc_packages
+    - role: asdf
     - role: gh_extensions
     - role: omz_zshrc
     - role: misc_dotfiles

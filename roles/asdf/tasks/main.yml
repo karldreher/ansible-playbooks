@@ -1,0 +1,40 @@
+---
+# tasks file for asdf
+
+- name: Install asdf via Homebrew
+  community.general.homebrew:
+    name: asdf
+    state: present
+  when: ansible_facts["os_family"] == "Darwin"
+
+- name: Install asdf release binary
+  ansible.builtin.unarchive:
+    src: >-
+      https://github.com/asdf-vm/asdf/releases/download/{{ asdf_linux_version }}/asdf-{{ asdf_linux_version }}-linux-{{
+      asdf_linux_arch_map[ansible_facts['architecture']] }}.tar.gz
+    dest: "{{ ansible_facts['user_dir'] }}/.local/bin"
+    creates: "{{ ansible_facts['user_dir'] }}/.local/bin/asdf"
+    remote_src: true
+    mode: "0755"
+  when: ansible_facts["os_family"] == "Debian"
+
+- name: Honor legacy version files in asdf
+  # Lets asdf read .nvmrc, .python-version, .go-version, and .terraform-version,
+  # which nvm, pyenv, goenv, and tfswitch used.
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_facts['user_dir'] }}/.asdfrc"
+    regexp: "^legacy_version_file"
+    line: "legacy_version_file = yes"
+    create: true
+    mode: "0644"
+
+- name: Install and pin asdf plugins
+  ansible.builtin.include_tasks: plugin.yml
+  loop: "{{ asdf_plugins }}"
+  loop_control:
+    loop_var: asdf_plugin
+    label: "{{ asdf_plugin.name }} {{ asdf_plugin.version }}"
+
+- name: Upgrade asdf
+  ansible.builtin.import_tasks: upgrade.yml
+  tags: [upgrade, never]

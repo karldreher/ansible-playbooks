@@ -1,0 +1,33 @@
+---
+# Same "list first" idiom as gh_extensions/tasks/install.yml, since
+# `asdf plugin add` and `asdf install` have no built-in no-op mode.
+- name: Get list of installed asdf plugins
+  ansible.builtin.command: asdf plugin list
+  register: asdf_plugin_list
+  failed_when: false
+  changed_when: false
+
+- name: "Add asdf plugin {{ asdf_plugin.name }}"
+  ansible.builtin.command: "asdf plugin add {{ asdf_plugin.name }}"
+  when: asdf_plugin.name not in asdf_plugin_list.stdout_lines
+  changed_when: true
+
+- name: "Get installed versions of {{ asdf_plugin.name }}"
+  # Idempotency: skip the install when the pinned version is already present.
+  ansible.builtin.command: "asdf list {{ asdf_plugin.name }}"
+  register: asdf_plugin_versions
+  failed_when: false
+  changed_when: false
+
+- name: "Install asdf version of plugin {{ asdf_plugin.name }}"
+  ansible.builtin.command: "asdf install {{ asdf_plugin.name }} {{ asdf_plugin.version }}"
+  when: asdf_plugin.version not in (asdf_plugin_versions.stdout | regex_findall('[0-9][^\s*]*'))
+  changed_when: true
+
+- name: "Pin version in ~/.tool-versions for {{ asdf_plugin.name }}"
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_facts['user_dir'] }}/.tool-versions"
+    regexp: "^{{ asdf_plugin.name }}\\s"
+    line: "{{ asdf_plugin.name }} {{ asdf_plugin.version }}"
+    create: true
+    mode: "0644"

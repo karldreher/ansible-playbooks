@@ -1,0 +1,10 @@
+---
+- name: Upgrade asdf via Homebrew  # noqa: package-latest
+  community.general.homebrew:
+    name: asdf
+    state: latest
+  when: ansible_facts["os_family"] == "Darwin"
+
+- name: Update asdf plugins
+  ansible.builtin.command: asdf plugin update --all
+  changed_when: true
