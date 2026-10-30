@@ -1,6 +1,7 @@
 ```mermaid
 graph TD
 
+    asdf -->|depends on| facts
     claude -->|depends on| facts
     facts
     gh_extensions -->|depends on| misc_packages
