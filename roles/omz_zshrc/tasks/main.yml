@@ -37,6 +37,8 @@
       dest: ".oh-my-zsh/custom/zsh-aliases.zsh"
     - src: "zsh-custom/zsh-notices.zsh.j2"
       dest: ".oh-my-zsh/custom/zsh-notices.zsh"
+    - src: "zsh-custom/zsh-asdf-golang.zsh.j2"
+      dest: ".oh-my-zsh/custom/zsh-asdf-golang.zsh"
   when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
 
 - name: Custom scripts directory
