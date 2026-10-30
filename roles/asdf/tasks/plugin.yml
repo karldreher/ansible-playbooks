@@ -13,12 +13,20 @@
   changed_when: true
 
 - name: "Get installed versions of {{ asdf_plugin.name }}"
+  # Used for idempotency on every run, not only upgrades: it lets the install
+  # below be skipped (and report "ok" rather than "changed") when the pinned
+  # version is already present.  Changing the pinned version in vars makes it
+  # absent here, which is what triggers installing the new one.
+  # `asdf list` exits non-zero when nothing is installed yet (expected on a
+  # first run), so failure is tolerated.
   ansible.builtin.command: "asdf list {{ asdf_plugin.name }}"
   register: asdf_plugin_versions
   failed_when: false
   changed_when: false
 
 - name: "Install asdf version of plugin {{ asdf_plugin.name }}"
+  # The regex extracts version numbers from `asdf list` output, which marks
+  # the current version with a leading `*`.
   ansible.builtin.command: "asdf install {{ asdf_plugin.name }} {{ asdf_plugin.version }}"
   when: asdf_plugin.version not in (asdf_plugin_versions.stdout | regex_findall('[0-9][^\s*]*'))
   changed_when: true
