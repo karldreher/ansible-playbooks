@@ -1,9 +1,6 @@
 ---
 - name: Configure local machine
   hosts: all
-  environment:
-    # asdf shims (node, npm, go, ...) must resolve for every role, including pi.
-    PATH: "{{ ansible_facts['user_dir'] }}/.asdf/shims:{{ ansible_facts['env']['PATH'] }}"
   pre_tasks:
     - name: Show selected Python interpreter
       ansible.builtin.debug:

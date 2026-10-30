@@ -1,7 +1,5 @@
 ---
 # tasks file for asdf
-#
-# asdf shims are expected on PATH via the play-level `environment` in main.yml.
 
 - name: Install asdf via Homebrew
   community.general.homebrew:
