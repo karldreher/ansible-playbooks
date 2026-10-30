@@ -6,16 +6,6 @@
     path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"
   register: omz_zshrc_omz_folder
 
-- name: Tfswitch enabled
-  # TODO: Refactor this more elegantly later, but this is more of a
-  # matter of placement.  Syntactically it is correct.
-  ansible.builtin.set_fact:
-    omz_zshrc_tfswitch_enabled: true
-  when:
-    - "'warrensbox/tap/tfswitch' in misc_packages_macos_brew_packages"
-    - "misc_packages_brew_packages is defined"
-    - "not misc_packages_brew_packages is failed"
-
 - name: Install omz-vimtips plugin
   ansible.builtin.git:
     repo: https://github.com/karldreher/omz-vimtips.git

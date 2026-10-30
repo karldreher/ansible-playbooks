@@ -1,17 +1,5 @@
 ---
 # tasks file for misc-dotfiles
-- name: Create tfswitch directory
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.tfswitch"
-    state: directory
-    mode: "0755"
-
-- name: Template tfswitch.toml
-  ansible.builtin.template:
-    src: templates/tfswitch.toml.j2
-    dest: "{{ ansible_facts['user_dir'] }}/.tfswitch.toml"
-    mode: "0644"
-
 - name: Create ghostty config directory
   ansible.builtin.file:
     path: "{{ ansible_facts['user_dir'] }}/.config/ghostty"

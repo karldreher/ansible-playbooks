@@ -9,9 +9,6 @@ misc_packages_linux_apt_packages:
   - yq
   - zsh
 
-misc_packages_macos_brew_taps:
-  - warrensbox/tap
-
 misc_packages_macos_brew_packages:
   - diceware
   - gh
@@ -27,7 +24,6 @@ misc_packages_macos_brew_packages:
   - tree
   - yq
   - zip
-  - warrensbox/tap/tfswitch
 
 misc_packages_macos_brew_casks:
   - ghostty
