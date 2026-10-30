@@ -49,33 +49,6 @@
   register: omz_zshrc_custom_scripts_dir
   when: "omz_zshrc_omz_folder.stat.exists and omz_zshrc_omz_folder.stat.isdir"
 
-- name: Remove goenv zsh configuration
-  # TODO: remove upon next update
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/zsh-goenv.zsh"
-    state: absent
-
-- name: Remove legacy version manager directories
-  # TODO: remove upon next update
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/{{ item }}"
-    state: absent
-  loop:
-    - .goenv
-    - .nvm
-    - .pyenv
-    - .rbenv
-
-- name: Remove pyenv initialization from login shell profiles
-  # TODO: remove upon next update
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_facts['user_dir'] }}/{{ item.0 }}"
-    regexp: "{{ item.1 }}"
-    state: absent
-  loop: "{{ ['.zprofile', '.profile'] | product(omz_zshrc_pyenv_profile_patterns) | list }}"
-  loop_control:
-    label: "{{ item.0 }}: {{ item.1 }}"
-
 - name: Template git_acp.zsh
   # TODO: remove upon next update
   ansible.builtin.file:
