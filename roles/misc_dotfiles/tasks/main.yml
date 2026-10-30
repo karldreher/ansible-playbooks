@@ -1,5 +1,14 @@
 ---
 # tasks file for misc-dotfiles
+- name: Remove tfswitch files
+  # TODO: remove upon next update
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/{{ item }}"
+    state: absent
+  loop:
+    - .tfswitch
+    - .tfswitch.toml
+
 - name: Create ghostty config directory
   ansible.builtin.file:
     path: "{{ ansible_facts['user_dir'] }}/.config/ghostty"
