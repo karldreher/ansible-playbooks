@@ -4,6 +4,22 @@
     name: "{{ misc_packages_macos_brew_packages }}"
     state: present
 
+- name: Uninstall goenv and tfswitch brew packages
+  # TODO: remove upon next update
+  community.general.homebrew:
+    name:
+      - goenv
+      - warrensbox/tap/tfswitch
+    state: absent
+  register: misc_packages_brew_removed_packages
+
+- name: Remove warrensbox brew tap
+  # TODO: remove upon next update
+  community.general.homebrew_tap:
+    name: warrensbox/tap
+    state: absent
+  when: misc_packages_brew_removed_packages is not failed
+
 - name: Install misc MacOS casks
   # Certain apps are cask only, which requires the use of the
   # community.general.homebrew_cask module.
