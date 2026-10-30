@@ -56,6 +56,13 @@ omz_zshrc_omz_plugin_list:
   - asdf
   - omz-vimtips  # custom plugin, cloned by tasks/main.yml
 
+# Lines pyenv's installer added to login shell profiles.
+omz_zshrc_pyenv_profile_patterns:
+  - '^# pyenv$'
+  - '^export PYENV_ROOT='
+  - '^export PATH="\$PYENV_ROOT/bin:\$PATH"$'
+  - '^eval "\$\(pyenv init'
+
 # Notice files for profile experiments and reminders
 omz_zshrc_notices:
   - file: experiments.txt

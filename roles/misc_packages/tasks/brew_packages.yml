@@ -4,11 +4,13 @@
     name: "{{ misc_packages_macos_brew_packages }}"
     state: present
 
-- name: Uninstall goenv and tfswitch brew packages
+- name: Uninstall legacy version manager brew packages
   # TODO: remove upon next update
   community.general.homebrew:
     name:
       - goenv
+      - pyenv
+      - pyenv-virtualenv
       - warrensbox/tap/tfswitch
     state: absent
   register: misc_packages_brew_removed_packages
