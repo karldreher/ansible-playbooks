@@ -62,6 +62,7 @@
     - .goenv
     - .nvm
     - .pyenv
+    - .rbenv
 
 - name: Remove pyenv initialization from login shell profiles
   # TODO: remove upon next update
