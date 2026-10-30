@@ -53,7 +53,6 @@ omz_zshrc_aliases:
 omz_zshrc_omz_plugin_list:
   - git
   - terraform
-  - nvm
   - asdf
   - omz-vimtips  # custom plugin, cloned by tasks/main.yml
 

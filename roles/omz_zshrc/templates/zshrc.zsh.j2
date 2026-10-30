@@ -25,7 +25,6 @@ unsetopt autocd
 
 # Configuration of plugins
 plugins=( {{ omz_zshrc_omz_plugin_list | join(" ") }} )
-zstyle ':omz:plugins:nvm' autoload yes
 
 # Autocompletions - Must precede sourcing omz
 {% if ansible_facts['os_family'] == 'Darwin' %}
