@@ -53,6 +53,15 @@
     path: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh/custom/zsh-goenv.zsh"
     state: absent
 
+- name: Remove legacy version manager directories
+  # TODO: remove upon next update
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/{{ item }}"
+    state: absent
+  loop:
+    - .goenv
+    - .nvm
+
 - name: Template git_acp.zsh
   # TODO: remove upon next update
   ansible.builtin.file:
