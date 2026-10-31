@@ -9,7 +9,7 @@
     state: directory
     mode: "0755"
 
-- name: Manage conductor create_pr prompt in $HOME/.conductor/settings.toml
+- name: Manage conductor prompts in $HOME/.conductor/settings.toml
   ansible.builtin.blockinfile:
     path: "{{ ansible_facts['user_dir'] }}/.conductor/settings.toml"
     create: true
@@ -17,6 +17,9 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK (misc_dotfiles conductor prompts)"
     block: |
       [prompts]
+      general = """
+      {{ misc_dotfiles_conductor_general_prompt }}
+      """
       create_pr = """
       {{ misc_dotfiles_conductor_create_pr_prompt }}
       """

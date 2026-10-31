@@ -1,6 +1,10 @@
 ---
 # vars file for misc-dotfiles
 
+# Appended to every Conductor agent session.
+misc_dotfiles_conductor_general_prompt: |-
+  Commit locally first. Group related edits into one conventional commit per logical unit of work, so each can be reverted on its own.
+
 # Appended to Conductor's built-in create PR instructions.
 misc_dotfiles_conductor_create_pr_prompt: |-
   Use a conventional commit style PR title, lowercase, prefixed with feat:, fix:, refactor:, etc.
