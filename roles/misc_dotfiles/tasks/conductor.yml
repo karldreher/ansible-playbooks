@@ -1,0 +1,22 @@
+---
+# Conductor owns most of ~/.conductor/settings.toml (models, git), so only the
+# [prompts] table is managed here, inside a marked block.
+# https://conductor.build/schemas/settings.schema.json
+
+- name: Create conductor config directory
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.conductor"
+    state: directory
+    mode: "0755"
+
+- name: Manage conductor create_pr prompt in $HOME/.conductor/settings.toml
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_facts['user_dir'] }}/.conductor/settings.toml"
+    create: true
+    mode: "0644"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK (misc_dotfiles conductor prompts)"
+    block: |
+      [prompts]
+      create_pr = """
+      {{ misc_dotfiles_conductor_create_pr_prompt }}
+      """

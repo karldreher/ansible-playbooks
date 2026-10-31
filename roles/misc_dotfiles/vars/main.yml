@@ -1,2 +1,22 @@
 ---
 # vars file for misc-dotfiles
+
+# Appended to Conductor's built-in create PR instructions.
+misc_dotfiles_conductor_create_pr_prompt: |-
+  Use a conventional commit style PR title, lowercase, prefixed with feat:, fix:, refactor:, etc.
+  Reference other PRs by full URL (e.g. https://github.com/org/repo/pull/54), never e.g. #54.
+  Do not add attribution trailers or session links to commit messages or PR descriptions
+  (no Claude-Session:, no Co-Authored-By:, no claude.ai/code URLs).
+  Write the description kindly and clearly for the human reviewers.  Humans enjoy separate paragraphs, headers, and favor readability.
+
+  You should follow the repo's guidance for creating a PR or use pull_request.md templates, otherwise, you should use a format like this.
+  ```
+  # Goal
+  *Explain the high-level goal of this PR. What problem does it solve, or what functionality does it add?*
+
+  # Summary
+  *Summarize the change.  Add links to each commit*.
+
+  # Testing
+  *Is this change tested within this Pull Request? Was test coverage added? Does the change require post-change verification instead?*
+  ```
