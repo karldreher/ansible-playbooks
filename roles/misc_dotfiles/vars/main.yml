@@ -15,7 +15,10 @@ misc_dotfiles_conductor_create_pr_prompt: |-
   *Explain the high-level goal of this PR. What problem does it solve, or what functionality does it add?*
 
   # Summary
-  *Summarize the change.  Add links to each commit*.
+  *Summarize the change.  Add links to each commit* with a brief summary of the change (1 line)
+  <EXAMPLE>
+  [abcdef](link-to-commit) - added migration to drop users table
+  </EXAMPLE>
 
   # Testing
   *Is this change tested within this Pull Request? Was test coverage added? Does the change require post-change verification instead?*
