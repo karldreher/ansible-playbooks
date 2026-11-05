@@ -16,8 +16,10 @@
 - name: Configure claude settings and CLAUDE.md
   ansible.builtin.include_tasks: config.yml
 
-- name: Install claude subagents
-  ansible.builtin.include_tasks: agents.yml
+- name: Remove retired commit-executor subagent
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.claude/agents/commit-executor.md"
+    state: absent
 
 - name: Install claude skills
   ansible.builtin.include_tasks: skills.yml
